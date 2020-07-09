@@ -1,0 +1,10 @@
+{
+    "base_dir": "/home/djoe/hdd/Files_for_inmind_guys/Classification_After_Roy_Changes/",
+    "api_folder": "training_api",
+    "dataset_folder_on_host": "data",
+    "checkpoints_folder_on_host": "checkpoints",
+    "inference_api_models_folder": "inference/models",
+    "servable_folder": "servable",
+    "image_name": "classification_training_cpu"
+}
+

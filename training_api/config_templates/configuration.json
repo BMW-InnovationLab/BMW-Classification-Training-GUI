@@ -1,0 +1,30 @@
+{
+    "configuration" : {
+                "lr" : 0.001,
+                "momentum" : 0.9,
+                "wd" : 0.0001,
+                "lr_factor" : 0.75,
+                "gpus_count" : 1,
+                "num_workers" : 8,
+                "jitter_param" : 0.4,
+                "lighting_param" : 0.1,
+                "Xavier()" : true,
+                "MSRAPrelu()": false,
+                "data_augmenting":true
+            },
+    "hyperParam" : {
+      "batch_size" : 1,
+      "epochs" : 3,
+      "processor" : "CPU"
+
+
+    },
+    "modelParam" : {
+      "weights_name": "resnet50_v1",
+      "training_mode": "from_scratch",
+      "model_name" : "test_18",
+      "new_model" : "test_19"
+    }
+
+
+}
