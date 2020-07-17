@@ -26,8 +26,8 @@ class CheckpointValidator():
         - True if the checkpoint is valid else otherwise
     """
 
-    def validate_checkpoint(self,checkpoint_name):
-        checkpoint_path = os.path.join(self.checkpoint_base_path, checkpoint_name)
+    def validate_checkpoint(self, checkpoint_name, checkpoint_architecture):
+        checkpoint_path = os.path.join(self.checkpoint_base_path, os.path.join(checkpoint_architecture, checkpoint_name))
 
         if not os.path.exists(checkpoint_path):
             return False

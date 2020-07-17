@@ -26,9 +26,9 @@ class CheckpointFacade():
     -------
         - checkpoint object 
     """
-    def create_checkpoint(self, checkpoint_name):
-        checkpoint_path = os.path.join(self.checkpoint_base_path, checkpoint_name)
-        if (self.CheckpointValidator.validate_checkpoint(checkpoint_name)):
+    def create_checkpoint(self, checkpoint_architecture, checkpoint_name):
+        checkpoint_path = os.path.join(self.checkpoint_base_path, os.path.join(checkpoint_architecture, checkpoint_name))
+        if (self.CheckpointValidator.validate_checkpoint(checkpoint_name, checkpoint_architecture)):
             params_file = checkpoint_name+".params"
             params_file = os.path.join(checkpoint_path, params_file) 
             classes_file = os.path.join(checkpoint_path, "classes.txt")

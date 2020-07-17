@@ -54,13 +54,14 @@ class TrainingTesting():
 
     """
     def training_loop(self,model_name, train_data, val_data, test_data, trainer, metric, L, config: Configuration, net, ctx):
+        new_model_path = '/checkpoints/'+config.weights_name+'/'+model_name
         lr_counter = 0
         num_batch = len(train_data)
         lr_steps = [10, 20, 30, np.inf]
         batch_size = config.batch_size * max(len(config.gpus_count), 1)
         
         best_acc = 0
-        model_name_writer=open('/checkpoints/'+model_name+'/networkname.txt','w')
+        model_name_writer=open(new_model_path+'/networkname.txt','w')
         model_name_writer.write(config.weights_name)
         model_name_writer.close()
         for epoch in range(config.epochs):
@@ -102,8 +103,8 @@ class TrainingTesting():
 
             if (train_acc > best_acc):
                 best_acc = train_acc
-                net.save_parameters('/checkpoints/' +model_name + '/' + model_name + '.params')
-                net.export('/checkpoints/' + model_name + '/' + model_name)
+                net.save_parameters(new_model_path + '/' + model_name + '.params')
+                net.export(new_model_path + '/' + model_name)
 
         _, test_acc = self.test(net, test_data, ctx)
         print('[Finished] Test-acc: %.3f' % (test_acc),flush=True)
@@ -111,7 +112,11 @@ class TrainingTesting():
             ctx1.empty_cache()
         # os.remove('../scripts/configuration.json')
 
-        with ZipFile(os.path.join('/servable', model_name+".zip"), 'w') as zipObj:
-            for filename in os.listdir(os.path.join('/checkpoints', model_name)):
-               filePath = os.path.join(os.path.join('/checkpoints', model_name), filename)
+        servable_folder_path = os.path.join('/servable',config.weights_name)
+        if not os.path.exists(servable_folder_path):
+            os.makedirs(servable_folder_path, exist_ok=True)
+
+        with ZipFile(os.path.join(servable_folder_path, model_name+".zip"), 'w') as zipObj:
+            for filename in os.listdir(new_model_path):
+               filePath = os.path.join(os.path.join(new_model_path, filename))
                zipObj.write(filePath)
