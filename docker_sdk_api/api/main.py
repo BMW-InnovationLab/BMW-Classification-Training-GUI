@@ -188,9 +188,16 @@ list of str
     checkpoints
 """
 @app.get('/checkpoints')
-async def get_checkpoints():
-    checkpoints = [checkpoint for checkpoint in os.listdir('/checkpoints') if os.path.isdir(os.path.join('/checkpoints',checkpoint)) and check_checkpoint_valid(os.path.join('/checkpoints',checkpoint))]
+def get_checkpoints():
+    checkpoints = {}
+    for root, dirs, files in os.walk("/checkpoints"):
+        for directory in dirs:
+            if check_checkpoint_valid(os.path.join(root, directory)):
+                name_parts = os.path.join(root, directory).split("/")
+                checkpoints[name_parts[-1]] = name_parts[-2]
+
     return checkpoints
+
 
 
 
@@ -204,17 +211,20 @@ list of str
     servable models
 """
 @app.get('/servable/models')
-async def get_downloadable_models():
+def get_downloadable_models():
     servable_checkpoints_folder = '/servable'
     if not os.path.isdir(servable_checkpoints_folder):
         os.makedirs(servable_checkpoints_folder)
-    # 
-    models = os.listdir(servable_checkpoints_folder)
-    response = []
-    for model in models:
-        if model.endswith(".zip"):
-            response.append(model.split(".zip")[0])  
-    return response
+    
+    servable_models = {}
+    for root, dirs, files in os.walk("/servable"):
+        for directory in dirs:
+            for f in os.listdir(os.path.join(root,directory)):
+                if f.endswith(".zip"):
+                    servable_models[f] = directory
+
+    return servable_models
+
 
 """
 Get all finished jobs by comparing the models that are in the servable folder (done training) with the models currently in progress 
@@ -226,7 +236,8 @@ list of str
 """
 @app.get('/jobs/finished')
 async def get_finished_jobs():
-    downloadable_models = os.listdir("/servable")
+
+    downloadable_models = list(get_downloadable_models().keys())
     downloadable_models = [model.split(".zip")[0] for model in downloadable_models]
 
     running_containers = []
