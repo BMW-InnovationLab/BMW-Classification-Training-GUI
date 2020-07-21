@@ -49,7 +49,7 @@ list of str
 """
 @app.get('/gpu/info')
 async def get_gpu_info():
-    return GPUtil.getAvailable(order = 'memory', limit = 10, maxLoad = 0.25, maxMemory = 0.25, includeNan=False, excludeID=[], excludeUUID=[])
+    return GPUtil.getAvailable(order = 'memory', limit = 10, maxLoad = 0.5, maxMemory = 0.5, includeNan=False, excludeID=[], excludeUUID=[])
 
 
 
