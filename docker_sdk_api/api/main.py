@@ -110,7 +110,8 @@ str
 @app.post('/jobs/add')
 async def add_job(container_settings:ContainerSettings):
     alias = container_settings.name
-    container_settings.name = re.sub('[^A-z0-9 -]', '', container_settings.name).lower().replace(" ", "_")
+    # container_settings.name = re.sub('[^A-z0-9 -]', '', container_settings.name).lower().replace(" ", "_")
+    container_settings.name = re.sub('\W+','_', container_settings.name)
     container_settings.name = "Classification_"+container_settings.name
     docker_service.start_job(container_settings, paths['api_folder'], paths['image_name'], paths['dataset_folder_on_host'], paths['checkpoints_folder_on_host'], paths['servable_folder'])
     alias_service.add_alias(container_settings.name, alias)
