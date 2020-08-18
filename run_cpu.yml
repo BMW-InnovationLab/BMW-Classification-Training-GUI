@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  docker_sdk:
+    image: classification_docker_sdk
+    network_mode: "host"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker_sdk_api:/api
+      - ./data:/datasets
+      - ./servable:/servable
+      - ./checkpoints:/checkpoints
+
+
+  user_interface:
+    image: classification_gui
+    ports:
+      - "4200:80"
+  
+  inference_api:
+    image: classification_inference_api_cpu
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./inference/models:/models
+      - ./inference/src/main:/main
+    ports:
+      - "4343:4343"

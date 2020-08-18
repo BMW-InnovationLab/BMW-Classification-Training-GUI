@@ -1,0 +1,45 @@
+  <div>
+  <div class="top-buttons-container">
+
+    <button mat-icon-button  matTooltip="Train model" (click)="checkGpuAvailability()" alt="Train model">
+      <mat-icon>add_circle</mat-icon>
+    </button>
+
+    <div>
+      <button mat-icon-button matTooltip="Download model" alt="Download model" (click)="getAvailableModelsToDownload()"
+              style="position: relative;float:right" mat-button [matMenuTriggerFor]="download">
+        <mat-icon>cloud_download</mat-icon>
+      </button>
+      <mat-menu #download="matMenu">
+        <div *ngFor="let model of downloadableModels">
+          <a mat-menu-item [href]="URL +model +'.zip'" class="downloadButton jobButtons" download> <b>{{this.getNameOfModel(model)}}</b>&nbsp;|&nbsp; {{this.getTypeOfModel(model)}}</a>
+          <mat-divider></mat-divider>
+        </div>
+        <a mat-menu-item *ngIf="downloadableModels.length===0" style="color:lightgrey" disabled> No Models to
+          download</a>
+      </mat-menu>
+    </div>
+
+    <button mat-icon-button matTooltip="Test with Swagger" (click)="test()" alt="Test with Swagger">
+      <mat-icon>offline_bolt</mat-icon>
+    </button>
+  </div>
+
+  <mat-progress-bar style="margin-left: auto; margin-right: auto;" *ngIf="showSpinner" mode='indeterminate'></mat-progress-bar>
+
+  <cdk-virtual-scroll-viewport itemSize=(jobsNumber) class="jobsViewPort">
+    <mat-list *cdkVirtualFor="let job of jobs">
+      <mat-card class="JobDiv">
+          <span class="JobNameSpan"> {{job}}</span>
+        <div *ngIf="jobIsDone(job) === -1" style="color:goldenrod;font-size: large;text-align: center">In Progress</div>
+        <div *ngIf="jobIsDone(job) !== -1" style="color: green;font-size: large;text-align: center">Done</div>
+
+        <div class="JobButtonsContainer">
+          <button mat-raised-button (click)="openDialog(job)" class="stopButton jobButtons"> Stop</button>
+<!--          <button mat-raised-button (click)="monitorJob(job)" class="monitorButton jobButtons"> Monitor</button>-->
+          <button mat-raised-button (click)="jobLogs(job)" class="logButton jobButtons"> Logs</button>
+        </div>
+      </mat-card>
+    </mat-list>
+  </cdk-virtual-scroll-viewport>
+</div>

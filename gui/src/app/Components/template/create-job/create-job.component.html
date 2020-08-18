@@ -1,0 +1,55 @@
+<mat-horizontal-stepper style="margin-top: 6vh" labelPosition=bottom  [selectedIndex]="step" [linear]="true" disableRipple=true #stepper>
+
+  <ng-template matStepperIcon="done">
+    <mat-icon>done</mat-icon>
+  </ng-template>
+
+
+  <mat-step label="Prepare Dataset" [editable]="firstStepEditable" [completed]=stepCompleted>
+    <app-prepare-datasets ></app-prepare-datasets>
+    <div class="ButtonsDiv">
+
+      <button mat-raised-button class="nextButton" [disabled]="nextButtonClicked" (click) =prepareData() color="primary">Next</button>
+      <button mat-raised-button class="backButton" routerLink="/training" routerLinkActive="active"> To Jobs List </button>
+      <button mat-raised-button class="homeButton" (click)=openHome()> Home </button>
+      <mat-spinner style="float: right; margin-right: 2% ;" diameter="45" *ngIf="nextButtonClicked"></mat-spinner>
+
+    </div>
+  </mat-step>
+
+
+  <mat-step label="General Settings" editable=false  [completed]=stepCompleted>
+    <app-container-settings [GPUsList]="availableGPUs" (outputContainerSettings)="generalSettingsData = $event"></app-container-settings>
+    <div class="ButtonsDiv">
+
+      <button class="formStepper" id="AppContainerNextButton" routerLink="../training"></button>
+      <button mat-raised-button (click) =generalSettings() [disabled]="nextButtonClicked" class="nextButton" color="primary">Next</button>
+<!--      <button mat-raised-button class="backButton" routerLink="/training" routerLinkActive="active" id="backButton" [disabled]="nextButtonClicked">To Jobs List</button>-->
+      <button mat-raised-button class="backButton" [disabled]="nextButtonClicked"  (click)="goBackStepper()">Back</button>
+      <button mat-raised-button class="homeButton" (click)=openHome()> Home </button>
+      <mat-spinner style="float: right; margin-right: 2% ;" diameter="45" *ngIf="nextButtonClicked"></mat-spinner>
+
+    </div>
+  </mat-step>
+
+
+  <mat-step label="Hyper Parameters" editable=false [completed]=stepCompleted>
+    <app-hyper-parameters></app-hyper-parameters>
+<!--    <app-advanced-hyper-parameters (outputHyperParameters)="advancedHyperParameterData=$event"  [configFile]="configFile"  *ngIf="advancedOptions"></app-advanced-hyper-parameters>-->
+    <div class="ButtonsDiv">
+
+      <button class="formStepper" id="hyperParametersNextButton" routerLink="../training"></button>
+      <button mat-raised-button (click) =step3Validator() class="nextButton" color="primary" [disabled]="nextButtonClicked">Finish</button>
+<!--      <button class="AdvancedButton" *ngIf="!advancedOptions" (click) = this.advanceOptionToggle() [disabled]="nextButtonClicked" mat-raised-button>Advanced</button>-->
+<!--      <button class="AdvancedButton" *ngIf="advancedOptions" (click) = "this.advancedOptions=!this.advancedOptions" [disabled]="nextButtonClicked" mat-raised-button>Basic</button>-->
+      <button mat-raised-button class="cancelButton" (click)="cancelJob()" [disabled]="nextButtonClicked" >Cancel</button>
+      <button mat-raised-button class="homeButton" (click)=openHome()> Home </button>
+
+    </div>
+    <button matStepperNext id="NextButton" class="formStepper" ></button>
+    <mat-spinner style="float: right; margin-right: 2% ;" diameter="45" *ngIf="nextButtonClicked"></mat-spinner>
+
+  </mat-step>
+
+
+</mat-horizontal-stepper>

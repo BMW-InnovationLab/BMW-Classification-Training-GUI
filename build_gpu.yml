@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  docker_sdk:
+    image: classification_docker_sdk
+    build:
+      context: ./docker_sdk_api
+      dockerfile: dockerfile
+      args:
+        http_proxy: 
+        https_proxy: 
+
+
+  training:
+    image: classification_training_api_gpu
+    build:
+      context: ./training_api
+      dockerfile: GPU/Dockerfile
+      args:
+        http_proxy: 
+        https_proxy:
+
+
+  user_interface:
+    image: gluoncv_classification_gui
+    build:
+      context: ./gui
+      dockerfile: dockerfile
+      args:
+        http_proxy: 
+        https_proxy: 
+
+
+
+  inference_api:
+    image: classification_inference_api_gpu
+    build:
+      context: ./inference
+      dockerfile: GPU/dockerfile
+      args:
+        http_proxy: 
+        https_proxy:

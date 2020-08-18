@@ -39,11 +39,48 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
 #### Installing Prerequisites
 
-\-Install docker by running the follwing command
+\- If you don't have neither docker nor docker-compose use the following  command 
 
-​       `chmod +x install_prerequisites.sh && source install_prerequisites.sh`
+  ​			`chmod +x install_full.sh && source install_full.sh`
+
+\- If you have docker ce installed and wish only to install docker-compose and perform necessary operations,  use the following command 
+
+  ​			`chmod +x install_compose.sh && source install_compose.sh`
+
+\- If both docker ce and docker-compose are installed then use the following command: 
+
+  ​			`chmod +x install_minimal.sh && source install_minimal.sh`
 
 \- Install NVIDIA Drivers (410.x or higher) and NVIDIA Docker for GPU training by following the [official docs](https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0))
+
+
+
+
+
+## Changes To Make
+
+- Go to  `gui/src/environments/environment.ts ` and `gui/src/environments/environment.prod.ts  ` and change the following:
+
+- field `url`:  
+must match the IP address of your machine
+      
+- the IP field of the `inferenceAPIUrl `: must match the IP address of your machine (**Use the `ifconfig `command to check your IP address . Please use your private IP which starts by either 10. or 172.16.  or 192.168.**)
+
+
+  !["environment.ts"](./documentation_images/env.gif)
+
+	 _environment.ts_
+
+
+  ![](./documentation_images/envprod.gif)
+
+	 _environment.prod.ts_
+
+- If you are behind a proxy, change the `args` `http_proxy` and `https_proxy`in `build_cpu.yml` or `build_gpu.yml` (depending on your mode) to match the address of your proxy. (**you can find build.yml in the repo's root directory**)
+
+  ![](./documentation_images/proxy.gif)
+
+
 
 ## Label your own dataset
 
@@ -70,63 +107,25 @@ The following is an example of how a dataset should be structured. Please put al
 
 
 
-## Build The Docker Image
+## Build the Solution
 
-### Lightweight, Midweight and Heavyweight Solution
-
-**Lightweight :** Building the docker image without pre-downloading any online pre-trained weights, the online weights will be downloaded when needed after running the image.
-
-**Midweight:** Downloading the online pre-trained weights during the docker image build. Just open the json file "networks.json",change the values of the networks you need to "true". 
-
-**Heavyweight :** Downloading all the online pre-trained weights during the docker image build. Just open the  json file "networks.json" and change the value of "select_all" to "true".
-
-In order to build the project run the following command from the project's root directory:  
-
-- For GPU:
+To build the solution, run the following command from the repository's root directory
 
 ```sh
-sudo docker build -t classification_training_gpu -f ./GPU/Dockerfile .
+docker-compose -f build_cpu.yml build #(cpu mode)
+docker-compose -f build_gpu.yml build #(gpu mode)
 ```
 
-- For CPU:
+## Run the Solution
+
+To run the solution, run the following command from the repository's root directory
 
 ```sh
-sudo docker build -t classification_training_cpu -f ./CPU/Dockerfile .
+docker-compose -f run_cpu.yml up #(cpu mode)
+docker-compose -f run_gpu.yml up #(gpu mode)
 ```
 
 
-
-### Behind a proxy
-
-- For GPU:
-
-```sh
-sudo docker build --build-arg http_proxy='' --build-arg https_proxy='' -t classification_training_gpu -f ./GPU/Dockerfile .
-```
-
-- For CPU:
-
-```sh
-sudo docker build --build-arg http_proxy='' --build-arg https_proxy='' -t classification_training_cpu -f ./CPU/Dockerfile .
-```
-
-## 
-
-## Run the docker container
-
-To run the API, go the to the API's directory and run the following:
-
-- For GPU:
-
-```sh
-sudo nvidia-docker run --shm-size 8G -itv $(pwd):/app -p <docker_host_port>:8000 classification_training_gpu
-```
-
-- For CPU:
-
-```sh
-sudo docker run --shm-size 8G -itv $(pwd):/app -p <docker_host_port>:8000 classification_training_cpu
-```
 
 ## Prepare Custom Dataset
 
@@ -151,94 +150,3 @@ This is how the **customdataset** folder should look like :
             │── img_2.jpg
 
 ```
-
-## 
-
-## API Endpoints
-
-To see all available endpoints, open your favorite browser and navigate to:
-
-```
-http://localhost:<docker_host_port>/docs
-```
-
-
-
-### Endpoints summary
-
-#### /dataset(POST)
-
-Prepares the dataset.
-
-**Parameters:**
-
-- dataset_name : the name of your dataset folder ( "dummy_dataset" to use our sample dataset)
-
-- training_ratio : percentage of the dataset needed for training (default value = 80)
-
-- validation_ratio : percentage of the dataset needed for validation (default value = 10)
-
-- testing_ratio : percentage of the dataset needed for testing (default value = 10)
-
-#### /config(POST)
-
-Configures and runs the training. After Training, the model will be saved in a folder called checkpoints.
-
-
-**Parameter:**
-
-- lr : learning rate (used for training) (default value: lr=0.001)
-
-- momentum : momentum (used for training) (default value: momentum=0.9)
-
-- wd : weight-decay (used for training) (default value: wd=0.0001)
-
-- lr_factor : learning rate factor (used for training) (default value: lr_factor=0.75)
-
-- gpus_count : list of gpus (used for training) , choose [-1] for CPU Training(default value: gpus_count=[0]) 
-
-- num_workers : number of workers (used for training) (default value: num_workers= 8 )
-
-- jitter_param : jitter (used for data augmentation) (default value: jitter_param=0.4)
-
-- lighting_param : lighting (used for data augmentation) (default value: lighting_param=0.1)
-
-- Xavier : true or false (used for weights initialization) (default value : Xavier=true)
-
-- MSRAPrelu : true or false (used for weights initialization) (default value: MSRAPrelu=false)
-
-- batch_size : batch size (used for training) (default value: batch_size=1)
-
-- epochs : epochs (used for training) (default value: epochs=3)
-
-- processor : CPU or GPU (used for inference) (default value: processor="CPU")
-
-- weights_type : how to do the training: (default value: weights_type="from_scratch")
-  - pre_trained: transfer learning from a pretrained network using online weights
-  - pretrained_offline : transfer learning from a pretrained network using local weights
-  - checkpoint: training the network using local weights
-  - from_scratch : training the network from scratch
-  
-- weights_name : name of the network (used for training) (default value: weights_name="resnet50_v1")
-
-- model_name : name of folder used to load local weights (for checkpoint or pretrained_offline) (default value: model_name="test_18")
-
-- new_model : name of folder used to save resulting weights. (default value: new_model="test_19")
-
-- data_augmenting : decides wether to augment the data using our custom data_augmentation funtion or not ( default value: data_augmenting="True")
-
-  #### /get(GET)
-
-  returns available networks list
-
-  ![api](./docs/get.png)
-
-![](./docs/apiendpoint.png)
-
-
-
-## Acknowledgements
-
-
-Roy Anwar,Beirut, Lebanon
-

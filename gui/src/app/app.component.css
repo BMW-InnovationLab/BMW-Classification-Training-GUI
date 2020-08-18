@@ -1,0 +1,82 @@
+
+.header {
+  height: 6vh;
+  width: 100%;
+  background-color: #3f51b5;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header img{
+  position: relative;
+  float: right;
+}
+
+#main{
+  background-color: #fafafa;
+  width : 100vw;
+  height: 100vh;
+}
+
+#main #subMain {
+  top : 0;
+  left : 0;
+  right : 0;
+  bottom: 0;
+  position : relative;
+  margin : auto;
+  width : 90vw ;
+  height: 90vh ;
+  background-color: #fafafa;
+}
+#pageTitle {
+  font-family: Arial, serif !important;
+  font-size: 3.5vh !important;
+  color: white !important;
+  margin-left: 0.8vw;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+.createNewJobButton {
+  position: absolute;
+  margin-right: 10%;
+  margin-top: 1vh;
+  right :-5vw;
+  bottom: 5vh;
+  font-size: x-large;
+}
+
+.trainingButton {
+  position: absolute;
+  left :1vw;
+  bottom: 12vh;
+}
+#mainBox {
+  position : fixed;
+  width : 100% ;
+  height: 100% ;
+  top : 0;
+  left : 0;
+  right : 0;
+  bottom: 0;
+  margin: 6vh auto 15vh;
+
+}
+
+.titleClass{
+  margin-top: 1.5vh;
+  font-size: x-large;
+}
+
+/*@media only screen and (max-width: 1280px) {*/
+/*  .titleClass{*/
+/*    font-size: x-large;*/
+/*  }*/
+/*}*/
+
+
+::ng-deep .mat-menu-panel{
+  max-width: fit-content !important;
+}

@@ -11,7 +11,7 @@ class DockerService():
     def get_all_jobs(self, image_name:str):
         containers = []
         for container in self.client.containers.list():
-            if(container.image.attrs['RepoTags'][0] == image_name):
+            if(len(container.image.attrs['RepoTags']) > 0 and container.image.attrs['RepoTags'][0] == image_name):
                 containers.append(container.name)
         return containers
 

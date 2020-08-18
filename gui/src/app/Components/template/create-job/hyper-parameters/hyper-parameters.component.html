@@ -1,0 +1,93 @@
+<form [formGroup]="FieldControl">
+
+  <div align="center" class="fieldsContainer">
+
+    <mat-form-field class="bigFormField">
+      <input matInput placeholder="Learning Rate"  formControlName="learning_rate" required>
+      <mat-error *ngIf="FieldControl.get('learning_rate').hasError('required')"> Please enter a Value
+      </mat-error>
+      <mat-error *ngIf="FieldControl.get('learning_rate').hasError('isNotFloat') && !FieldControl.get('learning_rate').hasError('required')">
+        Must be a float
+      </mat-error>
+      <mat-icon class="help_message_button" matTooltip="Learning rate of the model">help</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="bigFormField">
+
+      <input matInput placeholder="Batch Size" formControlName="batch_size" required>
+      <mat-error *ngIf="FieldControl.get('batch_size').hasError('required')"> Please enter a Value
+      </mat-error>
+      <mat-error *ngIf="FieldControl.get('batch_size').hasError('isNotInteger') && !FieldControl.get('batch_size').hasError('required')">
+        Must be an integer
+      </mat-error>
+
+      <mat-icon class="help_message_button" matTooltip="The number of samples processed before the model is updated (a lower
+batch size takes less memory but longer to train use batch size 1 with
+frcnn networks)">help</mat-icon>
+    </mat-form-field>
+
+      <mat-form-field class="bigFormField">
+        <input matInput placeholder="Epochs" formControlName="epochs" required> <!--  formControlName="num_classes" -->
+        <mat-error *ngIf="FieldControl.get('epochs').hasError('required')"> Please enter a Value
+        </mat-error>
+        <mat-error *ngIf="FieldControl.get('epochs').hasError('isNotInteger') && !FieldControl.get('epochs').hasError('required')">
+          Must be an integer
+        </mat-error>
+
+        <mat-icon class="help_message_button" matTooltip="The number of epochs you have for your model">help</mat-icon>
+      </mat-form-field>
+
+
+
+
+
+
+
+<!--    <div class="smallFormFieldContainer" *ngIf="showImageControl">-->
+<!--      <mat-form-field class="smallFormField">-->
+<!--        <input matInput placeholder="Image Width"  formControlName="width" required>-->
+<!--        <mat-error *ngIf="FieldControl.get('width').hasError('required')"> Please enter a Value-->
+<!--        </mat-error>-->
+<!--        <mat-error *ngIf="FieldControl.get('width').hasError('isNotInteger')"> This must be an-->
+<!--          integer-->
+<!--        </mat-error>-->
+<!--        <mat-icon class="help_message_button" matTooltip="Width of input image (300 if you are using ssd mobilenet or inception,-->
+<!--640 if you are using ssd resnet 50 or fpn)">help</mat-icon>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field class="smallFormField">-->
+<!--        <input matInput placeholder="Image Height"  formControlName="height" required>-->
+<!--        <mat-error *ngIf="FieldControl.get('height').hasError('required')"> Please enter a Value-->
+<!--        </mat-error>-->
+<!--        <mat-error *ngIf="FieldControl.get('height').hasError('isNotInteger')"> This must be an-->
+<!--          integer-->
+<!--        </mat-error>-->
+
+<!--        <mat-icon class="help_message_button" matTooltip="Height of input image (300 if you are using ssd mobilenet or-->
+<!--inception, 640 if you are using ssd resnet 50 or fpn)">help</mat-icon>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--    <div class="smallFormFieldContainer">-->
+<!--      <mat-form-field class="smallFormField">-->
+<!--        <input matInput placeholder="Training Steps" formControlName="training_steps" required>-->
+<!--        <mat-error *ngIf="FieldControl.get('training_steps').hasError('required')"> Please enter a Value-->
+<!--        </mat-error>-->
+<!--        <mat-error *ngIf="FieldControl.get('training_steps').hasError('isNotInteger')"> This must be an-->
+<!--          integer-->
+<!--        </mat-error>-->
+<!--        <mat-icon class="help_message_button" matTooltip="The number of training steps">help</mat-icon>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field class="smallFormField">-->
+<!--        <input matInput placeholder="Evaluation Steps"-->
+<!--               formControlName="eval_steps" required>-->
+<!--        <mat-error *ngIf="FieldControl.get('eval_steps').hasError('required')"> Please enter a Value-->
+<!--        </mat-error>-->
+<!--        <mat-error *ngIf="FieldControl.get('eval_steps').hasError('isNotInteger')"> This must be an-->
+<!--          integer-->
+<!--        </mat-error>-->
+<!--        <mat-icon class="help_message_button" matTooltip="The number of evaluation steps">help</mat-icon>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+  </div>
+</form>
+
+

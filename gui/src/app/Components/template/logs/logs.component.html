@@ -1,0 +1,20 @@
+<div style="height: 4vh">
+  <button mat-icon-button mat-dialog-close id="closeButton"><mat-icon>close</mat-icon> </button>
+  <button mat-icon-button (click)="refreshLogs()"> <mat-icon>loop</mat-icon> </button>
+  <button mat-icon-button (click)="downloadLogs()"><mat-icon>get_app</mat-icon></button>
+</div>
+
+<cdk-virtual-scroll-viewport itemSize=(jobsNumber) class="LogViewScrollBox" mat-dialog-content #cdkScroll  >
+
+<div *cdkVirtualFor="let log of data.jobLogs">
+  <span>
+  {{log}}
+    <br>
+  </span>
+</div>
+
+</cdk-virtual-scroll-viewport>
+
+
+
+
