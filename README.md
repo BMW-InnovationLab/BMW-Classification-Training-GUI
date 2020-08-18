@@ -4,7 +4,7 @@
 
 This repository allows you to get started with training a State-of-the-art Deep Learning model with little to no configuration needed! You provide your labeled dataset and you can start the training right away. This repo is based on [Gluoncv's](https://gluon-cv.mxnet.io/build/examples_classification/index.html) Framework. You can check the networks stats [here](https://gluon-cv.mxnet.io/model_zoo/classification.html)
 
-![api endpoint](./docs/training_api.gif)
+<br>
 
 ## Prerequisites
 
