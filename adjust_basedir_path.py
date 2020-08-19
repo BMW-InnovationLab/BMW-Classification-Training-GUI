@@ -11,7 +11,7 @@ while mode != "cpu" and mode != "gpu":
 
 
 basedir = os.getcwd()
-paths_json = json.loads(open("docker_sdk_api/data/paths.json", "r").read())
+paths_json = json.loads(open("docker_sdk_api/api/data/paths.json", "r").read())
 paths_json["base_dir"] = basedir
 
 
@@ -19,5 +19,5 @@ if mode == "gpu":
     paths_json["image_name"] = "classification_training_api_gpu" 
 
 
-with open('docker_sdk_api/data/paths.json', 'w') as outfile:
+with open('docker_sdk_api/api/data/paths.json', 'w') as outfile:
     json.dump(paths_json, outfile)

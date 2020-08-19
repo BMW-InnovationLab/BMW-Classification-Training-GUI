@@ -1,4 +1,4 @@
-version: '3'
+version: '2.3'
 
 services:
 
@@ -23,7 +23,7 @@ services:
 
 
   user_interface:
-    image: gluoncv_classification_gui
+    image: classification_gui
     build:
       context: ./gui
       dockerfile: dockerfile

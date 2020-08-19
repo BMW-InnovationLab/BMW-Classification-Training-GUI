@@ -1,4 +1,4 @@
-version: '3'
+version: '2.3'
 
 services:
 
@@ -8,7 +8,7 @@ services:
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./docker_sdk_api:/api
+      - ./docker_sdk_api/api:/api
       - ./data:/datasets
       - ./servable:/servable
       - ./checkpoints:/checkpoints
