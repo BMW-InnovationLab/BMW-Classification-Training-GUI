@@ -13,6 +13,7 @@ services:
       - ./data:/datasets
       - ./servable:/servable
       - ./checkpoints:/checkpoints
+      - ./models:/models
 
 
   user_interface:
@@ -23,8 +24,7 @@ services:
   inference_api:
     image: classification_inference_api_gpu
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./inference/models:/models
-      - ./inference/src/main:/main
+      - ./models:/models
+      - ./inference_api/src/main:/main
     ports:
       - "4343:4343"
