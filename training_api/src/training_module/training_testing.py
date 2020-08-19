@@ -116,7 +116,18 @@ class TrainingTesting():
         if not os.path.exists(servable_folder_path):
             os.makedirs(servable_folder_path, exist_ok=True)
 
+
+
+
         with ZipFile(os.path.join(servable_folder_path, model_name+".zip"), 'w') as zipObj:
             for filename in os.listdir(new_model_path):
                filePath = os.path.join(os.path.join(new_model_path, filename))
                zipObj.write(filePath)
+        
+
+        inference_model_path = os.path.join('/models', model_name)
+        if os.path.exists(inference_model_path):
+            shutil.rmtree(inference_model_path)
+
+        os.makedirs(inference_model_path)
+        shutil.copytree(new_model_path, inference_model_path)
