@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  url : 'http://192.168.16.108:',
+  url : 'http://localhost:',
   baseEndPoint : 2223,
-  inferenceAPIUrl: 'http://192.168.16.108:4343/docs'
+  inferenceAPIUrl: 'http://localhost:4343/docs'
 };

@@ -1,82 +1,84 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {AppComponent} from './app.component';
-import {TrainingUIMockupComponent} from './Components/template/training-ui-mockup/training-ui-mockup.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+import { routingComponents } from './app-routing.module';
+
+import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {ScrollingModule} from '@angular/cdk/scrolling';
-import {MatButtonModule} from '@angular/material/button';
-import {AppRoutingModule} from './app-routing.module';
-import {RouteNotFoundComponent} from './Components/route-not-found/route-not-found.component';
-import {PrepareDatasetsComponent} from './Components/template/create-job/prepare-datasets/prepare-datasets.component';
-import {CreateJobComponent} from './Components/template/create-job/create-job.component';
-import {ContainerSettingsComponent} from './Components/template/create-job/container-settings/container-settings.component';
-import {HyperParametersComponent} from './Components/template/create-job/hyper-parameters/hyper-parameters.component';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule, MatCheckboxModule, MatInputModule, MatListModule, MatSlideToggleModule} from '@angular/material';
-import {MatIconModule} from '@angular/material/icon';
-import {MatSelectModule} from '@angular/material/select';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatProgressBarModule} from "@angular/material/progress-bar";
-import {DialogComponent} from './Components/template/training-ui-mockup/dialog/dialog.component';
-import {LogsComponent} from './Components/template/logs/logs.component';
-// tslint:disable-next-line:max-line-length
-import { AdvancedHyperParametersComponent } from './Components/template/create-job/advanced-hyper-parameters/advanced-hyper-parameters.component';
-import {FlexModule} from '@angular/flex-layout';
-import {MatMenuModule} from '@angular/material/menu';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
 
-// tslint:disable-next-line:max-line-length
+registerLocaleData(en);
+
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import {
+  NgZorroAntdModule,
+  NzAlertModule, NzBadgeModule,
+  NzCardModule,
+  NzDividerModule,
+  NzEmptyModule, NzFormModule,
+  NzGridModule, NzInputModule, NzInputNumberModule, NzLayoutModule,
+  NzListModule, NzModalModule,
+  NzPaginationModule,
+  NzPopconfirmModule,
+  NzPopoverModule, NzSelectModule, NzStepsModule, NzToolTipModule
+} from 'ng-zorro-antd';
+import { StepperPageComponent } from './Components/stepper-page/stepper-page.component';
+import { PrepareDatasetComponent } from './Components/stepper-page/forms/prepare-dataset/prepare-dataset.component';
+import { GeneralSettingsComponent } from './Components/stepper-page/forms/general-settings/general-settings.component';
+import { HyperParametersComponent } from './Components/stepper-page/forms/hyper-parameters/hyper-parameters.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { AdvancedHyperParametersComponent } from './Components/stepper-page/forms/advanced-hyper-parameters/advanced-hyper-parameters.component';
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    TrainingUIMockupComponent,
-    RouteNotFoundComponent,
-    PrepareDatasetsComponent,
-    CreateJobComponent,
-    ContainerSettingsComponent,
-    HyperParametersComponent,
-    DialogComponent,
-    LogsComponent,
-    AdvancedHyperParametersComponent,
-  ],
+    declarations: [
+        AppComponent,
+        routingComponents,
+        StepperPageComponent,
+        PrepareDatasetComponent,
+        GeneralSettingsComponent,
+        HyperParametersComponent,
+        AdvancedHyperParametersComponent,
+    ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
+    AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    NzPageHeaderModule,
+    NzButtonModule,
+    NzIconModule,
+    NzDividerModule,
+    NzPopoverModule,
+    NzEmptyModule,
+    NzGridModule,
+    NzCardModule,
+    NzListModule,
+    NzPaginationModule,
+    NzPopconfirmModule,
+    NzLayoutModule,
+    NzStepsModule,
     ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzSelectModule,
+    NzInputNumberModule,
+    NzAlertModule,
+    NzToolTipModule,
+    NzBadgeModule,
+    NzModalModule,
     ScrollingModule,
-    MatButtonModule,
-    AppRoutingModule,
-    MatStepperModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatCardModule,
-    MatListModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatSlideToggleModule,
-    MatCheckboxModule,
-    FlexModule,
-    MatMenuModule,
-    MatProgressBarModule
-
+    NgZorroAntdModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [DialogComponent, LogsComponent],
-
-
+  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

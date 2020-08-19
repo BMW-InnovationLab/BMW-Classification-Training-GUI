@@ -1,27 +1,29 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule, Routes} from '@angular/router';
-import {TrainingUIMockupComponent} from './Components/template/training-ui-mockup/training-ui-mockup.component';
-import {RouteNotFoundComponent} from './Components/route-not-found/route-not-found.component';
-import {CreateJobComponent} from './Components/template/create-job/create-job.component';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
+import {JobsPageComponent} from './Components/jobs-page/jobs-page.component';
+import {LandingPageComponent} from './Components/landing_page/landing-page.component';
+import {StepperPageComponent} from './Components/stepper-page/stepper-page.component';
 
 const routes: Routes = [
-  {path: 'training', component: TrainingUIMockupComponent},
-  {path: 'newJob', component: CreateJobComponent},
-  {path: '', redirectTo: 'training', pathMatch: 'full'},
-  {path: '**', component: RouteNotFoundComponent}
-
+  {
+    path: '',
+    component: LandingPageComponent
+  },
+  {
+    path: 'jobs',
+    component: JobsPageComponent
+  },
+  {
+    path: 'stepper',
+    component: StepperPageComponent
+  }
 ];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(routes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+export const routingComponents = [LandingPageComponent, JobsPageComponent];

@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  url : 'http://127.0.0.1:',
+  url : 'http://localhost:',
   baseEndPoint : 2223,
-  inferenceAPIUrl: 'http://192.168.16.108:4343/docs'
+  inferenceAPIUrl: 'http://localhost:4343/docs'
 };
 
 /*

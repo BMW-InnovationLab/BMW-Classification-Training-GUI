@@ -1,40 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-
-body {
-  margin: 0;
-}
-
-/*.mat-horizontal-content-container{*/
-/*  height: 82% !important;*/
-
-/*}*/
-/*.mat-horizontal-stepper-content{*/
-/*  height: 100% !important;*/
-
-/*}*/
-
-.redSnackBar {
-  background-color: RGBA(255, 0, 0, 0.4);
-  font-weight: bold;
-
-}
-mat-dialog-container{
-  /*background-color: black !important;*/
-  padding: 3px !important;
-}
-
-.greenSnackBar {
-  background-color: rgba(95,200,130,0.86);
-}
+@import "~ng-zorro-antd/ng-zorro-antd.min.css";
 
 @font-face {
-  font-family: 'roboto';
-  src:url('./assets/fonts/Roboto-Medium.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+  font-family: Comfortaa;
+  src: url("assets/fonts/Comfortaa-VariableFont_wght.ttf") format("truetype");
 }
 
-
-
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
