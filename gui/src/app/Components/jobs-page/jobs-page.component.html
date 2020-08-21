@@ -44,7 +44,7 @@
           <nz-list-item class="list-item" *ngFor="let model of downloadableModelsKey; let i = index">
             <a style="color: black; margin: 0 auto" [href]="URL + downloadableModelsValue[i] + '/' + downloadableModelsKey[i]">
               <span style="font-weight: bold ">
-                {{(downloadableModelsKey[i].slice(0, -4).length > 6)? (downloadableModelsKey[i].slice(0, -4) | slice:0:8)+'...':(downloadableModelsKey[i].slice(0, -4))}}
+                {{(downloadableModelsKey[i].slice(0, -4).length > 6)? (downloadableModelsKey[i].slice(0, -4) | slice:0:7)+'...':(downloadableModelsKey[i].slice(0, -4))}}
               </span>
               <span> | </span>
               <span>{{downloadableModelsValue[i]}}</span>

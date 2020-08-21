@@ -16,6 +16,7 @@ import {DataSenderSecondApiService} from '../../Services/data-sender-second-api.
 import {AdvancedHyperParametersComponent} from './forms/advanced-hyper-parameters/advanced-hyper-parameters.component';
 import {NzMessageService} from 'ng-zorro-antd';
 import set = Reflect.set;
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-stepper-page',
@@ -183,86 +184,93 @@ export class StepperPageComponent implements OnInit, OnDestroy{
   }
 
   done(): void {
-    this.hyperParameters.submitForm(this.hyperParameters.validateForm.value);
-    console.log(this.hyperParameters.validateForm.valid);
-    if (!this.hyperParameters.validateForm.valid) {
-      // do nothing
-    } else {
-
-      if (this.hyperParametersHidden === true) {
-        this.advancedConfig.lr = this.advancedHyperParameters.validateForm.value.learning_rate;
-        this.advancedConfig.batch_size = this.advancedHyperParameters.validateForm.value.batch_size;
-        this.advancedConfig.epochs = this.advancedHyperParameters.validateForm.value.epochs;
-        this.advancedConfig.momentum = this.advancedHyperParameters.validateForm.value.momentum;
-        this.advancedConfig.wd = this.advancedHyperParameters.validateForm.value.wd;
-        this.advancedConfig.lr_factor = this.advancedHyperParameters.validateForm.value.lr_factor;
-        this.advancedConfig.num_workers = this.advancedHyperParameters.validateForm.value.num_workers;
-        this.advancedConfig.jitter_param = this.advancedHyperParameters.validateForm.value.jitter_param;
-        this.advancedConfig.lighting_param = this.advancedHyperParameters.validateForm.value.lighting_param;
-        this.advancedConfig.Xavier = this.advancedHyperParameters.validateForm.value.Xavier;
-        this.advancedConfig.MSRAPrelu = this.advancedHyperParameters.validateForm.value.MSRAPrelu;
-        this.advancedConfig.data_augmenting = this.advancedHyperParameters.validateForm.value.data_augmenting;
-        this.advancedConfig.processor = this.advancedHyperParameters.validateForm.value.processor;
-        this.advancedConfig.new_model = this.generalSettings.validateForm.value.containerName;
-        this.advancedConfig.gpus_count = this.generalSettings.validateForm.value.gpus_count;
-      } else {
-        this.basicConfig.lr = this.hyperParameters.validateForm.value.learning_rate;
-        this.basicConfig.batch_size = this.hyperParameters.validateForm.value.batch_size;
-        this.basicConfig.epochs = this.hyperParameters.validateForm.value.epochs;
-        this.basicConfig.new_model = this.generalSettings.validateForm.value.containerName;
-        this.basicConfig.gpus_count = this.generalSettings.validateForm.value.gpus_count;
-        this.basicConfig.processor = this.advancedHyperParameters.validateForm.value.processor;
-      }
-
-
-
-      this.dataset.dataset_name = this.prepareDataset.validateForm.value.dataset_name;
-      this.dataset.training_ratio = this.prepareDataset.validateForm.value.training;
-      this.dataset.validation_ratio = this.prepareDataset.validateForm.value.validation;
-      this.dataset.testing_ratio = this.prepareDataset.validateForm.value.testing;
-
-
-
-      if (this.generalSettings.validateForm.value.weightType === 'from_scratch' || this.generalSettings.validateForm.value.weightType === 'pre_trained') {
-        if (this.hyperParametersHidden === true) {
-          this.advancedConfig.weights_type = this.generalSettings.validateForm.value.weightType;
-          this.advancedConfig.weights_name = this.generalSettings.validateForm.value.networks;
+    if (this.hyperParametersHidden === true) {
+        this.advancedHyperParameters.submitForm(this.advancedHyperParameters.validateForm.value);
+        if (!this.advancedHyperParameters.validateForm.valid){
+          // do nothing
         } else {
-          this.basicConfig.weights_type = this.generalSettings.validateForm.value.weightType;
-          this.basicConfig.weights_name = this.generalSettings.validateForm.value.networks;
-        }
-      } else {
-        if (this.hyperParametersHidden === true) {
-          this.advancedConfig.weights_type = this.generalSettings.validateForm.value.weightType;
-          this.advancedConfig.model_name = this.generalSettings.validateForm.value.checkPoints;
-          this.advancedConfig.weights_name = this.generalSettings.selectedCheckpointValue;
-        } else {
-          this.basicConfig.weights_type = this.generalSettings.validateForm.value.weightType;
-          this.basicConfig.model_name = this.generalSettings.validateForm.value.checkPoints;
-          this.basicConfig.weights_name = this.generalSettings.selectedCheckpointValue;
-        }
-      }
+          this.advancedConfig.lr = this.advancedHyperParameters.validateForm.value.learning_rate;
+          this.advancedConfig.batch_size = this.advancedHyperParameters.validateForm.value.batch_size;
+          this.advancedConfig.epochs = this.advancedHyperParameters.validateForm.value.epochs;
+          this.advancedConfig.momentum = this.advancedHyperParameters.validateForm.value.momentum;
+          this.advancedConfig.wd = this.advancedHyperParameters.validateForm.value.wd;
+          this.advancedConfig.lr_factor = this.advancedHyperParameters.validateForm.value.lr_factor;
+          this.advancedConfig.num_workers = this.advancedHyperParameters.validateForm.value.num_workers;
+          this.advancedConfig.jitter_param = this.advancedHyperParameters.validateForm.value.jitter_param;
+          this.advancedConfig.lighting_param = this.advancedHyperParameters.validateForm.value.lighting_param;
+          this.advancedConfig.Xavier = this.advancedHyperParameters.validateForm.value.Xavier;
+          this.advancedConfig.MSRAPrelu = this.advancedHyperParameters.validateForm.value.MSRAPrelu;
+          this.advancedConfig.data_augmenting = this.advancedHyperParameters.validateForm.value.data_augmenting;
+          this.advancedConfig.processor = this.advancedHyperParameters.validateForm.value.processor;
+          this.advancedConfig.new_model = this.generalSettings.validateForm.value.containerName;
+          this.advancedConfig.gpus_count = this.generalSettings.validateForm.value.gpus_count;
 
-      console.log(this.advancedConfig);
+          this.dataset.dataset_name = this.prepareDataset.validateForm.value.dataset_name;
+          this.dataset.training_ratio = this.prepareDataset.validateForm.value.training;
+          this.dataset.validation_ratio = this.prepareDataset.validateForm.value.validation;
+          this.dataset.testing_ratio = this.prepareDataset.validateForm.value.testing;
 
-      this.dataSenderSecondApi.datasetPost(this.dataset, this.generalSettings.validateForm.value.APIPort).subscribe(
-        (message: HttpResponse<Config>) => {
-          if (this.hyperParametersHidden === true) {
-            this.dataSenderSecondApi.advancedConfigPost(this.advancedConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
-              (message1: HttpResponse<Config>) => {
-                console.log(this.advancedConfig);
-              });
+          if (this.generalSettings.validateForm.value.weightType === 'from_scratch' || this.generalSettings.validateForm.value.weightType === 'pre_trained') {
+              this.advancedConfig.weights_type = this.generalSettings.validateForm.value.weightType;
+              this.advancedConfig.weights_name = this.generalSettings.validateForm.value.networks;
           } else {
-            this.dataSenderSecondApi.basicConfigPost(this.basicConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
-              (message1: HttpResponse<Config>) => {
-                console.log(this.basicConfig);
-              });
+              this.advancedConfig.weights_type = this.generalSettings.validateForm.value.weightType;
+              this.advancedConfig.model_name = this.generalSettings.validateForm.value.checkPoints;
+              this.advancedConfig.weights_name = this.generalSettings.selectedCheckpointValue;
           }
-        });
 
-      this.current += 1;
-      this.changeContent();
-    }
+          this.dataSenderSecondApi.datasetPost(this.dataset, this.generalSettings.validateForm.value.APIPort).subscribe(
+            (message: HttpResponse<Config>) => {
+                this.dataSenderSecondApi.advancedConfigPost(this.advancedConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
+                  (message1: HttpResponse<Config>) => {
+                    console.log(this.advancedConfig);
+                  });
+            });
+
+          this.current += 1;
+          this.changeContent();
+          this.router.navigate(['/jobs']);
+        }
+      } else {
+        this.hyperParameters.submitForm(this.hyperParameters.validateForm.value);
+        if (!this.hyperParameters.validateForm.valid){
+          // do nothing
+        } else {
+          this.basicConfig.lr = this.hyperParameters.validateForm.value.learning_rate;
+          this.basicConfig.batch_size = this.hyperParameters.validateForm.value.batch_size;
+          this.basicConfig.epochs = this.hyperParameters.validateForm.value.epochs;
+          this.basicConfig.new_model = this.generalSettings.validateForm.value.containerName;
+          this.basicConfig.gpus_count = this.generalSettings.validateForm.value.gpus_count;
+          this.basicConfig.processor = this.advancedHyperParameters.validateForm.value.processor;
+
+          this.dataset.dataset_name = this.prepareDataset.validateForm.value.dataset_name;
+          this.dataset.training_ratio = this.prepareDataset.validateForm.value.training;
+          this.dataset.validation_ratio = this.prepareDataset.validateForm.value.validation;
+          this.dataset.testing_ratio = this.prepareDataset.validateForm.value.testing;
+
+          // tslint:disable-next-line:max-line-length
+          if (this.generalSettings.validateForm.value.weightType === 'from_scratch' || this.generalSettings.validateForm.value.weightType === 'pre_trained') {
+              this.basicConfig.weights_type = this.generalSettings.validateForm.value.weightType;
+              this.basicConfig.weights_name = this.generalSettings.validateForm.value.networks;
+          } else {
+              this.basicConfig.weights_type = this.generalSettings.validateForm.value.weightType;
+              this.basicConfig.model_name = this.generalSettings.validateForm.value.checkPoints;
+              this.basicConfig.weights_name = this.generalSettings.selectedCheckpointValue;
+          }
+
+          this.dataSenderSecondApi.datasetPost(this.dataset, this.generalSettings.validateForm.value.APIPort).subscribe(
+            (message: HttpResponse<Config>) => {
+                this.dataSenderSecondApi.basicConfigPost(this.basicConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
+                  (message1: HttpResponse<Config>) => {
+                    console.log(this.basicConfig);
+                  });
+            });
+
+          this.current += 1;
+          this.changeContent();
+          this.router.navigate(['/jobs']);
+        }
+      }
   }
 
 
@@ -341,7 +349,8 @@ export class StepperPageComponent implements OnInit, OnDestroy{
   constructor(private dataGetterFirstApi: DataGetterFirstApiService,
               private dataSenderFirstApi: DataSenderFirstApiService,
               private dataSenderSecondApi: DataSenderSecondApiService,
-              private message: NzMessageService) {
+              private message: NzMessageService,
+              private router: Router) {
     this.interval = setInterval(() => {
       this.dataGetterFirstApi.getFinishedJobs().subscribe((finishedJobs) => {
         if (finishedJobs.length > this.finishedJobs.length) {

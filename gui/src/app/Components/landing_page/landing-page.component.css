@@ -341,3 +341,34 @@ body, html {
     font-size: 35px;
   }
 }
+
+.get-started-button:hover .get-started-icon {
+  overflow: hidden;
+  animation: icon 550ms;
+}
+
+@keyframes icon {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+
+
+  50% {
+    opacity: 0;
+    transform: translate(150%, -50%);
+  }
+
+  75% {
+    opacity: 0;
+    transform: translate(-150%, -50%);
+  }
+
+  90% {
+    opacity: 0;
+    transform: translate(-100%, -50%);
+  }
+
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}

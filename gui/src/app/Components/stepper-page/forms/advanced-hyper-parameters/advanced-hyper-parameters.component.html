@@ -28,6 +28,9 @@
         <ng-container *ngIf="control.hasError('required')">
           Please input a number!
         </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
+        </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -40,6 +43,9 @@
       <ng-template #bsErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notInt')">
+          Must be an int
         </ng-container>
       </ng-template>
     </nz-form-control>
@@ -54,6 +60,9 @@
         <ng-container *ngIf="control.hasError('required')">
           Please input a number!
         </ng-container>
+        <ng-container *ngIf="control.hasError('notInt')">
+          Must be an int
+        </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -66,6 +75,9 @@
       <ng-template #momentumErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
         </ng-container>
       </ng-template>
     </nz-form-control>
@@ -80,6 +92,9 @@
         <ng-container *ngIf="control.hasError('required')">
           Please input a number!
         </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
+        </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -92,6 +107,9 @@
       <ng-template #lrfErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
         </ng-container>
       </ng-template>
     </nz-form-control>
@@ -106,6 +124,9 @@
         <ng-container *ngIf="control.hasError('required')">
           Please input a number!
         </ng-container>
+        <ng-container *ngIf="control.hasError('notInt')">
+          Must be an int
+        </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -119,6 +140,9 @@
         <ng-container *ngIf="control.hasError('required')">
           Please input a number!
         </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
+        </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -131,6 +155,9 @@
       <ng-template #lightingErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
         </ng-container>
       </ng-template>
     </nz-form-control>

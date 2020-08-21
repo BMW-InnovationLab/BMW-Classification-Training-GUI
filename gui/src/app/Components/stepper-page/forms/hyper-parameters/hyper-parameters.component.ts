@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {Observable, Observer} from 'rxjs';
 
 @Component({
   selector: 'app-hyper-parameters',
@@ -11,11 +12,31 @@ export class HyperParametersComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.validateForm = this.fb.group({
-      batch_size: [1, [Validators.required]],
-      learning_rate: [0.01, [Validators.required]],
-      epochs: [1, [Validators.required]],
+      batch_size: [1, [Validators.required], [this.checkIfIntValidator]],
+      learning_rate: [0.01, [Validators.required], [this.checkIfFloatValidator]],
+      epochs: [1, [Validators.required], [this.checkIfIntValidator]],
     });
   }
+
+  checkIfFloatValidator = (control: FormControl) =>
+    new Observable((observer: Observer<ValidationErrors | null>) => {
+        if (!String(control.value).match(/^[0]+(\.[0-9]{1,50})?$/)) {
+          observer.next({ error: true, notFloat: true });
+        } else {
+          observer.next(null);
+        }
+        observer.complete();
+    })
+
+  checkIfIntValidator = (control: FormControl) =>
+    new Observable((observer: Observer<ValidationErrors | null>) => {
+      if (!String(control.value).match(/^[0-9]+$/)) {
+        observer.next({ error: true, notInt: true });
+      } else {
+        observer.next(null);
+      }
+      observer.complete();
+    })
 
   submitForm(value: { batch_size: number; learning_rate: number; epochs: number; }): void {
     // tslint:disable-next-line:forin
