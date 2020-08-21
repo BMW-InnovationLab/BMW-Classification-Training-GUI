@@ -23,6 +23,7 @@ services:
   
   inference_api:
     image: classification_inference_api_gpu
+    runtime: nvidia
     volumes:
       - ./models:/models
       - ./inference_api/src/main:/main

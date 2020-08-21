@@ -17,6 +17,8 @@ paths_json["base_dir"] = basedir
 
 if mode == "gpu":
     paths_json["image_name"] = "classification_training_api_gpu" 
+if mode == "cpu":
+    paths_json["image_name"] = "classification_training_api_cpu" 
 
 
 with open('docker_sdk_api/api/data/paths.json', 'w') as outfile:

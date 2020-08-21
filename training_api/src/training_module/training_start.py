@@ -149,7 +149,6 @@ class TrainingStart():
                 net.initialize(mx.init.MSRAPrelu(), ctx=ctx)
 
         elif (config.weights_type == 'pre_trained') or (config.weights_type == 'pretrained_offline'):
-            print("HELLO")
             net = network_model
 
             network = str(net)

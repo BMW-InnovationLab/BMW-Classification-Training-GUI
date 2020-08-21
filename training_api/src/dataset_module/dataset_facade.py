@@ -43,7 +43,7 @@ class DatasetFacade():
         if not valid:
             print("Dataset is not valid check documentation")
         if valid:
-            print("Dataset is valid preceding ")
+            print("Dataset is valid proceeding ")
             self.splitter.split_dataset(dataset_path, dataset.training_ratio, dataset.validation_ratio,
                                         dataset.testing_ratio)
 

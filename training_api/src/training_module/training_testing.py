@@ -124,10 +124,7 @@ class TrainingTesting():
                filePath = os.path.join(os.path.join(new_model_path, filename))
                zipObj.write(filePath)
         
-
         inference_model_path = os.path.join('/models', model_name)
         if os.path.exists(inference_model_path):
             shutil.rmtree(inference_model_path)
-
-        os.makedirs(inference_model_path)
         shutil.copytree(new_model_path, inference_model_path)

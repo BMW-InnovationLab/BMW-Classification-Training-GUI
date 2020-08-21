@@ -13,5 +13,6 @@ class PathsService():
             paths['dataset_folder_on_host'] = os.path.join(paths['base_dir'], paths['dataset_folder_on_host'])
             paths['checkpoints_folder_on_host'] = os.path.join(paths['base_dir'], paths['checkpoints_folder_on_host'])
             paths['servable_folder'] = os.path.join(paths['base_dir'], paths['servable_folder'])
+            paths['models_folder']=os.path.join(paths['base_dir'],paths['models_folder'])
             return paths
 
