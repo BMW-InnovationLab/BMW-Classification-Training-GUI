@@ -39,7 +39,7 @@ def predict(images, model_name, model_config):
     # run forward pass to obtain the predicted score for each class
     pred = net(transformed_img)
     # map predicted values to probability by softmax
-    prob = nd.softmax(pred)[0].asnumpy()
+    prob =  nd.softmax(pred)[0].asnumpy() * 100
     #prob = pred[0].asnumpy()
 
     with open(os.path.join("/models",str(model_name),'config.json')) as config_file:
