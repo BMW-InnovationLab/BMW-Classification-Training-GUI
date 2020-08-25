@@ -11,6 +11,7 @@ from services.docker_service import DockerService
 from services.alias_service import AliasService
 from services.paths_service import PathsService
 from services.used_ports_service import UsedPortsService
+from services.proxy_service import ProxyService
 from dto.container_info import ContainerInfo
 from dto.container_settings import ContainerSettings
 from validators.dataset_validator import check_dataset_valid
@@ -20,6 +21,7 @@ docker_service = DockerService()
 alias_service = AliasService()
 used_ports_service = UsedPortsService()
 paths = PathsService().get_paths()
+proxy_env = ProxyService().get_proxy_env()
 networks = json.loads(open("./data/networks.json","r").read())
 
 
@@ -113,7 +115,7 @@ async def add_job(container_settings:ContainerSettings):
     # container_settings.name = re.sub('[^A-z0-9 -]', '', container_settings.name).lower().replace(" ", "_")
     container_settings.name = re.sub('\W+','_', container_settings.name)
     container_settings.name = "Classification_"+container_settings.name
-    docker_service.start_job(container_settings, paths['api_folder'], paths['image_name'], paths['dataset_folder_on_host'], paths['checkpoints_folder_on_host'], paths['servable_folder'], paths['models_folder'])
+    docker_service.start_job(container_settings, paths['api_folder'], paths['image_name'], paths['dataset_folder_on_host'], paths['checkpoints_folder_on_host'], paths['servable_folder'], paths['models_folder'], proxy_env)
     alias_service.add_alias(container_settings.name, alias)
     return "Success"
 
