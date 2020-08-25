@@ -34,7 +34,7 @@ services:
 
 
   inference_api:
-    image: classification_inference_api_cpu
+    image: classification_inference_api
     build:
       context: ./inference_api
       dockerfile: CPU/dockerfile

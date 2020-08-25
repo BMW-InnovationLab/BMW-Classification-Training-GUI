@@ -34,10 +34,10 @@ services:
 
 
   inference_api:
-    image: classification_inference_api_gpu
+    image: classification_inference_api
     build:
       context: ./inference_api
-      dockerfile: GPU/dockerfile
+      dockerfile: CPU/dockerfile
       args:
         http_proxy: 
         https_proxy:

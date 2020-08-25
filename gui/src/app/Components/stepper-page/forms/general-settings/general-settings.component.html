@@ -17,14 +17,14 @@
   </nz-form-item>
 
     <nz-form-item class="form-item" [ngStyle]="{'pointer-events' : gpusCountDisabled === true ? 'none' : 'auto'}">
-      <nz-form-label nzFlex="1">GPUs :</nz-form-label>
+      <nz-form-label nzFlex="1">Architecture :</nz-form-label>
       <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="gpuErrorTpl">
         <nz-select nz-tooltip="list of gpus (used for training) , choose [-1] for CPU Training"
                    nzTooltipPlacement="topRight"
-                   nzMode="multiple" formControlName="gpus_count" nzPlaceHolder="GPUs"
+                   nzMode="multiple" formControlName="gpus_count" nzPlaceHolder="Architecture"
                    (ngModelChange)="onNoGPUSelect($event)" [(ngModel)]="selectedGPUs">
-          <nz-option [nzValue]="-1" nzLabel="NO GPU"></nz-option>
-          <nz-option [nzDisabled]="disableSelection" *ngFor="let gpus of availableGPUs" [nzLabel]="gpus" [nzValue]="gpus"
+          <nz-option [nzValue]="-1" nzLabel="CPU"></nz-option>
+          <nz-option [nzDisabled]="disableSelection" *ngFor="let gpus of availableGPUs" [nzLabel]="'GPU ' + gpus" [nzValue]="gpus"
                      [nzHide]="!isNotSelected(gpus)"></nz-option>
         </nz-select>
         <ng-template #gpuErrorTpl let-control>

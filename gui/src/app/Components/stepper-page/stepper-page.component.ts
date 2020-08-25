@@ -55,6 +55,7 @@ export class StepperPageComponent implements OnInit, OnDestroy{
   addJob: AddJob = {
     name: '',
     api_port: 0,
+    gpus_count: []
   };
 
   removeJob: RemoveJob = {
@@ -142,6 +143,7 @@ export class StepperPageComponent implements OnInit, OnDestroy{
       } else {
         this.addJob.name = this.generalSettings.validateForm.value.containerName;
         this.addJob.api_port = this.generalSettings.validateForm.value.APIPort;
+        this.addJob.gpus_count = this.generalSettings.validateForm.value.gpus_count;
 
         this.generalSettings.containerNameDisabled = true;
         this.generalSettings.gpusCountDisabled = true;
@@ -314,14 +316,6 @@ export class StepperPageComponent implements OnInit, OnDestroy{
       default: {
       }
     }
-  }
-
-  // Changes stepper header icons depending on the state
-  stepperIcons(value, current){
-    if (current === this.current) {
-      value = 'loading';
-    }
-    return value;
   }
 
   testWithSwagger(){

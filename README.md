@@ -8,7 +8,8 @@ This repository allows you to get started with training a State-of-the-art Deep 
 - This repo is based on the [Gluoncv](https://gluon-cv.mxnet.io/build/examples_classification/index.html) Framework. 
 - The app supports all the netowrks in the [GluonCV model zoo](https://gluon-cv.mxnet.io/model_zoo/classification.html)
 - All networks can be trained from scratch or using the pretrained weights.
-- The training and infernence APIs can work on both CPU and GPU architectures.
+- The training API can work on both CPU and GPU architectures.
+- The inference API works with CPU only
 - The app was tested with Google Chrome and it is recommended to use Chrome when training.
 <br>
 <br>
@@ -67,12 +68,32 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
 ## Changes To Make
 
+- Go to `docker_sdk_api/api/data/paths.json` and change the following:
+
+  - field `image_name` must be set to:<br>
+  **classification_training_api_gpu** : if you wish to train on GPUs.
+
+
+      
+      ![](./documentation_images/gpu_image_name.gif)
+
+      <br>
+
+
+    **classification_training_api_cpu** : if you wish to train on the CPU.
+
+    ![](./documentation_images/cpu_image_name.gif)
+
+<br>
+<br>
+
+
 - Go to  `gui/src/environments/environment.ts ` and `gui/src/environments/environment.prod.ts  ` and change the following:
 
-- field `url`:  
+  - field `url`:  
 must match the IP address of your machine
       
-- the IP field of the `inferenceAPIUrl `: must match the IP address of your machine (**Use the `ifconfig `command to check your IP address . Please use your private IP which starts by either 10. or 172.16.  or 192.168.**)
+  - the IP field of the `inferenceAPIUrl `: must match the IP address of your machine (**Use the `ifconfig `command to check your IP address . Please use your private IP which starts by either 10. or 172.16.  or 192.168.**)
 
 
   !["environment.ts"](./documentation_images/env.gif)
@@ -84,9 +105,17 @@ must match the IP address of your machine
 
 	 _environment.prod.ts_
 
-- If you are behind a proxy, change the `args` `http_proxy` and `https_proxy`in `build_cpu.yml` or `build_gpu.yml` (depending on your mode) to match the address of your proxy. (**you can find build.yml in the repo's root directory**)
+<br>
+If you are behind a proxy:
 
-  ![](./documentation_images/proxy.gif)
+  - change the `args` `http_proxy ` and ` https_proxy `in  build_cpu.yml` or `build_gpu.yml` (depending on your mode) to match the address of your proxy. (**you can find build.yml in the repo's root directory**)
+
+    ![](./documentation_images/proxy.gif)
+
+
+  - Enter you proxy settings in the `docker_sdk_api/api/data/proxy.json ` file
+
+    ![](./documentation_images/proxy_json.gif)
 
 <br>
 <br>
@@ -138,26 +167,20 @@ The following is an example of how a dataset should be structured. Please put al
 
 ## Build the Solution
 
-If you wish to deploy both training and inference workflows in CPU mode, please write the following command
+If you wish want to deploy the training workflow in CPU mode, please write the following command
 
 ```sh
 docker-compose -f build_cpu.yml build 
 ```
 <br>
 
-If you wish want to deploy both training and inference workflows in GPU mode, please write the following command
+If you wish want to deploy the training workflow in GPU mode, please write the following command
 
 ```sh
 docker-compose -f build_gpu.yml build
 ```
 
-<br>
 
-If you wish want to deploy the training workflow in GPU mode and the inference workflow in CPU mode please write the following command
-
-```sh
-docker-compose -f build_combined.yml build
-```
 
 
 
@@ -166,14 +189,14 @@ docker-compose -f build_combined.yml build
 <br>
 
 ## Run the Solution
-If you wish to deploy both training and inference workflows in CPU mode, please write the following command
+If you wish to deploy the training workflow in CPU mode, please write the following command
 
 ```sh
 docker-compose -f run_cpu.yml up
 ```
 <br>
 
-If you wish want to deploy both training and inference workflows in GPU mode, please write the following command
+If you wish want to deploy the training workflow in GPU mode, please write the following command
 
 ```sh
 docker-compose -f run_gpu.yml up
@@ -181,11 +204,7 @@ docker-compose -f run_gpu.yml up
 
 <br>
 
-If you wish want to deploy the training workflow in GPU mode and the inference workflow in CPU mode please write the following command
 
-```sh
-docker-compose -f run_combined.yml up
-```
 
 
 <br>
@@ -289,12 +308,12 @@ Delete the container's job to stop an ongoing job or to remove the container of 
  
 ## Acknowledgments
 
-- Roy Anwar, Beirut, Lebanon
+- Roy Anwar, BMW Innovation Lab, Munich, Germany
 
 - Joe Sleiman, [inmind.ai](https://inmind.ai/), Beirut, Lebanon
 
 - Ismail Shehab, [inmind.ai](https://inmind.ai/), Beirut, Lebanon
 
-- Jimmy Tekli, BMW Innovation Lab, Munchen, Germany
-
 - Fouad Chaccour, Beirut, Lebanon
+
+- Jimmy Tekli, BMW Innovation Lab, Munich, Germany

@@ -1,9 +1,7 @@
 from pydantic import BaseModel
+from typing import List
 
 class ContainerSettings(BaseModel):
     name: str
-    # network_architecture: str
-    # dataset_path: str
-    # gpus: int
-    # tensorboard_port: int
+    gpus_count: List[int]
     api_port: int

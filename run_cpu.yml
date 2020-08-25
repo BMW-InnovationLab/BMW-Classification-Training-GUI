@@ -21,7 +21,7 @@ services:
       - "4200:80"
   
   inference_api:
-    image: classification_inference_api_cpu
+    image: classification_inference_api
     volumes:
       - ./models:/models
       - ./inference_api/src/main:/main
