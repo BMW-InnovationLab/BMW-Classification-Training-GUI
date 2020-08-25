@@ -5,7 +5,7 @@ import json
 mode = None
 
 while mode != "cpu" and mode != "gpu":
-    mode = input("Enter mode (cpu/gpu): ")
+    mode = input("Enter the training mode (cpu/gpu): ")
 
 
 

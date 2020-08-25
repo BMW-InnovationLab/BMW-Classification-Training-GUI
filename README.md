@@ -2,8 +2,14 @@
 
 #  Gluoncv Classification API 
 
-This repository allows you to get started with training a State-of-the-art Deep Learning model with little to no configuration needed! You provide your labeled dataset and you can start the training right away. This repo is based on [Gluoncv's](https://gluon-cv.mxnet.io/build/examples_classification/index.html) Framework. You can check the networks stats [here](https://gluon-cv.mxnet.io/model_zoo/classification.html)
+This repository allows you to get started with training a State-of-the-art Deep Learning model with little to no configuration needed! You provide your labeled dataset and you can start the training right away.You can even test your model with our built-in Inference REST API. Training classification models with GluonCV has never been so easy.
 
+
+- This repo is based on the [Gluoncv](https://gluon-cv.mxnet.io/build/examples_classification/index.html) Framework. 
+- The app supports all the netowrks in the [GluonCV model zoo](https://gluon-cv.mxnet.io/model_zoo/classification.html)
+- All networks can be trained from scratch or using the pretrained weights.
+- The training and infernence APIs can work on both CPU and GPU architectures.
+- The app was tested with Google Chrome and it is recommended to use Chrome when training.
 <br>
 <br>
 
@@ -114,33 +120,80 @@ The following is an example of how a dataset should be structured. Please put al
 <br>
 <br>
 
+
+## Lightweight, Midweight and Heavyweight Solution
+
+**Lightweight :**  Building the docker image without pre-downloading any online pre-trained weights, the online weights will be downloaded when needed after running the image.
+<br>
+
+**Midweight:** Downloading the online pre-trained weights during the docker image build.<br>
+ To do that, open the json file _"training_api/midweight_heavyweight_solution/networks.json"_ and change the values of the networks you need to "true". 
+<br>
+
+**Heavyweight :** Downloading all the online pre-trained weights during the docker image build. <br>
+ To do that, open the json file _"training_api/midweight_heavyweight_solution/networks.json"_ and change the value of "select_all" to "true".
+
+<br>
+<br>
+
 ## Build the Solution
 
-To build the solution, run the following command from the repository's root directory
+If you wish to deploy both training and inference workflows in CPU mode, please write the following command
 
 ```sh
-docker-compose -f build_cpu.yml build #(cpu mode)
-docker-compose -f build_gpu.yml build #(gpu mode)
+docker-compose -f build_cpu.yml build 
 ```
+<br>
+
+If you wish want to deploy both training and inference workflows in GPU mode, please write the following command
+
+```sh
+docker-compose -f build_gpu.yml build
+```
+
+<br>
+
+If you wish want to deploy the training workflow in GPU mode and the inference workflow in CPU mode please write the following command
+
+```sh
+docker-compose -f build_combined.yml build
+```
+
+
+
 
 <br>
 <br>
 
 ## Run the Solution
-
-To run the solution, run the following command from the repository's root directory
+If you wish to deploy both training and inference workflows in CPU mode, please write the following command
 
 ```sh
-docker-compose -f run_cpu.yml up #(cpu mode)
-docker-compose -f run_gpu.yml up #(gpu mode)
+docker-compose -f run_cpu.yml up
 ```
+<br>
+
+If you wish want to deploy both training and inference workflows in GPU mode, please write the following command
+
+```sh
+docker-compose -f run_gpu.yml up
+```
+
+<br>
+
+If you wish want to deploy the training workflow in GPU mode and the inference workflow in CPU mode please write the following command
+
+```sh
+docker-compose -f run_combined.yml up
+```
+
 
 <br>
 <br>
 
 ## Prepare Custom Dataset
 
-After running the docker container, run this command if you labeled your dataset with the labelme labeling-tool:
+After running the docker container, run this command if you labeled your dataset with the [labelme](https://github.com/wkentaro/labelme/) labeling-tool:
 
 ```sh 
 python3 preparedataset.py --datasetpath <your_resulting_folder>
@@ -230,3 +283,18 @@ Download your model to use it in your applications
 Delete the container's job to stop an ongoing job or to remove the container of a finished job. (Finished jobs are always available to download)
 
 ![](./documentation_images/7.gif)
+
+<br>
+<br>
+ 
+## Acknowledgments
+
+- Roy Anwar, Beirut, Lebanon
+
+- Joe Sleiman, [inmind.ai](https://inmind.ai/), Beirut, Lebanon
+
+- Ismail Shehab, [inmind.ai](https://inmind.ai/), Beirut, Lebanon
+
+- Jimmy Tekli, BMW Innovation Lab, Munchen, Germany
+
+- Fouad Chaccour, Beirut, Lebanon
