@@ -2,14 +2,15 @@
 
 #  Gluoncv Classification API 
 
-This repository allows you to get started with training a State-of-the-art Deep Learning model with little to no configuration needed! You provide your labeled dataset and you can start the training right away.You can even test your model with our built-in Inference REST API. Training classification models with GluonCV has never been so easy.
+This repository allows you to get started with training a State-of-the-art Deep Learning model with little to no configuration needed! You provide your labeled dataset and you can start the training right away. You can even test your model with our built-in Inference REST API. Training classification models with GluonCV has never been so easy.
 
 
 - This repo is based on the [Gluoncv](https://gluon-cv.mxnet.io/build/examples_classification/index.html) Framework. 
-- The app supports all the netowrks in the [GluonCV model zoo](https://gluon-cv.mxnet.io/model_zoo/classification.html)
+- The app supports all the networks in the [GluonCV model zoo](https://gluon-cv.mxnet.io/model_zoo/classification.html)
 - All networks can be trained from scratch or using the pretrained weights.
-- The training API can work on both CPU and GPU architectures.
-- The inference API works with CPU only
+- The solution contains both training and inference APIs.
+- The training API supports both CPU and GPU architectures.
+- The built-in inference API supports CPU.
 - The app was tested with Google Chrome and it is recommended to use Chrome when training.
 
 ![](./documentation_images/ClassificationDemo.gif)
