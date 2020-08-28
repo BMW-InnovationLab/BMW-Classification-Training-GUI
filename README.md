@@ -157,11 +157,11 @@ The following is an example of how a dataset should be structured. Please put al
 
 ## Lightweight, Midweight and Heavyweight Solution
 
-**Lightweight :**  Building the docker image without pre-downloading any online pre-trained weights, the online weights will be downloaded when needed after running the image.
+**Lightweight (default mode):**  Building the docker image without pre-downloading any online pre-trained weights, the online weights will be downloaded when needed after running the image.
 <br>
 
-**Midweight:** Downloading the online pre-trained weights during the docker image build.<br>
- To do that, open the json file _"training_api/midweight_heavyweight_solution/networks.json"_ and change the values of the networks you need to "true". 
+**Midweight:** Downloading specific online pre-trained weights during the docker image build.<br>
+ To do that, open the json file _"training_api/midweight_heavyweight_solution/networks.json"_ and change the values of the networks you wish to download to "true". 
 <br>
 
 **Heavyweight :** Downloading all the online pre-trained weights during the docker image build. <br>
