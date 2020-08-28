@@ -70,8 +70,8 @@ class TrainingStart():
                 "configuration" : {
                     "gpu" : False,
                     "cpu" : True,
-                    "max_number_of_predictions": 3,
-                    "minimum_confidence": 80
+                    "max_number_of_predictions": 5,
+                    "minimum_confidence": 0
                 },
                 "inference_engine_name": "classification"
             }

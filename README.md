@@ -113,14 +113,16 @@ must match the IP address of your machine
 <br>
 If you are behind a proxy:
 
-  - change the `args` `http_proxy ` and ` https_proxy `in  build_cpu.yml` or `build_gpu.yml` (depending on your mode) to match the address of your proxy. (**you can find build.yml in the repo's root directory**)
-
-    ![](./documentation_images/proxy.gif)
-
-
   - Enter you proxy settings in the `docker_sdk_api/api/data/proxy.json ` file
 
     ![](./documentation_images/proxy_json.gif)
+
+
+  - Enter the following command:
+
+  ```sh
+    python3 set_proxy_args.py
+  ```
 
 <br>
 <br>
