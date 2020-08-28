@@ -10,7 +10,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 - All networks can be trained from scratch or using the pretrained weights.
 - The solution contains both training and inference APIs.
 - The training API supports both CPU and GPU architectures.
-- The built-in inference API supports CPU.
+- The built-in inference API supports CPU architectures.
 - The app was tested with Google Chrome and it is recommended to use Chrome when training.
 
 ![](./documentation_images/ClassificationDemo.gif)
