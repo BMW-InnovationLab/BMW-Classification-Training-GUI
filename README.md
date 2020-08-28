@@ -321,4 +321,6 @@ Delete the container's job to stop an ongoing job or to remove the container of 
 
 - Fouad Chaccour, Beirut, Lebanon
 
+- Hadi Koubeissy, Beirut, Lebanon
+
 - Jimmy Tekli, BMW Innovation Lab, Munich, Germany
