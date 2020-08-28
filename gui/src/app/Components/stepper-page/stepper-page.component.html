@@ -52,12 +52,13 @@
       <nz-divider class="divider" nzType="vertical"></nz-divider>
       <a
         nz-tooltip="Downloadable Models" nzTooltipPlacement="bottom"
-        (click)="dot = false"
+        (click)="onDownloadableModelClick()"
         class="download-button"
         nz-button nzType="link"
         nz-popover
         nzPopoverTitle="Downloadable Models"
         nzPopoverTrigger="click"
+        [nzPopoverPlacement]="popoverPlacement"
         [nzPopoverContent]="downloads"
       >
         <nz-badge style="font-size: 1.15em;" [nzDot]="dot">
@@ -66,13 +67,24 @@
       </a>
 
       <ng-template #downloads>
-        <nz-list nzSize="default" style="max-height: 250px"
+        <nz-list *ngIf="mobile" nzSize="default" style="max-height: 250px"
                  [ngStyle]="{'overflow-y': downloadableModelsKey.length > 5 ? 'scroll' : 'none'}">
           <nz-list-item class="list-item" *ngFor="let model of downloadableModelsKey; let i = index">
             <a style="color: black; margin: 0 auto" [href]="URL + downloadableModelsValue[i] + '/' + downloadableModelsKey[i]">
               <span style="font-weight: bold">
                   {{(downloadableModelsKey[i].slice(0, -4).length > 6)? (downloadableModelsKey[i].slice(0, -4) | slice:0:7)+'...':(downloadableModelsKey[i].slice(0, -4))}}
               </span>
+              <span> | </span>
+              <span>{{downloadableModelsValue[i]}}</span>
+            </a>
+          </nz-list-item>
+        </nz-list>
+        <nz-list *ngIf="!mobile" nzSize="default" style="max-height: 250px"
+                 [ngStyle]="{'overflow-y': downloadableModelsKey.length > 5 ? 'scroll' : 'none'}">
+          <nz-list-item class="list-item" *ngFor="let model of downloadableModelsKey; let i = index">
+            <a style="color: black; margin: 0 auto" [href]="URL + downloadableModelsValue[i] + '/' + downloadableModelsKey[i]">
+              <span style="font-weight: bold">
+                  {{ downloadableModelsKey[i].slice(0, -4) }}</span>
               <span> | </span>
               <span>{{downloadableModelsValue[i]}}</span>
             </a>

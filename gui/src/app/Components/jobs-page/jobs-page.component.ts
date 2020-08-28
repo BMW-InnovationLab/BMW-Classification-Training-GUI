@@ -45,6 +45,17 @@ export class JobsPageComponent implements OnInit, OnDestroy {
 
   windowHeight: boolean;
 
+  popoverPlacement;
+
+  // tslint:disable-next-line:ban-types
+  styleObject(): Object {
+    if (this.downloadableModelsKey.length > 5){
+      return {'overflow-y': 'scroll'};
+    } else {
+      return {'overflow-y': 'none'};
+    }
+  }
+
   page() {
     if (this.displayList.length > 0) {
       this.displayList = [];
@@ -122,6 +133,21 @@ export class JobsPageComponent implements OnInit, OnDestroy {
 
   handleCancelMiddle(): void {
     this.isVisibleMiddle = false;
+  }
+
+  onDownloadableModelClick() {
+    this.dot = false;
+    if (this.mobile === false) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.downloadableModelsKey.length; i++){
+        if (this.downloadableModelsKey[i].length > 6) {
+          this.popoverPlacement = 'bottomRight';
+          break;
+        } else {
+          this.popoverPlacement = 'bottom';
+        }
+      }
+    }
   }
 
   constructor(private dataGetterFirstApi: DataGetterFirstApiService, private dataSenderFirstApi: DataSenderFirstApiService) {
@@ -209,8 +235,8 @@ export class JobsPageComponent implements OnInit, OnDestroy {
         this.downloadableModelsKey.push(key);
         this.downloadableModelsValue.push(value);
       }
-
     });
+
   }
 
   ngOnDestroy() {

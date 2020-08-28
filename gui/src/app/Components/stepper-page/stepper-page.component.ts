@@ -113,6 +113,8 @@ export class StepperPageComponent implements OnInit, OnDestroy{
 
   mobile: boolean;
 
+  popoverPlacement;
+
   cancel(): void {
     this.removeJob.name = this.generalSettings.validateForm.value.containerName;
     this.dataSenderFirstApi.removeJob(this.removeJob).subscribe();
@@ -337,6 +339,21 @@ export class StepperPageComponent implements OnInit, OnDestroy{
     } else {
       this.hyperParametersHidden = false;
       this.advancedHyperParametersHidden = true;
+    }
+  }
+
+  onDownloadableModelClick() {
+    this.dot = false;
+    if (this.mobile === false) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.downloadableModelsKey.length; i++){
+        if (this.downloadableModelsKey[i].length > 6) {
+          this.popoverPlacement = 'bottomRight';
+          break;
+        } else {
+          this.popoverPlacement = 'bottom';
+        }
+      }
     }
   }
 
