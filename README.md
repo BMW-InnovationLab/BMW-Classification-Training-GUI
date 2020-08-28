@@ -75,8 +75,8 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
 - Go to `docker_sdk_api/api/data/paths.json` and change the following:
 
-  - field `image_name` must be set to:<br>
-  **classification_training_api_gpu** : if you wish to train on GPUs.
+  - if you wish to deploy the training solution on GPUs, please set the field `image_name` to:<br>
+  **classification_training_api_gpu** 
 
 
       
@@ -84,8 +84,8 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
       <br>
 
-
-    **classification_training_api_cpu** : if you wish to train on the CPU.
+   - if you wish to deploy the training solution on CPU, please set the field `image_name` to:
+    **classification_training_api_cpu** 
 
     ![](./documentation_images/cpu_image_name.gif)
 
