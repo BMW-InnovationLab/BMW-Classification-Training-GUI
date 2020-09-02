@@ -163,11 +163,11 @@ The following is an example of how a dataset should be structured. Please put al
 <br>
 
 **Midweight:** Downloading specific online pre-trained weights during the docker image build.<br>
- To do that, open the json file _"training_api/midweight_heavyweight_solution/networks.json"_ and change the values of the networks you wish to download to "true". 
+ To do that, open the json file `training_api/midweight_heavyweight_solution/networks.json` and change the values of the networks you wish to download to "true". 
 <br>
 
 **Heavyweight :** Downloading all the online pre-trained weights during the docker image build. <br>
- To do that, open the json file _"training_api/midweight_heavyweight_solution/networks.json"_ and change the value of "select_all" to "true".
+ To do that, open the json file `training_api/midweight_heavyweight_solution/networks.json` and change the value of "select_all" to "true".
 
 <br>
 <br>
