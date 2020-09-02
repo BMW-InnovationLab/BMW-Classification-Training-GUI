@@ -11,7 +11,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 - The solution contains both training and inference APIs.
 - The training API supports both CPU and GPU architectures.
 - The built-in inference API supports CPU architectures.
-- The app was tested with Google Chrome and it is recommended to use Chrome when training.
+- It is recommended to use google Chrome when using the training app.
 
 ![](./documentation_images/ClassificationDemo.gif)
 
