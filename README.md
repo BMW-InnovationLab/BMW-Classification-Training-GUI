@@ -7,7 +7,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
 - This repo is based on the [Gluoncv](https://gluon-cv.mxnet.io/build/examples_classification/index.html) Framework. 
 - The app supports all the networks in the [GluonCV model zoo](https://gluon-cv.mxnet.io/model_zoo/classification.html)
-- All networks can be trained from scratch or using the pretrained weights.
+- All networks can be trained from scratch or using pretrained weights.
 - The solution contains both training and inference APIs.
 - The training API supports both CPU and GPU architectures.
 - The built-in inference API supports CPU architectures.
