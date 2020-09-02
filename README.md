@@ -118,7 +118,7 @@ If you are behind a proxy:
     ![](./documentation_images/proxy_json.gif)
 
 
-  - Enter the following command:
+  - From the repo's root directory, issue the following command:
 
   ```sh
     python3 set_proxy_args.py
