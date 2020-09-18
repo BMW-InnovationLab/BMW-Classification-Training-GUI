@@ -140,12 +140,12 @@ In case it is used by another application. The api can be configured to run on a
 * Go to gui/src/environments/environment.ts and gui/src/environments/environment.prod.ts and change the `baseEndPoint` field value to match the newly selected port:
 
 
-![](./documentation_images/envport.gif)
+![](./documentation_images/envport.gif)<br>
 _gui/src/environments/environment.ts_
 
 <br>
 
-![](./documentation_images/envprodport.gif)
+![](./documentation_images/envprodport.gif)<br>
 _gui/src/environments/environment.prod.ts_
 
 <br>
