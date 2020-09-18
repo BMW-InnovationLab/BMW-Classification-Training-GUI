@@ -3,6 +3,7 @@ import {DataGetterFirstApiService} from '../../Services/data-getter-first-api.se
 import {DataSenderFirstApiService} from '../../Services/data-sender-first-api.service';
 import {RemoveJob} from '../../Interfaces/removeJob';
 import {environment} from '../../../environments/environment';
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-jobs-page',
@@ -47,6 +48,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
 
   popoverPlacement;
 
+  // this function changes the css of the component it is linked to upon meeting its conditions
   // tslint:disable-next-line:ban-types
   styleObject(): Object {
     if (this.downloadableModelsKey.length > 5){
@@ -56,6 +58,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  // function which calculates and manages the jobs list, then splits the jobs into pages
   page() {
     if (this.displayList.length > 0) {
       this.displayList = [];
@@ -77,6 +80,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  // checks if the job is done or still running
   jobIsDone = (jobs: string) => {
     if (this.finishedJobs !== undefined) {
       return this.finishedJobs.indexOf(jobs);
@@ -84,6 +88,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
     return -1;
   }
 
+  // gets the value of a model since the model is a dictionary list and is split into ModelKeys array and ModeValues array
   getSpecificJobDownloadableModelValue = (jobs: string) => {
     for (let i = 0; i < this.downloadableModelsKey.length; i++) {
       if (jobs + '.zip' === this.downloadableModelsKey[i]) {
@@ -92,6 +97,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  // returns the logs list of a certain job
   logsButton(jobs: string) {
     this.specificJob = jobs;
     this.removeJob.name = jobs;
@@ -101,10 +107,12 @@ export class JobsPageComponent implements OnInit, OnDestroy {
     this.isVisibleMiddle = true;
   }
 
+  // linked to the test with swagger button
   testWithSwagger(){
     window.open(environment.inferenceAPIUrl, '_blank');
   }
 
+  // deletes the selected value from the APIs list
   onJobRemove(jobs: string) {
     this.removeJob.name = jobs;
     this.dataSenderFirstApi.removeJob(this.removeJob).subscribe();
@@ -115,12 +123,14 @@ export class JobsPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  // checks if job is running or done to state whether the popup text should be 'cancel job' or 'close job'
   jobRemovePopupText(jobs) {
     if (this.jobIsDone(jobs) !== -1) {
       this.removePopupText = 'Close Job?';
     }
   }
 
+  // linked to the button inside the logs modal to update the logs list
   handleRefreshMiddle(): void {
     console.log(this.specificJob);
     this.removeJob.name = this.specificJob;
@@ -131,16 +141,26 @@ export class JobsPageComponent implements OnInit, OnDestroy {
     } );
   }
 
+  downloadLogs(): void {
+    let downloadableData = '';
+    for (const key of this.logs.values()) {
+      downloadableData = downloadableData + key + '\n';
+    }
+    const blob = new Blob( [downloadableData] , { type: 'text/txt; charset=utf-8' });
+    fileSaver.saveAs(blob, this.specificJob + '_logs ' + new Date().toDateString() + '.txt');
+  }
+
   handleCancelMiddle(): void {
     this.isVisibleMiddle = false;
   }
 
+  // if the jobs name is greater that 6 then the placement of the popover list will shift to the left to fix UI problems
   onDownloadableModelClick() {
     this.dot = false;
     if (this.mobile === false) {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.downloadableModelsKey.length; i++){
-        if (this.downloadableModelsKey[i].length > 6) {
+        if (this.downloadableModelsKey[i].slice(0, -4).length > 6) {
           this.popoverPlacement = 'bottomRight';
           break;
         } else {

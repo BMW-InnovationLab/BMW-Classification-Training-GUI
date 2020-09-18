@@ -1,4 +1,5 @@
 <nz-layout>
+<!--  header is same as the jobs page, i'll add comments to the new stuff-->
   <nz-header nz-row class="header">
     <div nz-col
          class="left-header-div"
@@ -22,6 +23,8 @@
         <i class="button-icon" nz-icon nzType="unordered-list" nzTheme="outline"></i>
       </a>
       <nz-divider class="divider" nzType="vertical"></nz-divider>
+
+<!--      jobs list view, same code architecture as the downloadable models button-->
       <a
         nz-tooltip="Jobs List" nzTooltipPlacement="bottom"
         class="button job-list-button"
@@ -34,6 +37,7 @@
         <i class="button-icon" nz-icon nzType="clock-circle" nzTheme="outline"></i>
       </a>
 
+<!--      popover template for the jobs list view-->
       <ng-template #jobs>
         <nz-list nzSize="default">
           <nz-list-item class="list-item" *ngFor="let job of allJobs">
@@ -107,7 +111,11 @@
     <div class="bg"></div>
     <div class="bg-1" *ngIf="mobile"></div>
     <div class="bg-2" *ngIf="switchState === true"></div>
+
+<!--    stepper outer-->
     <div nz-row class="stepper">
+
+<!--      stepper inner-->
         <nz-card class="stepper-card" nz-col [ngStyle]="{'height': hyperParametersHidden ? '100%' : '75%'}">
 
           <nz-steps class="stepper-header" [nzCurrent]="current">

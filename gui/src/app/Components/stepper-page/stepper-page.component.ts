@@ -115,6 +115,8 @@ export class StepperPageComponent implements OnInit, OnDestroy{
 
   popoverPlacement;
 
+  // cancel(), per(), next() and done() are all linked to the nz action buttons
+
   cancel(): void {
     this.removeJob.name = this.generalSettings.validateForm.value.containerName;
     this.dataSenderFirstApi.removeJob(this.removeJob).subscribe();
@@ -331,6 +333,7 @@ export class StepperPageComponent implements OnInit, OnDestroy{
     return -1;
   }
 
+  // switch between hyper and advanced hyper parameters
   switch() {
     this.switchState = !this.switchState;
     if (this.switchState === true) {
@@ -347,7 +350,7 @@ export class StepperPageComponent implements OnInit, OnDestroy{
     if (this.mobile === false) {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.downloadableModelsKey.length; i++){
-        if (this.downloadableModelsKey[i].length > 6) {
+        if (this.downloadableModelsKey[i].slice(0, -4).length > 6) {
           this.popoverPlacement = 'bottomRight';
           break;
         } else {
