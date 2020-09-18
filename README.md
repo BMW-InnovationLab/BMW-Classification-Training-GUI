@@ -19,6 +19,8 @@ This repository allows you to get started with training a State-of-the-art Deep 
 <br>
 <br>
 
+---
+
 ## Prerequisites
 
 - Linux or windows
@@ -50,6 +52,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 <br>
 
 
+
 ### Installing Prerequisites
 
 \- If you don't have neither docker nor docker-compose use the following  command 
@@ -70,6 +73,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 <br>
 <br>
 
+---
 
 ## Changes To Make
 
@@ -125,7 +129,29 @@ If you are behind a proxy:
   ```
 
 <br>
+
+Docker SDK api uses the port **2223** to run.<br>
+In case it is used by another application. The api can be configured to run on a different port by doing the following steps:
+
+* Go to _docker_sdk_api/dockerfile_ and change the value after the --port flag in the CMD command.
+
+![sdk_port](./documentation_images/sdk_port.gif)
+
+* Go to gui/src/environments/environment.ts and gui/src/environments/environment.prod.ts and change the `baseEndPoint` field value to match the newly selected port:
+
+
+![](./documentation_images/envport.gif)
+_gui/src/environments/environment.ts_
+
 <br>
+
+![](./documentation_images/envprodport.gif)
+_gui/src/environments/environment.prod.ts_
+
+<br>
+<br>
+
+---
 
 ## Label your own dataset
 
@@ -133,6 +159,8 @@ To classify your own images for training, you can install the [labelme](https://
 
 <br>
 <br>
+
+---
 
 ## Dataset Folder Structure
 
@@ -156,6 +184,7 @@ The following is an example of how a dataset should be structured. Please put al
 <br>
 <br>
 
+---
 
 ## Lightweight, Midweight and Heavyweight Solution
 
@@ -171,6 +200,8 @@ The following is an example of how a dataset should be structured. Please put al
 
 <br>
 <br>
+
+---
 
 ## Build the Solution
 
@@ -195,6 +226,8 @@ docker-compose -f build_gpu.yml build
 <br>
 <br>
 
+
+---
 ## Run the Solution
 If you wish to deploy the training workflow in CPU mode, please write the following command
 
@@ -216,6 +249,8 @@ docker-compose -f run_gpu.yml up
 
 <br>
 <br>
+
+---
 
 ## Prepare Custom Dataset
 
@@ -242,6 +277,8 @@ This is how the **customdataset** folder should look like :
 ```
 <br>
 <br>
+
+---
 
 ## Usage
 
@@ -312,6 +349,8 @@ Delete the container's job to stop an ongoing job or to remove the container of 
 
 <br>
 <br>
+
+---
  
 ## Acknowledgments
 
