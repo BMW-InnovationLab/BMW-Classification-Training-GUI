@@ -1,0 +1,159 @@
+<nz-layout>
+<!--  header is same as the jobs page, i'll add comments to the new stuff-->
+  <nz-header nz-row class="header">
+    <div nz-col
+         class="left-header-div"
+         [nzXXl]="{span: 5}" [nzXl]="{span: 7}" [nzLg]="{span: 8}" [nzMd]="{span: 10}" [nzSm]="{span: 12}">
+      <span class="title" >Create Job</span>
+      <nz-divider class="divider" nzType="vertical"></nz-divider>
+      <a disabled class="button home" nz-button nzType="link" routerLink="/"
+         nz-tooltip="Home" nzTooltipPlacement="bottom">
+        <i style="color: rgba(0,0,0,0.25)" class="button-icon" nz-icon nzType="home" nzTheme="fill"></i>
+      </a>
+    </div>
+
+    <div nz-col
+         [nzXXl]="{span: 14}" [nzXl]="{span: 9}" [nzLg]="{span: 8}" [nzMd]="{span: 3}" [nzSm]="{span: 0}">
+    </div>
+
+    <div nz-col nzFlex="1"
+         class="right-header-div"
+         [nzXXl]="{span: 6}" [nzXl]="{span: 8}" [nzLg]="{span: 8}" [nzMd]="{span: 11}" [nzSm]="{span: 12}">
+      <a class="button" nz-button nzType="link" routerLink="/jobs" nz-tooltip="All Jobs" nzTooltipPlacement="bottom">
+        <i class="button-icon" nz-icon nzType="unordered-list" nzTheme="outline"></i>
+      </a>
+      <nz-divider class="divider" nzType="vertical"></nz-divider>
+
+<!--      jobs list view, same code architecture as the downloadable models button-->
+      <a
+        nz-tooltip="Jobs List" nzTooltipPlacement="bottom"
+        class="button job-list-button"
+        nz-button nzType="link"
+        nz-popover
+        nzPopoverTitle="Direct Jobs List Preview"
+        nzPopoverTrigger="click"
+        [nzPopoverContent]="jobs"
+      >
+        <i class="button-icon" nz-icon nzType="clock-circle" nzTheme="outline"></i>
+      </a>
+
+<!--      popover template for the jobs list view-->
+      <ng-template #jobs>
+        <nz-list nzSize="default">
+          <nz-list-item class="list-item" *ngFor="let job of allJobs">
+            <div *ngIf="jobIsDone(job) === -1" style="color: black; width: 100%; display: flex; align-items: center; justify-content: space-evenly">
+              <span style="color: orange;" class="material-icons status">radio_button_checked</span>
+              <span>{{ job }}</span>
+            </div>
+            <div *ngIf="jobIsDone(job) !== -1" style="color: black; width: 100%; display: flex; align-items: center; justify-content: space-evenly">
+              <span style="color: green;" class="material-icons status">radio_button_checked</span>
+              <span>{{ job }}</span>
+            </div>
+          </nz-list-item>
+        </nz-list>
+      </ng-template>
+
+      <nz-divider class="divider" nzType="vertical"></nz-divider>
+      <a
+        nz-tooltip="Downloadable Models" nzTooltipPlacement="bottom"
+        (click)="onDownloadableModelClick()"
+        class="download-button"
+        nz-button nzType="link"
+        nz-popover
+        nzPopoverTitle="Downloadable Models"
+        nzPopoverTrigger="click"
+        [nzPopoverPlacement]="popoverPlacement"
+        [nzPopoverContent]="downloads"
+      >
+        <nz-badge style="font-size: 1.15em;" [nzDot]="dot">
+          <i class="button-icon downloads-icon" nz-icon nzType="cloud-download" nzTheme="outline"></i>
+        </nz-badge>
+      </a>
+
+      <ng-template #downloads>
+        <nz-list *ngIf="mobile" nzSize="default" style="max-height: 250px"
+                 [ngStyle]="{'overflow-y': downloadableModelsKey.length > 5 ? 'scroll' : 'none'}">
+          <nz-list-item class="list-item" *ngFor="let model of downloadableModelsKey; let i = index">
+            <a style="color: black; margin: 0 auto" [href]="URL + downloadableModelsValue[i] + '/' + downloadableModelsKey[i]">
+              <span style="font-weight: bold">
+                  {{(downloadableModelsKey[i].slice(0, -4).length > 6)? (downloadableModelsKey[i].slice(0, -4) | slice:0:7)+'...':(downloadableModelsKey[i].slice(0, -4))}}
+              </span>
+              <span> | </span>
+              <span>{{downloadableModelsValue[i]}}</span>
+            </a>
+          </nz-list-item>
+        </nz-list>
+        <nz-list *ngIf="!mobile" nzSize="default" style="max-height: 250px"
+                 [ngStyle]="{'overflow-y': downloadableModelsKey.length > 5 ? 'scroll' : 'none'}">
+          <nz-list-item class="list-item" *ngFor="let model of downloadableModelsKey; let i = index">
+            <a style="color: black; margin: 0 auto" [href]="URL + downloadableModelsValue[i] + '/' + downloadableModelsKey[i]">
+              <span style="font-weight: bold">
+                  {{ downloadableModelsKey[i].slice(0, -4) }}</span>
+              <span> | </span>
+              <span>{{downloadableModelsValue[i]}}</span>
+            </a>
+          </nz-list-item>
+        </nz-list>
+      </ng-template>
+
+      <nz-divider class="divider" nzType="vertical"></nz-divider>
+      <a class="button" nz-button nzType="link" (click)="testWithSwagger()"
+         nz-tooltip="Test With Swagger" nzTooltipPlacement="bottomRight">
+        <i class="button-icon" nz-icon nzType="thunderbolt" nzTheme="fill"></i>
+      </a>
+    </div>
+
+  </nz-header>
+
+  <!--  body  -->
+
+  <nz-content>
+    <div class="bg"></div>
+    <div class="bg-1" *ngIf="mobile"></div>
+    <div class="bg-2" *ngIf="switchState === true"></div>
+
+<!--    stepper outer-->
+    <div nz-row class="stepper">
+
+<!--      stepper inner-->
+        <nz-card class="stepper-card" nz-col [ngStyle]="{'height': hyperParametersHidden ? '100%' : '75%'}">
+
+          <nz-steps class="stepper-header" [nzCurrent]="current">
+            <nz-step nzTitle="Prepare Dataset" nzIcon="book"></nz-step>
+            <nz-step nzTitle="General Settings" nzIcon="setting"></nz-step>
+            <nz-step nzTitle="Hyper Parameters" nzIcon="form"></nz-step>
+          </nz-steps>
+
+          <div class="steps-content">
+            <nz-card [hidden]="card1Hidden" class="steps-content-card">
+              <app-prepare-dataset class="prepare-dataset"></app-prepare-dataset>
+            </nz-card>
+            <nz-card [hidden]="card2Hidden" class="steps-content-card">
+              <app-general-settings class="prepare-dataset"></app-general-settings>
+            </nz-card>
+            <nz-card [hidden]="card3Hidden" class="steps-content-card">
+              <app-hyper-parameters [hidden]="hyperParametersHidden" class="prepare-dataset"></app-hyper-parameters>
+              <app-advanced-hyper-parameters [hidden]="advancedHyperParametersHidden" class="prepare-dataset" ></app-advanced-hyper-parameters>
+              <nz-switch style="float: right" (click)="switch()" [ngModel]="switchState" nzCheckedChildren="Advanced" nzUnCheckedChildren="Basic"></nz-switch>
+            </nz-card>
+          </div>
+
+          <div class="steps-action">
+            <button class="footer-buttons" [nzLoading]="doneButtonLoading" nz-button nzType="primary" (click)="done()" *ngIf="current === 2">
+              <span>Done</span>
+            </button>
+            <button class="footer-buttons" [nzLoading]="step2NextButtonLoading" nz-button nzType="default" (click)="next()" *ngIf="current < 2">
+              <span>Next</span>
+            </button>
+            <button class="footer-buttons" [disabled]="step2PreviousButtonDisabled" nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+              <span>Previous</span>
+            </button>
+            <button class="footer-buttons" [disabled]="cancelButtonDisabled" nz-button nzType="default" (click)="cancel()" *ngIf="current > 1" routerLink="/jobs">
+              <span>Cancel</span>
+            </button>
+          </div>
+
+        </nz-card>
+      </div>
+  </nz-content>
+</nz-layout>

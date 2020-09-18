@@ -70,8 +70,8 @@ class TrainingStart():
                 "configuration" : {
                     "gpu" : False,
                     "cpu" : True,
-                    "max_number_of_predictions": 3,
-                    "minimum_confidence": 0.8
+                    "max_number_of_predictions": 5,
+                    "minimum_confidence": 0
                 },
                 "inference_engine_name": "classification"
             }
@@ -81,7 +81,7 @@ class TrainingStart():
                     "gpu" : True,
                     "cpu" : False,
                     "max_number_of_predictions": 3,
-                    "minimum_confidence": 0.8
+                    "minimum_confidence": 80
                 },
                 "inference_engine_name": "classification"
             }
@@ -96,7 +96,7 @@ class TrainingStart():
     -model_name : string (name of the export)
 
     """
-    def get_classes(self, model_path, model_name):
+    def get_classes(self, model_path, model_architecture, model_name):
         MODELS_PATH = model_path
         i = 0
         classes = ''
@@ -107,7 +107,7 @@ class TrainingStart():
             else:
                 classes = classes + ',' + directory
 
-        class_File = open('/checkpoints/' + model_name + '/classes.txt', 'w')
+        class_File = open('/checkpoints/' + model_architecture+'/'+model_name + '/classes.txt', 'w')
         class_File.write(classes)
         class_File.close()
         return i
@@ -128,12 +128,14 @@ class TrainingStart():
     - The metric
     """
     def model_trainer(self, config: Configuration, model_path, network_model, model_name):
+        model_checkpoint_path = '/checkpoints/'+ config.weights_name+'/'+model_name
         inference_configuration=self.define_inference_configuration(config.processor)
-        if not os.path.exists('/checkpoints/' + model_name):
-            os.mkdir('/checkpoints/' + model_name)
-        with open('/checkpoints/'+model_name+'/config.json','w') as outfile:
+
+        if not os.path.exists(model_checkpoint_path):
+            os.makedirs(model_checkpoint_path, exist_ok=True)
+        with open(model_checkpoint_path+'/config.json','w') as outfile:
              json.dump(inference_configuration, outfile)
-        classes = self.get_classes(model_path, model_name)
+        classes = self.get_classes(model_path, config.weights_name, model_name)
         ctx = self.get_ctx(config.processor, config.gpus_count)
 
         if (config.weights_type == "from_scratch"):
@@ -147,7 +149,6 @@ class TrainingStart():
                 net.initialize(mx.init.MSRAPrelu(), ctx=ctx)
 
         elif (config.weights_type == 'pre_trained') or (config.weights_type == 'pretrained_offline'):
-            print("HELLO")
             net = network_model
 
             network = str(net)

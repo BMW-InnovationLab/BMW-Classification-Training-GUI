@@ -1,10 +1,25 @@
 
 
-#  Gluoncv Classification API 
+#  Gluoncv Classification API CPU/GPU
 
-This repository allows you to get started with training a State-of-the-art Deep Learning model with little to no configuration needed! You provide your labeled dataset and you can start the training right away. This repo is based on [Gluoncv's](https://gluon-cv.mxnet.io/build/examples_classification/index.html) Framework. You can check the networks stats [here](https://gluon-cv.mxnet.io/model_zoo/classification.html)
+This repository allows you to get started with training a State-of-the-art Deep Learning model with little to no configuration needed! You provide your labeled dataset and you can start the training right away. You can even test your model with our built-in Inference REST API. Training classification models with GluonCV has never been so easy.
 
-![api endpoint](./docs/training_api.gif)
+
+- This repo is based on the [Gluoncv](https://gluon-cv.mxnet.io/build/examples_classification/index.html) Framework. 
+- The app supports all the networks in the [GluonCV model zoo](https://gluon-cv.mxnet.io/model_zoo/classification.html)
+- All networks can be trained from scratch or using pretrained weights.
+- The solution contains both training and inference APIs.
+- The training API supports both CPU and GPU architectures.
+- The built-in inference API supports CPU architectures.
+- It is recommended to use google Chrome when using the training app.
+
+![](./documentation_images/ClassificationDemo.gif)
+
+
+<br>
+<br>
+
+---
 
 ## Prerequisites
 
@@ -13,9 +28,9 @@ This repository allows you to get started with training a State-of-the-art Deep 
 - Docker CE latest stable release 
 - NVIDIA Docker 2 (optional: for gpu training)
 
+<br>
 
-
-#### How to check for prerequisites
+### How to check for prerequisites
 
 **To check if you have docker-ce installed:** 
 
@@ -34,20 +49,118 @@ This repository allows you to get started with training a State-of-the-art Deep 
 ![](./docs/nvidiasmi.gif)
 
 
+<br>
 
 
 
-#### Installing Prerequisites
+### Installing Prerequisites
 
-\-Install docker by running the follwing command
+\- If you don't have neither docker nor docker-compose use the following  command 
 
-​       `chmod +x install_prerequisites.sh && source install_prerequisites.sh`
+  ​			`chmod +x install_full.sh && source install_full.sh`
+
+\- If you have docker ce installed and wish only to install docker-compose and perform necessary operations,  use the following command 
+
+  ​			`chmod +x install_compose.sh && source install_compose.sh`
+
+\- If both docker ce and docker-compose are installed then use the following command: 
+
+  ​			`chmod +x install_minimal.sh && source install_minimal.sh`
 
 \- Install NVIDIA Drivers (410.x or higher) and NVIDIA Docker for GPU training by following the [official docs](https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0))
+
+
+<br>
+<br>
+
+---
+
+## Changes To Make
+
+- Go to `docker_sdk_api/api/data/paths.json` and change the following:
+
+  - if you wish to deploy the training solution on GPUs (default mode), please set the field `image_name` to:<br>
+  **classification_training_api_gpu** 
+
+
+      
+      ![](./documentation_images/gpu_image_name.gif)
+
+      <br>
+
+   - if you wish to deploy the training solution on CPU, please set the field `image_name` to:
+    **classification_training_api_cpu** 
+
+    ![](./documentation_images/cpu_image_name.gif)
+
+<br>
+<br>
+
+
+- Go to  `gui/src/environments/environment.ts ` and `gui/src/environments/environment.prod.ts  ` and change the following:
+
+  - field `url`:  
+must match the IP address of your machine
+      
+  - the IP field of the `inferenceAPIUrl `: must match the IP address of your machine (**Use the `ifconfig `command to check your IP address . Please use your private IP which starts by either 10. or 172.16.  or 192.168.**)
+
+
+  !["environment.ts"](./documentation_images/env.gif)
+
+	 _environment.ts_
+
+
+  ![](./documentation_images/envprod.gif)
+
+	 _environment.prod.ts_
+
+<br>
+If you are behind a proxy:
+
+  - Enter you proxy settings in the `docker_sdk_api/api/data/proxy.json ` file
+
+    ![](./documentation_images/proxy_json.gif)
+
+
+  - From the repo's root directory, issue the following command:
+
+  ```sh
+    python3 set_proxy_args.py
+  ```
+
+<br>
+
+Docker SDK api uses the port **2223** to run.<br>
+In case it is used by another application. The api can be configured to run on a different port by doing the following steps:
+
+* Go to _docker_sdk_api/dockerfile_ and change the value after the --port flag in the CMD command.
+
+![sdk_port](./documentation_images/sdk_port.gif)
+
+* Go to gui/src/environments/environment.ts and gui/src/environments/environment.prod.ts and change the `baseEndPoint` field value to match the newly selected port:
+
+
+![](./documentation_images/envport.gif)
+_gui/src/environments/environment.ts_
+
+<br>
+
+![](./documentation_images/envprodport.gif)
+_gui/src/environments/environment.prod.ts_
+
+<br>
+<br>
+
+---
 
 ## Label your own dataset
 
 To classify your own images for training, you can install the [labelme](https://github.com/wkentaro/labelme/) labeling tool. Check the specific classification [documentation](https://github.com/wkentaro/labelme/tree/master/examples/classification) to know more about labeling using labelme.
+
+<br>
+<br>
+
+---
 
 ## Dataset Folder Structure
 
@@ -68,69 +181,80 @@ The following is an example of how a dataset should be structured. Please put al
 
 ```
 
+<br>
+<br>
 
+---
 
-## Build The Docker Image
+## Lightweight, Midweight and Heavyweight Solution
 
-### Lightweight, Midweight and Heavyweight Solution
+**Lightweight (default mode):**  Building the docker image without pre-downloading any online pre-trained weights, the online weights will be downloaded when needed after running the image.
+<br>
 
-**Lightweight :** Building the docker image without pre-downloading any online pre-trained weights, the online weights will be downloaded when needed after running the image.
+**Midweight:** Downloading specific online pre-trained weights during the docker image build.<br>
+ To do that, open the json file `training_api/midweight_heavyweight_solution/networks.json` and change the values of the networks you wish to download to "true". 
+<br>
 
-**Midweight:** Downloading the online pre-trained weights during the docker image build. Just open the json file "networks.json",change the values of the networks you need to "true". 
+**Heavyweight :** Downloading all the online pre-trained weights during the docker image build. <br>
+ To do that, open the json file `training_api/midweight_heavyweight_solution/networks.json` and change the value of "select_all" to "true".
 
-**Heavyweight :** Downloading all the online pre-trained weights during the docker image build. Just open the  json file "networks.json" and change the value of "select_all" to "true".
+<br>
+<br>
 
-In order to build the project run the following command from the project's root directory:  
+---
 
-- For GPU:
+## Build the Solution
 
-```sh
-sudo docker build -t classification_training_gpu -f ./GPU/Dockerfile .
-```
-
-- For CPU:
-
-```sh
-sudo docker build -t classification_training_cpu -f ./CPU/Dockerfile .
-```
-
-
-
-### Behind a proxy
-
-- For GPU:
+If you wish want to deploy the training workflow in CPU mode, please write the following command
 
 ```sh
-sudo docker build --build-arg http_proxy='' --build-arg https_proxy='' -t classification_training_gpu -f ./GPU/Dockerfile .
+docker-compose -f build_cpu.yml build 
 ```
+<br>
 
-- For CPU:
+If you wish want to deploy the training workflow in GPU mode, please write the following command
 
 ```sh
-sudo docker build --build-arg http_proxy='' --build-arg https_proxy='' -t classification_training_cpu -f ./CPU/Dockerfile .
+docker-compose -f build_gpu.yml build
 ```
 
-## 
 
-## Run the docker container
 
-To run the API, go the to the API's directory and run the following:
 
-- For GPU:
+
+
+<br>
+<br>
+
+
+---
+## Run the Solution
+If you wish to deploy the training workflow in CPU mode, please write the following command
 
 ```sh
-sudo nvidia-docker run --shm-size 8G -itv $(pwd):/app -p <docker_host_port>:8000 classification_training_gpu
+docker-compose -f run_cpu.yml up
 ```
+<br>
 
-- For CPU:
+If you wish want to deploy the training workflow in GPU mode, please write the following command
 
 ```sh
-sudo docker run --shm-size 8G -itv $(pwd):/app -p <docker_host_port>:8000 classification_training_cpu
+docker-compose -f run_gpu.yml up
 ```
+
+<br>
+
+
+
+
+<br>
+<br>
+
+---
 
 ## Prepare Custom Dataset
 
-After running the docker container, run this command if you labeled your dataset with the labelme labeling-tool:
+After running the docker container, run this command if you labeled your dataset with the [labelme](https://github.com/wkentaro/labelme/) labeling-tool:
 
 ```sh 
 python3 preparedataset.py --datasetpath <your_resulting_folder>
@@ -151,94 +275,93 @@ This is how the **customdataset** folder should look like :
             │── img_2.jpg
 
 ```
+<br>
+<br>
 
-## 
+---
 
-## API Endpoints
+## Usage
 
-To see all available endpoints, open your favorite browser and navigate to:
-
-```
-http://localhost:<docker_host_port>/docs
-```
+- If the app is deployed on your machine:  open your web browser and type the following: `localhost:4200` or `127.0.0.1:4200  `
 
 
-
-### Endpoints summary
-
-#### /dataset(POST)
-
-Prepares the dataset.
-
-**Parameters:**
-
-- dataset_name : the name of your dataset folder ( "dummy_dataset" to use our sample dataset)
-
-- training_ratio : percentage of the dataset needed for training (default value = 80)
-
-- validation_ratio : percentage of the dataset needed for validation (default value = 10)
-
-- testing_ratio : percentage of the dataset needed for testing (default value = 10)
-
-#### /config(POST)
-
-Configures and runs the training. After Training, the model will be saved in a folder called checkpoints.
-
-
-**Parameter:**
-
-- lr : learning rate (used for training) (default value: lr=0.001)
-
-- momentum : momentum (used for training) (default value: momentum=0.9)
-
-- wd : weight-decay (used for training) (default value: wd=0.0001)
-
-- lr_factor : learning rate factor (used for training) (default value: lr_factor=0.75)
-
-- gpus_count : list of gpus (used for training) , choose [-1] for CPU Training(default value: gpus_count=[0]) 
-
-- num_workers : number of workers (used for training) (default value: num_workers= 8 )
-
-- jitter_param : jitter (used for data augmentation) (default value: jitter_param=0.4)
-
-- lighting_param : lighting (used for data augmentation) (default value: lighting_param=0.1)
-
-- Xavier : true or false (used for weights initialization) (default value : Xavier=true)
-
-- MSRAPrelu : true or false (used for weights initialization) (default value: MSRAPrelu=false)
-
-- batch_size : batch size (used for training) (default value: batch_size=1)
-
-- epochs : epochs (used for training) (default value: epochs=3)
-
-- processor : CPU or GPU (used for inference) (default value: processor="CPU")
-
-- weights_type : how to do the training: (default value: weights_type="from_scratch")
-  - pre_trained: transfer learning from a pretrained network using online weights
-  - pretrained_offline : transfer learning from a pretrained network using local weights
-  - checkpoint: training the network using local weights
-  - from_scratch : training the network from scratch
-  
-- weights_name : name of the network (used for training) (default value: weights_name="resnet50_v1")
-
-- model_name : name of folder used to load local weights (for checkpoint or pretrained_offline) (default value: model_name="test_18")
-
-- new_model : name of folder used to save resulting weights. (default value: new_model="test_19")
-
-- data_augmenting : decides wether to augment the data using our custom data_augmentation funtion or not ( default value: data_augmenting="True")
-
-  #### /get(GET)
-
-  returns available networks list
-
-  ![api](./docs/get.png)
-
-![](./docs/apiendpoint.png)
+- If the app is deployed on a different machine: open your web browser and type the following: `<machine_ip>:4200`
 
 
 
-## Acknowledgements
 
 
-Roy Anwar,Beirut, Lebanon
+<br>
 
+
+
+#### 1- Preparing Dataset
+
+Prepare your dataset for training
+
+![](./documentation_images/1.gif)
+
+ 
+<br>
+
+
+#### 2- Specifying General Settings
+
+Specify the general parameters for you docker container
+
+![](./documentation_images/2.gif)
+
+
+
+<br>
+
+#### 3- Specifying Hyperparameters
+
+Specify the hyperparameters for the training job
+
+![](./documentation_images/3.gif)
+
+
+
+<br>
+
+#### 4- Checking training logs
+
+Check your training logs to get better insights on the progress of the training
+
+![](./documentation_images/6.gif)
+
+<br>
+
+#### 5- Downloading Models
+
+Download your model to use it in your applications
+
+![](./documentation_images/5.gif)
+
+<br>
+
+#### 6- Stopping and Delete the model's container
+
+Delete the container's job to stop an ongoing job or to remove the container of a finished job. (Finished jobs are always available to download)
+
+![](./documentation_images/7.gif)
+
+<br>
+<br>
+
+---
+ 
+## Acknowledgments
+
+- Roy Anwar, BMW Innovation Lab, Munich, Germany
+
+- Joe Sleiman, [inmind.ai](https://inmind.ai/), Beirut, Lebanon
+
+- Ismail Shehab, [inmind.ai](https://inmind.ai/), Beirut, Lebanon
+
+- Fouad Chaccour, Beirut, Lebanon
+
+- Hadi Koubeissy, Beirut, Lebanon
+
+- Jimmy Tekli, BMW Innovation Lab, Munich, Germany

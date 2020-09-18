@@ -1,0 +1,335 @@
+<!--material icons import link-->
+<link rel="stylesheet" href="/path/to/material-icons/iconfont/material-icons.css">
+
+<nz-layout>
+<!--  page header-->
+  <nz-header nz-row class="header">
+
+<!--    left side of the header, containing page title 'All Jobs' along side a vertical divider and home button
+        which links back to the landing page-->
+    <div nz-col
+         class="left-header-div"
+    [nzXXl]="{span: 4}" [nzXl]="{span: 6}" [nzLg]="{span: 7}" [nzMd]="{span: 9}" [nzSm]="{span: 12}">
+
+<!--      header title-->
+      <span class="title" >All Jobs</span>
+
+<!--      divider-->
+      <nz-divider class="divider" nzType="vertical"></nz-divider>
+
+<!--      home button (landing page button)-->
+      <a class="button home" nz-button nzType="link" routerLink="/" nz-tooltip="Home" nzTooltipPlacement="bottom">
+        <i class="button-icon" nz-icon nzType="home" nzTheme="fill"></i>
+      </a>
+    </div>
+
+<!--    empty space between the left and right sides of the header, its length decreases as the page gets smaller
+        try changing its background color to view how it changes by changing the width-->
+    <div nz-col
+    [nzXXl]="{span: 16}" [nzXl]="{span: 12}" [nzLg]="{span: 10}" [nzMd]="{span: 6}" [nzSm]="{span: 0}"></div>
+
+<!--    right side of the header, containing the buttons and vertical dividers-->
+    <div nz-col nzFlex="1"
+         class="right-header-div"
+    [nzXXl]="{span: 4}" [nzXl]="{span: 6}" [nzLg]="{span: 7}" [nzMd]="{span: 9}" [nzSm]="{span: 12}">
+
+<!--      create job button which redirects you to the stepper page-->
+      <a class="button" nz-button nzType="link" routerLink="/stepper" nz-tooltip="Create Job" nzTooltipPlacement="bottom">
+        <i class="button-icon" nz-icon nzType="plus-circle" nzTheme="fill"></i>
+      </a>
+
+<!--      divider-->
+      <nz-divider class="divider" nzType="vertical"></nz-divider>
+
+<!--      downloadable models button-->
+      <a
+        nz-tooltip="Downloadable Models" nzTooltipPlacement="bottom"
+        (click)="onDownloadableModelClick()"
+        class="header-download-button"
+        nz-button nzType="link"
+        nz-popover
+        nzPopoverTitle="Downloadable Models"
+        nzPopoverTrigger="click"
+        [nzPopoverPlacement]="popoverPlacement"
+        [nzPopoverContent]="downloads"
+      >
+
+<!--        a dot that appears to the top right corner of the downloadable models button when a job is finished-->
+        <nz-badge style="font-size: 1.15em;" [nzDot]="dot">
+          <i class="button-icon downloads-icon" nz-icon nzType="cloud-download" nzTheme="outline"></i>
+        </nz-badge>
+      </a>
+
+<!--      this is the list that you see when you click on the downloadable models button containing all the finished
+          jobs-->
+      <ng-template #downloads>
+<!--        this list applies when width < 768px-->
+        <nz-list *ngIf="mobile" nzSize="default" style="max-height: 250px"
+                 [ngStyle]="{'overflow-y': downloadableModelsKey.length > 5 ? 'scroll' : 'none'}">
+          <nz-list-item class="list-item" *ngFor="let model of downloadableModelsKey; let i = index">
+            <a style="color: black; margin: 0 auto" [href]="URL + downloadableModelsValue[i] + '/' + downloadableModelsKey[i]">
+              <span style="font-weight: bold ">
+                {{(downloadableModelsKey[i].slice(0, -4).length > 6)? (downloadableModelsKey[i].slice(0, -4) | slice:0:7)+'...':(downloadableModelsKey[i].slice(0, -4))}}
+              </span>
+              <span> | </span>
+              <span>{{downloadableModelsValue[i]}}</span>
+            </a>
+          </nz-list-item>
+        </nz-list>
+<!--        this list applies when width >= 768px-->
+        <nz-list *ngIf="!mobile" nzSize="default" style="max-height: 250px;"
+                 [ngStyle]="styleObject()">
+          <nz-list-item class="list-item" *ngFor="let model of downloadableModelsKey; let i = index">
+            <a style="color: black; margin: 0 auto" [href]="URL + downloadableModelsValue[i] + '/' + downloadableModelsKey[i]">
+              <span style="font-weight: bold ">
+                {{ downloadableModelsKey[i].slice(0, -4) }}</span>
+              <span> | </span>
+              <span>{{downloadableModelsValue[i]}}</span>
+            </a>
+          </nz-list-item>
+        </nz-list>
+      </ng-template>
+
+<!--      divider-->
+      <nz-divider class="divider" nzType="vertical"></nz-divider>
+
+<!--      test with swagger button-->
+      <a class="button" nz-button nzType="link" (click)="testWithSwagger()" nz-tooltip="Test With Swagger"
+         nzTooltipPlacement="bottomRight">
+        <i class="button-icon" nz-icon nzType="thunderbolt" nzTheme="fill"></i>
+      </a>
+    </div>
+
+  </nz-header>
+
+<!--  page body-->
+  <nz-content>
+
+<!--    page background-->
+    <div class="bg"></div>
+
+<!--    second background which applies if the conditions below apply, not a very efficient way but does the job-->
+    <div class="bg-1" *ngIf="windowHeight && mobile && numberOfJobsPerPage >= 5"></div>
+
+<!--    jobs list outer shell-->
+    <div nz-row nzAlign="top">
+      <div nz-col
+           [nzXXl]="{span: 8, offset: 8}"
+           [nzXl]="{span: 12, offset: 6}"
+           [nzLg]="{span: 12, offset: 6}"
+           [nzMd]="{span: 16, offset: 4}"
+           [nzSm]="{span: 16, offset: 4}"
+           nzSpan="18"
+           nzOffset="3"
+      >
+
+<!--        jobs list inner shell-->
+        <nz-list nzItemLayout="vertical" nzGrid>
+
+<!--          job item-->
+          <nz-list-item *ngFor="let jobs of displayList">
+            <nz-card class="card" nzHoverable="true">
+              <div nz-row nzJustify="space-between">
+
+<!--                pc view-->
+<!--                left side of the jobs card-->
+
+<!--            when job is running    -->
+                <div *ngIf="jobIsDone(jobs) === -1 && !mobile" class="parent-div status-div" nz-col nzFlex="1">
+                  <span style="color: orange" class="material-icons status">radio_button_checked</span>
+                  <span class="status-text" style="color: orange">Running</span>
+                </div>
+
+<!--                when job is done-->
+                <div *ngIf="jobIsDone(jobs) !== -1 && !mobile" class="parent-div status-div" nz-col nzFlex="1">
+                  <span style="color: green" class="material-icons status">radio_button_checked</span>
+                  <span class="status-text" style="color: green">Done</span>
+                </div>
+
+<!--                middle part of the card containing the jobs name-->
+                <div *ngIf="!mobile" class="parent-div" nz-col nzFlex="2">
+                  <span nz-tooltip [nzTooltipTitle]="jobs" class="container-name">{{ (jobs.length>6)? (jobs | slice:0:8)+'...':(jobs) }}</span>
+                </div>
+
+<!--                right side of the jobs card-->
+                <div class="parent-right-div" nz-col nzFlex="2" *ngIf="!mobile">
+
+<!--                  when job is running-->
+                  <a *ngIf="jobIsDone(jobs) === -1" [disabled]="true" class="download-button" nz-button nzType="link">
+                    <span style="color: rgba(0,0,0,0.25); display: flex; justify-content: center; transform: translateY(45%)" class="material-icons download">get_app</span>
+                  </a>
+
+<!--                  when job is done-->
+                  <a *ngIf="jobIsDone(jobs) !== -1" [disabled]="false" class="download-button" nz-button nzType="link"
+                     [href]="URL + getSpecificJobDownloadableModelValue(jobs) + '/' + jobs + '.zip'">
+                    <span style="color: black; display: flex; justify-content: center; transform: translateY(45%)" class="material-icons download">get_app</span>
+                  </a>
+
+<!--                  divider-->
+                  <nz-divider class="divider" nzType="vertical"></nz-divider>
+
+<!--                  logs button-->
+                  <a style="color: black;" class="logs-button" nz-button nzType="link" (click)="logsButton(jobs)">
+                    <span class="material-icons logs">info</span>
+                  </a>
+
+<!--                  this is for when you click on the logs button-->
+                  <nz-modal
+                    [nzBodyStyle]="{
+                    'overflow-y': 'scroll',
+                    'height': '70vh',
+                    'background-color': 'black',
+                    'color': 'white',
+                    'display': 'flex',
+                    'flex-direction': 'column-reverse'
+                     }"
+                    nzWidth="70%"
+                    nzWrapClassName="vertical-center-modal"
+                    [(nzVisible)]="isVisibleMiddle"
+                    [nzTitle]="'Logs | ' + jobs"
+                    (nzOnCancel)="handleCancelMiddle()"
+                    [nzFooter]="modalFooter"
+                  >
+
+<!--                    this fills the modal-->
+                    <span *ngFor="let log of logs.slice().reverse()">
+                      {{log}}<br />
+                    </span>
+                  </nz-modal>
+
+<!--                  template for the footer of the modal-->
+                  <ng-template #modalFooter>
+                    <button nz-button nzType="primary" (click)="handleRefreshMiddle()">Refresh</button>
+                    <button nz-button nzType="primary" (click)="downloadLogs()">Download</button>
+                  </ng-template>
+
+<!--                  divider-->
+                  <nz-divider class="divider" nzType="vertical"></nz-divider>
+
+<!--                  button which either cancels the job is it's running or closes the job if it is done-->
+<!--                  same functionality but just different namings (cancel) (close)-->
+                  <a class="delete-button" nz-button nzType="link"
+                     nz-popconfirm
+                     (nzOnConfirm)="onJobRemove(jobs)"
+                     [nzPopconfirmTitle]="removePopupText"
+                     (click)="jobRemovePopupText(jobs)"
+                     nzPopconfirmPlacement="right">
+                    <span style="color: red" class="material-icons delete">delete</span>
+                  </a>
+                </div>
+
+<!--                mobile view-->
+<!--                same as above but with a little more optimization for a clean view in the mobile responsiveness-->
+
+                <div class="parent-div" nz-col nzFlex="2" *ngIf="mobile">
+
+                  <div *ngIf="jobIsDone(jobs) === -1" class="status-div">
+                    <span style="color: orange" class="material-icons status">radio_button_checked</span>
+                    <span class="container-name">{{ (jobs.length>6)? (jobs | slice:0:6)+'...':(jobs) }}</span>
+                  </div>
+
+                  <div *ngIf="jobIsDone(jobs) !== -1" class="status-div">
+                    <span style="color: green" class="material-icons status">radio_button_checked</span>
+                    <span class="container-name">{{ (jobs.length>6)? (jobs | slice:0:6)+'...':(jobs) }}</span>
+                  </div>
+
+                </div>
+
+                <div class="parent-right-div" nz-col nzFlex="2" *ngIf="mobile">
+                  <button style="color: black" nz-button nzType="link" nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight">
+                    <i nz-icon nzType="menu"></i>
+                  </button>
+                  <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                      <li nz-menu-item style="display: table; justify-content: center">
+                        <a *ngIf="jobIsDone(jobs) === -1" [disabled]="true" nz-button nzType="link">
+                          <span style="color: rgba(0,0,0,0.25); display: table-cell; vertical-align: middle" class="material-icons">get_app</span>
+                          <span style="display: table-cell; vertical-align: middle">Download Modal</span>
+                        </a>
+                        <a *ngIf="jobIsDone(jobs) !== -1" [disabled]="false" nz-button nzType="link"
+                           [href]="URL + getSpecificJobDownloadableModelValue(jobs) + '/' + jobs + '.zip'">
+                          <span style="color: black; display: table-cell; vertical-align: middle; padding-right: 5px" class="material-icons">get_app</span>
+                          <span style="display: table-cell; vertical-align: middle">Download Modal</span>
+                        </a>
+                      </li>
+                      <li nz-menu-divider style="margin-left: 10%; margin-right: 10%"></li>
+                      <li nz-menu-item style="display: table; justify-content: center">
+                        <a nz-button nzType="link" (click)="logsButton(jobs)">
+                          <span class="material-icons" style="color: black; display: table-cell; vertical-align: middle; padding-right: 5px">info</span>
+                          <span style="display: table-cell; vertical-align: middle">Logs</span>
+                        </a>
+                        <nz-modal
+                          [nzBodyStyle]="{
+                    'overflow-y': 'scroll',
+                    'height': '70vh',
+                    'background-color': 'black',
+                    'color': 'white',
+                    'display': 'flex',
+                    'flex-direction': 'column-reverse'
+                     }"
+                          nzWidth="70%"
+                          nzWrapClassName="vertical-center-modal"
+                          [(nzVisible)]="isVisibleMiddle"
+                          nzTitle="Logs"
+                          (nzOnCancel)="handleCancelMiddle()"
+                          [nzFooter]="modalFooter"
+                        >
+                    <span *ngFor="let log of logs.slice().reverse()">
+                      {{log}}<br />
+                    </span>
+                        </nz-modal>
+                        <ng-template #modalFooter>
+                          <button nz-button nzType="primary" (click)="handleRefreshMiddle()">Refresh</button>
+                        </ng-template>
+                      </li>
+                      <li nz-menu-divider style="margin-left: 10%; margin-right: 10%"></li>
+                      <li nz-menu-item style="display: table; justify-content: center">
+                        <a nz-button nzType="link"
+                           nz-popconfirm
+                           (nzOnConfirm)="onJobRemove(jobs)"
+                           [nzPopconfirmTitle]="removePopupText"
+                           (click)="jobRemovePopupText(jobs)"
+                           nzPopconfirmPlacement="right">
+                          <span style="color: red; display: table-cell; vertical-align: middle; padding-right: 5px" class="material-icons">delete</span>
+                          <span style="display: table-cell; vertical-align: middle">Delete</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nz-dropdown-menu>
+                </div>
+
+              </div>
+            </nz-card>
+          </nz-list-item>
+        </nz-list>
+
+<!--        this appears if the jobs list is greater than 5, and appends the rest to a different page-->
+        <nz-pagination style="float: right" [(nzPageIndex)]="pageIndex" [nzTotal]="allJobs.length"
+                       [nzPageSize]="5" nzSimple nzHideOnSinglePage (click)="page()"loc
+        ></nz-pagination>
+      </div>
+    </div>
+
+<!--    this appears when there are no jobs, list length = 0 -->
+    <div>
+      <nz-empty *ngIf="allJobs.length === 0"
+        class="no-running-jobs"
+        nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+        [nzNotFoundContent]="contentTpl"
+      >
+        <ng-template #contentTpl>
+          <h3 class="no-running-jobs-text">No Running Jobs</h3>
+          <h2 class="no-running-jobs-text">
+            Click
+            <a nz-button nzType="link" routerLink="/stepper">
+              <i style="color: black; font-size: 1.5em" nz-icon nzType="plus-circle" nzTheme="fill"></i>
+            </a>
+            to create a job
+          </h2>
+        </ng-template>
+      </nz-empty>
+    </div>
+
+  </nz-content>
+</nz-layout>
+

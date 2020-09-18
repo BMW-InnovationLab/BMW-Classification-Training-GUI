@@ -1,0 +1,50 @@
+<form nz-form [formGroup]="validateForm" nzLayout="vertical" (ngSubmit)="submitForm(validateForm.value)">
+  <nz-form-item style="display: block;">
+    <nz-form-label nzFlex="1">Learning Rate :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="lrErrorTpl">
+      <input nz-tooltip="learning rate (used for training)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="learning_rate" placeholder="Learning Rate" />
+      <ng-template #lrErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="display: block;">
+    <nz-form-label nzFlex="1">Batch Size :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="bsErrorTpl">
+      <input nz-tooltip="batch size (used for training)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="batch_size" placeholder="Batch Size" />
+      <ng-template #bsErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notInt')">
+          Must be an int
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="display: block;">
+    <nz-form-label nzFlex="1">Epochs :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="eErrorTpl">
+      <input nz-tooltip="epochs (used for training)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="epochs" placeholder="Epochs" />
+      <ng-template #eErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notInt')">
+          Must be an int
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>

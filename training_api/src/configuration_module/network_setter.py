@@ -135,7 +135,7 @@ class NetworkSetter():
         if weight_type == 'pretrained_offline':
             transfer_learning=True
         if (weight_type == 'checkpoint') or (weight_type == 'pretrained_offline'):
-            Checkpoint=CheckpointFacade().create_checkpoint(checkpoint_model_name)
+            Checkpoint=CheckpointFacade().create_checkpoint(model_name, checkpoint_model_name)
             net = self.get_local_weights(model_name,Checkpoint,nmbrofclasses,transfer_learning)
         elif weight_type == 'from_scratch':
             net = self.get_scratch_model(model_name,nmbrofclasses)

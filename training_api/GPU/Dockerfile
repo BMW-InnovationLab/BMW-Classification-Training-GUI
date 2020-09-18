@@ -8,7 +8,7 @@ ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 ENV NVIDIA_REQUIRE_CUDA=cuda>=10.0 brand=tesla,driver>=384,driver<385 brand=tesla,driver>=410,driver<411
 ENV NCCL_VERSION=2.4.8
 ENV CUDNN_VERSION=7.6.3.30
-
+ENV MXNET_CUDNN_AUTOTUNE_DEFAULT=0
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
   locales \

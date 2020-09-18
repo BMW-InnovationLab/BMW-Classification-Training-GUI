@@ -1,0 +1,21 @@
+FROM python:3.6
+
+
+COPY src/main /main
+
+
+RUN pip install  Pillow \
+  		  pytest \
+  		# fastapi dependencies
+  		  fastapi[all] \
+  		# project dependencies
+  	  	  numpy \
+		  gluoncv \
+		  opencv-python
+RUN pip install jsonschema
+RUN pip install mxnet-mkl
+COPY src/packages/gluoncv /usr/local/lib/python3.6/site-packages/gluoncv 
+
+WORKDIR /main
+    
+CMD ["uvicorn", "start:app", "--host", "0.0.0.0", "--port", "4343"]

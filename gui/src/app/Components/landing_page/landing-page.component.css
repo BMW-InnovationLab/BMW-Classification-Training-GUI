@@ -1,0 +1,374 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bg {
+  background-image: url("../../../assets/images/landingBackground.png");
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-repeat: no-repeat;
+  position: absolute;
+  background-position:center;
+  background-size:cover;
+}
+
+.site-page-header {
+  height: 10%;
+  z-index: 1;
+}
+
+.header-title {
+  font-family: Comfortaa, serif;
+  position: absolute;
+  font-size: 40px;
+  height: 60px;
+  padding-top: 10px;
+  left: 4%;
+  top: 30%;
+}
+
+.body-text {
+  font-family: Comfortaa, serif;
+  font-size: 30px;
+  position: absolute;
+  left: 50%;
+  top: 25%;
+}
+
+.body-text-1 {
+  margin: 0;
+}
+.body-text-2 {
+  text-align: center;
+  margin: 0;
+}
+
+.get-started-button {
+  height: 100px;
+  width: 100px;
+  position: relative;
+  margin-top: 30px;
+  left: 40%;
+}
+
+.get-started-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  font-size: 50px;
+}
+
+@media only screen and (min-width: 2300px) and (max-width: 3840px) {
+  .header-title {
+    font-family: Comfortaa, serif;
+    position: absolute;
+    font-size: 90px;
+    height: 120px;
+    padding-top: 40px;
+    left: 1%;
+    top: 20%;
+  }
+
+  .body-text {
+    font-family: Comfortaa, serif;
+    font-size: 60px;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+  }
+
+  .get-started-button {
+    height: 200px;
+    width: 200px;
+    position: relative;
+    margin-top: 30px;
+    left: 40%;
+  }
+
+  .get-started-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: 100px;
+  }
+
+}
+
+@media only screen and (min-width: 2048px) and (max-width: 2300px) {
+  .header-title {
+    font-family: Comfortaa, serif;
+    position: absolute;
+    font-size: 90px;
+    height: 120px;
+    padding-top: 40px;
+    left: 1%;
+    top: 20%;
+  }
+
+  .body-text {
+    font-family: Comfortaa, serif;
+    font-size: 55px;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+  }
+
+  .get-started-button {
+    height: 200px;
+    width: 200px;
+    position: relative;
+    margin-top: 30px;
+    left: 40%;
+  }
+
+  .get-started-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: 100px;
+  }
+}
+
+@media only screen and (min-width: 1920px) and (max-width: 2048px) {
+  .header-title {
+    font-family: Comfortaa, serif;
+    position: absolute;
+    font-size: 50px;
+    height: 60px;
+    padding-top: 10px;
+    left: 1%;
+    top: 30%;
+  }
+
+  .body-text {
+    font-family: Comfortaa, serif;
+    font-size: 35px;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+  }
+
+  .get-started-button {
+    height: 125px;
+    width: 125px;
+    position: relative;
+    margin-top: 30px;
+    left: 40%;
+  }
+
+  .get-started-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: 60px;
+  }
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1920px) {
+  .header-title {
+    font-family: Comfortaa, serif;
+    position: absolute;
+    font-size: 40px;
+    height: 60px;
+    padding-top: 10px;
+    left: 1%;
+    top: 20%;
+  }
+
+  .body-text {
+    font-family: Comfortaa, serif;
+    font-size: 30px;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+  }
+
+  .get-started-button {
+    height: 125px;
+    width: 125px;
+    position: relative;
+    margin-top: 30px;
+    left: 38%;
+  }
+
+  .get-started-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: 60px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .header-title {
+    font-family: Comfortaa, serif;
+    position: absolute;
+    font-size: 35px;
+    height: 50px;
+    padding-top: 10px;
+    left: 2%;
+    top: 15%;
+  }
+
+  .body-text {
+    font-family: Comfortaa, serif;
+    font-size: 25px;
+    position: absolute;
+    left: 40%;
+    top: 25%;
+  }
+
+  .get-started-button {
+    height: 100px;
+    width: 100px;
+    position: relative;
+    margin-top: 30px;
+    left: 38%;
+  }
+
+  .get-started-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: 50px;
+  }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 768px) {
+  .header-title {
+    font-family: Comfortaa, serif;
+    position: absolute;
+    font-size: 25px;
+    height: 50px;
+    padding-top: 10px;
+    left: 2%;
+    top: 10%;
+  }
+
+  .body-text {
+    font-family: Comfortaa, serif;
+    font-size: 20px;
+    position: absolute;
+    left: 40%;
+    top: 25%;
+  }
+
+  .get-started-button {
+    height: 80px;
+    width: 80px;
+    position: relative;
+    margin-top: 30px;
+    left: 38%;
+  }
+
+  .get-started-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: 40px;
+  }
+}
+
+@media only screen and (min-width: 240px) and (max-width: 450px) {
+  .header-title {
+    font-family: Comfortaa, serif;
+    font-size: 18px;
+    height: 50px;
+    padding-top: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .body-text {
+    font-family: Comfortaa, serif;
+    font-size: 18px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .body-text-1-1 {
+    position: absolute;
+    left: 50%;
+    top: -15%;
+    transform: translate(-50%, -50%);
+  }
+
+  .get-started-button {
+    height: 75px;
+    width: 75px;
+    margin-top: 30px;
+    left: 35%;
+  }
+
+  .get-started-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: 35px;
+  }
+}
+
+.get-started-button:hover .get-started-icon {
+  overflow: hidden;
+  animation: icon 550ms;
+}
+
+@keyframes icon {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+
+
+  50% {
+    opacity: 0;
+    transform: translate(150%, -50%);
+  }
+
+  75% {
+    opacity: 0;
+    transform: translate(-150%, -50%);
+  }
+
+  90% {
+    opacity: 0;
+    transform: translate(-100%, -50%);
+  }
+
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}

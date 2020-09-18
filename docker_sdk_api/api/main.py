@@ -11,6 +11,7 @@ from services.docker_service import DockerService
 from services.alias_service import AliasService
 from services.paths_service import PathsService
 from services.used_ports_service import UsedPortsService
+from services.proxy_service import ProxyService
 from dto.container_info import ContainerInfo
 from dto.container_settings import ContainerSettings
 from validators.dataset_validator import check_dataset_valid
@@ -20,6 +21,7 @@ docker_service = DockerService()
 alias_service = AliasService()
 used_ports_service = UsedPortsService()
 paths = PathsService().get_paths()
+proxy_env = ProxyService().get_proxy_env()
 networks = json.loads(open("./data/networks.json","r").read())
 
 
@@ -49,7 +51,7 @@ list of str
 """
 @app.get('/gpu/info')
 async def get_gpu_info():
-    return GPUtil.getAvailable(order = 'memory', limit = 10, maxLoad = 0.25, maxMemory = 0.25, includeNan=False, excludeID=[], excludeUUID=[])
+    return GPUtil.getAvailable(order = 'memory', limit = 10, maxLoad = 0.5, maxMemory = 0.5, includeNan=False, excludeID=[], excludeUUID=[])
 
 
 
@@ -110,9 +112,12 @@ str
 @app.post('/jobs/add')
 async def add_job(container_settings:ContainerSettings):
     alias = container_settings.name
-    container_settings.name = re.sub('[^A-z0-9 -]', '', container_settings.name).lower().replace(" ", "_")
-    container_settings.name = "Classification_"+container_settings.name
-    docker_service.start_job(container_settings, paths['api_folder'], paths['image_name'], paths['dataset_folder_on_host'], paths['checkpoints_folder_on_host'], paths['servable_folder'])
+    container_settings.name = re.sub('\W+','_', container_settings.name)
+    gpus = "_".join([str(gpu) for gpu in container_settings.gpus_count])
+    if gpus == '-1':
+        gpus = 'cpu'
+    container_settings.name = "Classification_"+container_settings.name+"_"+gpus 
+    docker_service.start_job(container_settings, paths['api_folder'], paths['image_name'], paths['dataset_folder_on_host'], paths['checkpoints_folder_on_host'], paths['servable_folder'], paths['models_folder'], proxy_env)
     alias_service.add_alias(container_settings.name, alias)
     return "Success"
 
@@ -188,9 +193,16 @@ list of str
     checkpoints
 """
 @app.get('/checkpoints')
-async def get_checkpoints():
-    checkpoints = [checkpoint for checkpoint in os.listdir('/checkpoints') if os.path.isdir(os.path.join('/checkpoints',checkpoint)) and check_checkpoint_valid(os.path.join('/checkpoints',checkpoint))]
+def get_checkpoints():
+    checkpoints = {}
+    for root, dirs, files in os.walk("/checkpoints"):
+        for directory in dirs:
+            if check_checkpoint_valid(os.path.join(root, directory)):
+                name_parts = os.path.join(root, directory).split("/")
+                checkpoints[name_parts[-1]] = name_parts[-2]
+
     return checkpoints
+
 
 
 
@@ -204,17 +216,20 @@ list of str
     servable models
 """
 @app.get('/servable/models')
-async def get_downloadable_models():
+def get_downloadable_models():
     servable_checkpoints_folder = '/servable'
     if not os.path.isdir(servable_checkpoints_folder):
         os.makedirs(servable_checkpoints_folder)
-    # 
-    models = os.listdir(servable_checkpoints_folder)
-    response = []
-    for model in models:
-        if model.endswith(".zip"):
-            response.append(model.split(".zip")[0])  
-    return response
+    
+    servable_models = {}
+    for root, dirs, files in os.walk("/servable"):
+        for directory in dirs:
+            for f in os.listdir(os.path.join(root,directory)):
+                if f.endswith(".zip"):
+                    servable_models[f] = directory
+
+    return servable_models
+
 
 """
 Get all finished jobs by comparing the models that are in the servable folder (done training) with the models currently in progress 
@@ -226,7 +241,8 @@ list of str
 """
 @app.get('/jobs/finished')
 async def get_finished_jobs():
-    downloadable_models = os.listdir("/servable")
+
+    downloadable_models = list(get_downloadable_models().keys())
     downloadable_models = [model.split(".zip")[0] for model in downloadable_models]
 
     running_containers = []

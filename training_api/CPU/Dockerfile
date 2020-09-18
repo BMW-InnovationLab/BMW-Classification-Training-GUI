@@ -10,7 +10,7 @@ RUN apt-get update  && apt-get install --fix-missing -y \
 
 
 RUN pip install gluoncv 
-RUN pip install mxnet
+RUN pip install mxnet-mkl
 RUN pip install fastapi[all]
 
 WORKDIR /app/src

@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "inference_engine_name": {
+      "type": "string"
+    },
+     "configuration" : { "type" : "object" , "properties" : { "gpu" : { "type" : "boolean" }, "cpu" : {"type" : "boolean" } , "max_number_of_predictions" : { "type" : "number" } , "minimum_confidence" : { "type" : "number" } }
+,"required" : [ "gpu","cpu","max_number_of_predictions","minimum_confidence" ]}   
+  },
+  "required": [
+    "inference_engine_name",
+    "configuration"
+  ]
+}

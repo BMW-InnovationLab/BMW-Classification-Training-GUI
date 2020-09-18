@@ -1,0 +1,11 @@
+.split-ratio-form-item {
+  width: 32%;
+  display: block;
+}
+
+@media only screen and (min-width: 280px) and (max-width: 768px) {
+  .split-ratio-form-item {
+    width: 100%;
+    display: block;
+  }
+}
