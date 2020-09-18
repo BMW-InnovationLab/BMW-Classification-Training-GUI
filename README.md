@@ -1,17 +1,17 @@
 
 
-#  Gluoncv Classification API 
+#  Gluoncv Classification API CPU/GPU
 
 This repository allows you to get started with training a State-of-the-art Deep Learning model with little to no configuration needed! You provide your labeled dataset and you can start the training right away. You can even test your model with our built-in Inference REST API. Training classification models with GluonCV has never been so easy.
 
 
 - This repo is based on the [Gluoncv](https://gluon-cv.mxnet.io/build/examples_classification/index.html) Framework. 
 - The app supports all the networks in the [GluonCV model zoo](https://gluon-cv.mxnet.io/model_zoo/classification.html)
-- All networks can be trained from scratch or using the pretrained weights.
+- All networks can be trained from scratch or using pretrained weights.
 - The solution contains both training and inference APIs.
 - The training API supports both CPU and GPU architectures.
 - The built-in inference API supports CPU architectures.
-- The app was tested with Google Chrome and it is recommended to use Chrome when training.
+- It is recommended to use google Chrome when using the training app.
 
 ![](./documentation_images/ClassificationDemo.gif)
 
@@ -79,7 +79,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
 - Go to `docker_sdk_api/api/data/paths.json` and change the following:
 
-  - if you wish to deploy the training solution on GPUs, please set the field `image_name` to:<br>
+  - if you wish to deploy the training solution on GPUs (default mode), please set the field `image_name` to:<br>
   **classification_training_api_gpu** 
 
 
@@ -122,7 +122,7 @@ If you are behind a proxy:
     ![](./documentation_images/proxy_json.gif)
 
 
-  - Enter the following command:
+  - From the repo's root directory, issue the following command:
 
   ```sh
     python3 set_proxy_args.py
@@ -192,11 +192,11 @@ The following is an example of how a dataset should be structured. Please put al
 <br>
 
 **Midweight:** Downloading specific online pre-trained weights during the docker image build.<br>
- To do that, open the json file _"training_api/midweight_heavyweight_solution/networks.json"_ and change the values of the networks you wish to download to "true". 
+ To do that, open the json file `training_api/midweight_heavyweight_solution/networks.json` and change the values of the networks you wish to download to "true". 
 <br>
 
 **Heavyweight :** Downloading all the online pre-trained weights during the docker image build. <br>
- To do that, open the json file _"training_api/midweight_heavyweight_solution/networks.json"_ and change the value of "select_all" to "true".
+ To do that, open the json file `training_api/midweight_heavyweight_solution/networks.json` and change the value of "select_all" to "true".
 
 <br>
 <br>
