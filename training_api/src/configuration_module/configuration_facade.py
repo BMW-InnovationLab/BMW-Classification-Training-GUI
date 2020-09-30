@@ -39,6 +39,7 @@ class ConfigurationFacade:
     """
 
     def configure_job(self, config: Configuration):
+        print("CONFIGURATION INFO: \n","Network: "+ str(config.weights_name) , "\n Weight Type: " + str(config.weights_type) , "\n Device :" + str(config.gpus_count),"\n Batch-Size :" + str(config.batch_size),"\n num-workers :" + str(config.num_workers))
         configuration_object = self.jobSetter.set_config(config)
         return configuration_object
     """

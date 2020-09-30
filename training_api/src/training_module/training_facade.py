@@ -33,10 +33,8 @@ class TrainingFacade():
     """
 
     def training(self, config: Configuration,train_data, valid_data, test_data, net, dataset_name):
-        print(net)
         model_name=config.new_model
         model_path="/data/"+dataset_name
         trainer, metric, L = self.start.model_trainer(config, model_path, net, model_name)
-        print(net)
         ctx = self.start.get_ctx(config.processor, config.gpus_count)
         self.train.training_loop(model_name,train_data, valid_data, test_data, trainer, metric, L, config, net, ctx)

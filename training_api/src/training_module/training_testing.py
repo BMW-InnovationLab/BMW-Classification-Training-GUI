@@ -54,7 +54,6 @@ class TrainingTesting():
 
     """
     def training_loop(self,model_name, train_data, val_data, test_data, trainer, metric, L, config: Configuration, net, ctx):
-        print("INFO: \n","Network: "+ str(config.weights_name) , "\n Weight Type: " + str(config.weights_type) , "\n Device :" + str(config.gpus_count),"\n Batch-Size :" + str(config.batch_size),"\n num-workers :" + str(config.num_workers))
         new_model_path = '/checkpoints/'+config.weights_name+'/'+model_name
         lr_counter = 0
         num_batch = len(train_data)

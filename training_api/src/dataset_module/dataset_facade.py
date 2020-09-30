@@ -38,6 +38,7 @@ class DatasetFacade():
 
     # todo change dataset path
     def prepare_dataset(self, dataset):
+        print("\n DATASET INFO: ","\n Dataset Name: " + str(dataset.dataset_name),"\n Training Ratio: " + str(dataset.training_ratio),"\n Validation Ratio: " + str(dataset.validation_ratio))
         dataset_path = os.path.join("/data/", dataset.dataset_name)
         valid = self.validator.validate_dataset(dataset_path)
         if not valid:
