@@ -117,7 +117,7 @@ async def add_job(container_settings:ContainerSettings):
     if gpus == '-1':
         gpus = 'cpu'
     container_settings.name = "Classification_"+container_settings.name+"_"+gpus 
-    docker_service.start_job(container_settings, paths['api_folder'], paths['image_name'], paths['dataset_folder_on_host'], paths['checkpoints_folder_on_host'], paths['servable_folder'], paths['models_folder'], proxy_env)
+    docker_service.start_job(container_settings, paths['image_name'], paths['dataset_folder_on_host'], paths['checkpoints_folder_on_host'], paths['servable_folder'], paths['models_folder'], proxy_env)
     alias_service.add_alias(container_settings.name, alias)
     return "Success"
 

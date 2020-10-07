@@ -37,8 +37,8 @@ class DockerService():
         return ""
     
 
-    def start_job(self, container_settings:ContainerSettings, api_path:str, image_name:str, datasets_path:str, checkpoints_path:str, servable_path:str, models_path : str, proxy_env:dict):
-        volumes = {api_path: {'bind':'/app', 'mode':'rw'}, datasets_path: {'bind':'/data', 'mode':'rw'}, checkpoints_path: {'bind':'/checkpoints', 'mode':'rw'}, servable_path: {'bind':'/servable', 'mode':'rw'} ,models_path: {'bind':'/models', 'mode':'rw'}}
+    def start_job(self, container_settings:ContainerSettings,  image_name:str, datasets_path:str, checkpoints_path:str, servable_path:str, models_path : str, proxy_env:dict):
+        volumes = { datasets_path: {'bind':'/data', 'mode':'rw'}, checkpoints_path: {'bind':'/checkpoints', 'mode':'rw'}, servable_path: {'bind':'/servable', 'mode':'rw'} ,models_path: {'bind':'/models', 'mode':'rw'}}
         ports = {'8000/tcp':str(container_settings.api_port)}
 
         #find the processor type to specify proper runtime
