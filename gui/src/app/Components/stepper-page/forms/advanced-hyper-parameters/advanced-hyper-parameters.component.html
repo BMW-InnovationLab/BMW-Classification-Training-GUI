@@ -1,23 +1,6 @@
 <form nz-form [formGroup]="validateForm" nzLayout="vertical"
       (ngSubmit)="submitForm(validateForm.value)"
       style="justify-content: space-between; display: flex; flex-wrap: wrap;">
-  <nz-form-item style="width: 100%; display: block;">
-    <nz-form-label nzFlex="1">Processor :</nz-form-label>
-    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="processorErrorTpl">
-      <nz-select nz-tooltip="CPU or GPU (used for inference)"
-        nzTooltipPlacement="topRight"
-        formControlName="processor" nzPlaceHolder="Processor"
-                 [(ngModel)]="selectedProcessor">
-        <nz-option nzValue="CPU" nzLabel="CPU"></nz-option>
-        <nz-option nzValue="GPU" nzLabel="GPU"></nz-option>
-      </nz-select>
-      <ng-template #processorErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          Please select a processor!
-        </ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
   <nz-form-item class="form-item">
     <nz-form-label nzFlex="1">Learning Rate :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="lrErrorTpl">

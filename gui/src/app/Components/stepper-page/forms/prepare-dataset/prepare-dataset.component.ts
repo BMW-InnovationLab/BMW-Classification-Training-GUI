@@ -30,7 +30,6 @@ export class PrepareDatasetComponent implements OnInit {
       this.validateForm.controls[key].updateValueAndValidity();
     }
     this.sum = this.validateForm.value.training + this.validateForm.value.validation + this.validateForm.value.testing;
-    console.log(value);
   }
 
   ngOnInit(): void {

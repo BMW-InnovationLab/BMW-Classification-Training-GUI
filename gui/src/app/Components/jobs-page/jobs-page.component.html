@@ -186,7 +186,7 @@
                     nzWidth="70%"
                     nzWrapClassName="vertical-center-modal"
                     [(nzVisible)]="isVisibleMiddle"
-                    [nzTitle]="'Logs | ' + jobs"
+                    [nzTitle]="'Logs | ' + specificLogsJob"
                     (nzOnCancel)="handleCancelMiddle()"
                     [nzFooter]="modalFooter"
                   >
@@ -305,7 +305,7 @@
 
 <!--        this appears if the jobs list is greater than 5, and appends the rest to a different page-->
         <nz-pagination style="float: right" [(nzPageIndex)]="pageIndex" [nzTotal]="allJobs.length"
-                       [nzPageSize]="5" nzSimple nzHideOnSinglePage (click)="page()"loc
+                       [nzPageSize]="5" nzSimple nzHideOnSinglePage (click)="page()" (keyup.enter)="page()"
         ></nz-pagination>
       </div>
     </div>

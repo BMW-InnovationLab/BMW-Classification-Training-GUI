@@ -86,7 +86,7 @@
     <nz-form-label nzFlex="1">Checkpoints :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="checkpointErrorTpl">
       <nz-select nz-tooltip="name of folder used to load local weights"
-                 nzTooltipPlacement="topRight"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
                  nzPlaceHolder="Checkpoints" formControlName="checkPoints">
         <nz-option *ngFor="let checkpoints of checkpointsKeys; let i = index"
                    [nzLabel]="checkpointsKeys[i] + ' | ' + checkpointsValue[i]" [nzValue]="checkpointsKeys[i]"

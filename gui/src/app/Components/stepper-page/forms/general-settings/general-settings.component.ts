@@ -92,7 +92,6 @@ export class GeneralSettingsComponent implements OnInit {
             val = 1;
           }
         }
-        console.log(val);
         if (val === 1) {
           observer.next({error: true, duplicated: true});
         } else {
@@ -145,7 +144,6 @@ export class GeneralSettingsComponent implements OnInit {
       }
     }
 
-    console.log(value);
   }
 
   isNotSelected(value: number): boolean {

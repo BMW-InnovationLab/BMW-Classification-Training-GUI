@@ -229,7 +229,6 @@ export class StepperPageComponent implements OnInit, OnDestroy{
             (message: HttpResponse<Config>) => {
                 this.dataSenderSecondApi.advancedConfigPost(this.advancedConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
                   (message1: HttpResponse<Config>) => {
-                    console.log(this.advancedConfig);
                   });
             });
 
@@ -268,7 +267,6 @@ export class StepperPageComponent implements OnInit, OnDestroy{
             (message: HttpResponse<Config>) => {
                 this.dataSenderSecondApi.basicConfigPost(this.basicConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
                   (message1: HttpResponse<Config>) => {
-                    console.log(this.basicConfig);
                   });
             });
 
