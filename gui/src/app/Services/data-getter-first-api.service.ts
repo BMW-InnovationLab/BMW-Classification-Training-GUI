@@ -12,7 +12,7 @@ export class DataGetterFirstApiService {
   constructor(private http: HttpClient) { }
 
   getDataSets() {
-    return this.http.get<string[]>(this.serviceUrl + this.basePort + '/datasets');
+    return this.http.get<string[]>(this.serviceUrl + this.basePort + '/datasetsclasses');
   }
 
   getAvailableGPUs() {
@@ -28,7 +28,7 @@ export class DataGetterFirstApiService {
   }
 
   getAvailableCheckPoints() {
-    return this.http.get<any>(this.serviceUrl + this.basePort + '/checkpoints');
+    return this.http.get<any>(this.serviceUrl + this.basePort + '/checkpointsclasses');
   }
 
   getDownloadableModels() {

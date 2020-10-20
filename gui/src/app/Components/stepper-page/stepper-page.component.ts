@@ -137,6 +137,36 @@ export class StepperPageComponent implements OnInit, OnDestroy{
           nzDuration: 3000
         });
       } else {
+
+        this.generalSettings.checkpointsValidKeys = [];
+        this.generalSettings.checkpointsValidValue = [];
+
+        let datasetIndex = this.prepareDataset.availableFoldersKeys.indexOf(this.prepareDataset.validateForm.value.dataset_name);
+
+        for (let i = 0; i < this.generalSettings.checkpointsValue.length; i++) {
+          let val = 0;
+          if (this.generalSettings.checkpointsValue[i].length === this.prepareDataset.availableFoldersValue[datasetIndex].length) {
+            for (let j = 0; j < this.generalSettings.checkpointsValue[i].length; j++) {
+              if (this.generalSettings.checkpointsValue[i].includes(this.prepareDataset.availableFoldersValue[datasetIndex][j])) {
+                val = 1;
+              } else {
+                val = 0;
+              }
+            }
+
+            // if (val === 1) {
+            //   this.generalSettings.checkpointsValidKeys.push(this.generalSettings.checkpointsKeys[i]);
+            //   this.generalSettings.checkpointsValidValue.push(this.generalSettings.checkpointsValue[i]);
+            // }
+          }
+
+          if (val === 1) {
+            let chk = this.generalSettings.checkpointsKeys[i].split('/')[0];
+            let chk2 = this.generalSettings.checkpointsKeys[i].split('/')[1];
+
+            this.generalSettings.checkpointsList.push(chk + ' | ' + chk2);
+          }
+        }
         this.current += 1;
         this.changeContent();
       }
@@ -145,6 +175,7 @@ export class StepperPageComponent implements OnInit, OnDestroy{
       if (!this.generalSettings.validateForm.valid){
         // do nothing
       } else {
+
         this.addJob.name = this.generalSettings.validateForm.value.containerName;
         this.addJob.api_port = this.generalSettings.validateForm.value.APIPort;
         this.addJob.gpus_count = this.generalSettings.validateForm.value.gpus_count;
@@ -221,7 +252,7 @@ export class StepperPageComponent implements OnInit, OnDestroy{
               this.advancedConfig.weights_name = this.generalSettings.validateForm.value.networks;
           } else {
               this.advancedConfig.weights_type = this.generalSettings.validateForm.value.weightType;
-              this.advancedConfig.model_name = this.generalSettings.validateForm.value.checkPoints;
+              this.advancedConfig.model_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[2].toString();
               this.advancedConfig.weights_name = this.generalSettings.selectedCheckpointValue;
           }
 
@@ -229,12 +260,16 @@ export class StepperPageComponent implements OnInit, OnDestroy{
             (message: HttpResponse<Config>) => {
                 this.dataSenderSecondApi.advancedConfigPost(this.advancedConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
                   (message1: HttpResponse<Config>) => {
+                    if (message1.toString() === 'Training Started') {
+                      this.doneButtonLoading = false;
+                      this.current += 1;
+                      this.changeContent();
+                      this.router.navigate(['/jobs']);
+                    } else {
+                      this.doneButtonLoading = true;
+                    }
                   });
             });
-
-          this.current += 1;
-          this.changeContent();
-          this.router.navigate(['/jobs']);
         }
       } else {
         this.hyperParameters.submitForm(this.hyperParameters.validateForm.value);
@@ -259,7 +294,7 @@ export class StepperPageComponent implements OnInit, OnDestroy{
               this.basicConfig.weights_name = this.generalSettings.validateForm.value.networks;
           } else {
               this.basicConfig.weights_type = this.generalSettings.validateForm.value.weightType;
-              this.basicConfig.model_name = this.generalSettings.validateForm.value.checkPoints;
+              this.basicConfig.model_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[2].toString();
               this.basicConfig.weights_name = this.generalSettings.selectedCheckpointValue;
           }
 
@@ -267,12 +302,16 @@ export class StepperPageComponent implements OnInit, OnDestroy{
             (message: HttpResponse<Config>) => {
                 this.dataSenderSecondApi.basicConfigPost(this.basicConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
                   (message1: HttpResponse<Config>) => {
+                    if (message1.toString() === 'Training Started') {
+                      this.doneButtonLoading = false;
+                      this.current += 1;
+                      this.changeContent();
+                      this.router.navigate(['/jobs']);
+                    } else {
+                      this.doneButtonLoading = true;
+                    }
                   });
             });
-
-          this.current += 1;
-          this.changeContent();
-          this.router.navigate(['/jobs']);
         }
       }
   }

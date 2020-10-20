@@ -183,6 +183,16 @@ async def get_datasets():
     return datasets
 
 
+@app.get('/datasetsclasses')
+async def get_datasetsclasses():
+    datasetsclasses={}
+    datasets = [dataset for dataset in os.listdir('/datasets') if os.path.isdir(os.path.join('/datasets',dataset)) and check_dataset_valid(os.path.join('/datasets',dataset))]
+    for dataset in datasets:
+        classes=os.listdir(os.path.join("/datasets",dataset))
+        datasetsclasses[dataset]=classes
+
+    return datasetsclasses
+
 
 """
 Get all valid checkpoints
@@ -204,7 +214,18 @@ def get_checkpoints():
     return checkpoints
 
 
+@app.get('/checkpointsclasses')
+def get_checkpoints():
+    checkpoints = {}
+    for root, dirs, files in os.walk("/checkpoints"):
+        for directory in dirs:
+            if check_checkpoint_valid(os.path.join(root, directory)):
+                name_parts = os.path.join(root, directory).split("/")
+                with open(os.path.join(os.path.join(root, directory),"classes.txt")) as f:
+                    classes=f.read().split(",")
+                checkpoints[os.path.join(name_parts[-2],name_parts[-1])] = classes
 
+    return checkpoints
 
 
 """

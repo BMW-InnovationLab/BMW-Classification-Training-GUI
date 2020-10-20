@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {DataGetterFirstApiService} from '../../../../Services/data-getter-first-api.service';
 import {Observable, Observer} from 'rxjs';
+import {PrepareDatasetComponent} from "../prepare-dataset/prepare-dataset.component";
 
 interface WeightType {
   name: string;
@@ -36,9 +37,12 @@ export class GeneralSettingsComponent implements OnInit {
 
   networksList: Array<string> = [];
 
-  checkpointsList: any;
+  checkpointsList = [];
   checkpointsKeys = [];
   checkpointsValue = [];
+
+  checkpointsValidKeys = [];
+  checkpointsValidValue = [];
 
   networksHidden = true;
   checkpointsHidden = true;
@@ -138,12 +142,15 @@ export class GeneralSettingsComponent implements OnInit {
       this.validateForm.controls[key].updateValueAndValidity();
     }
 
-    for (let i = 0; i < this.checkpointsKeys.length; i++) {
-      if (this.validateForm.value.checkPoints === this.checkpointsKeys[i]) {
-        this.selectedCheckpointValue = this.checkpointsValue[i];
+    if (this.checkpointsHidden === true && this.validateForm.value.checkPoints === null){
+      this.selectedCheckpointValue = '';
+    } else {
+      if (this.checkpointsList.length > 0) {
+        this.selectedCheckpointValue = this.validateForm.value.checkPoints.split(' ')[0].toString();
+      } else {
+        this.selectedCheckpointValue = '';
       }
     }
-
   }
 
   isNotSelected(value: number): boolean {
@@ -193,13 +200,10 @@ export class GeneralSettingsComponent implements OnInit {
     });
 
     this.dataGetterFirstApi.getAvailableCheckPoints().subscribe((availableCheckpoints) => {
-      this.checkpointsList = availableCheckpoints;
-
-      for (const [key, value] of Object.entries(this.checkpointsList)) {
+      for (const [key, value] of Object.entries(availableCheckpoints)) {
         this.checkpointsKeys.push(key);
         this.checkpointsValue.push(value);
       }
-
     });
 
     this.dataGetterFirstApi.getDownloadableModels().subscribe((models) => {

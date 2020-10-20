@@ -4,7 +4,7 @@
     <nz-form-label nzFlex="1" >Dataset Folder :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="datasetErrorTpl">
       <nz-select formControlName="dataset_name" nzPlaceHolder="Dataset Folder" nz-tooltip="the name of your dataset folder" nzTooltipPlacement="topRight">
-        <nz-option *ngFor="let datasets of availableFiles" [nzLabel]="datasets" [nzValue]="datasets"></nz-option>
+        <nz-option *ngFor="let datasets of availableFoldersKeys" [nzLabel]="datasets" [nzValue]="datasets"></nz-option>
       </nz-select>
       <ng-template #datasetErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
