@@ -131,7 +131,7 @@ If you are behind a proxy:
 <br>
 
 Docker SDK api uses the port **2223** to run.<br>
-In case it is used by another application. The api can be configured to run on a different port by doing the following steps:
+In case this port is used by another application. The api can be configured to run on a different port by doing the following steps:
 
 * Go to _docker_sdk_api/dockerfile_ and change the value after the --port flag in the CMD command.
 
