@@ -202,7 +202,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    if (window.screen.width < 768) { // 768px portrait
+    if (window.screen.width <= 1024) { // 768px portrait
       this.mobile = true;
     } else {
       this.mobile = false;
@@ -215,7 +215,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
     }
 
     window.onresize = () => {
-      if (window.screen.width < 768) { // 768px portrait
+      if (window.screen.width <= 1024) { // 768px portrait
         this.mobile = true;
       } else {
         this.mobile = false;

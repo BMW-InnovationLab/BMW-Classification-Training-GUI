@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {DataGetterFirstApiService} from '../../../../Services/data-getter-first-api.service';
 import {Observable, Observer} from 'rxjs';
-import {PrepareDatasetComponent} from "../prepare-dataset/prepare-dataset.component";
+import {PrepareDatasetComponent} from '../prepare-dataset/prepare-dataset.component';
 
 interface WeightType {
   name: string;
@@ -16,6 +16,8 @@ interface WeightType {
 })
 
 export class GeneralSettingsComponent implements OnInit {
+  @ViewChild(PrepareDatasetComponent) prepareDataset: PrepareDatasetComponent;
+
   validateForm: FormGroup;
 
   availableGPUs: Array<number> = [];
@@ -61,6 +63,9 @@ export class GeneralSettingsComponent implements OnInit {
   weightTypeDisabled = false;
   networksDisabled = false;
   checkpointsDisabled = false;
+
+  datasetIndex: number;
+  datasetValue = [];
 
   constructor(private fb: FormBuilder, private dataGetterFirstApi: DataGetterFirstApiService) {
     this.validateForm = this.fb.group({
@@ -122,8 +127,33 @@ export class GeneralSettingsComponent implements OnInit {
     } else if (this.selectedWeightType === 'checkpoint' || this.selectedWeightType === 'pretrained_offline') {
       if (this.selectedWeightType === 'checkpoint') {
         this.weightTypeTooltip = 'training the network using local weights';
+
+        this.checkpointsList = [];
+        let index = 0;
+
+        for (let i = 0; i < this.datasetValue.length; i++) {
+          if (this.checkpointsValue[i].length === this.datasetValue.length) {
+            for (let j = 0; j < this.datasetValue.length; j++) {
+              if (this.checkpointsValue[i].includes(this.datasetValue[j])) {
+                index = 1;
+              } else {
+                index = 0;
+              }
+            }
+          }
+
+          if (index === 1) {
+            this.checkpointsList.push(this.checkpointsKeys[i].split('/')[1] + ' | ' + this.checkpointsKeys[i].split('/')[0]);
+          }
+        }
       } else {
-         this.weightTypeTooltip = 'transfer learning from a pretrained network using local weights';
+        this.checkpointsList = [];
+
+        for (let i = 0; i < this.checkpointsKeys.length; i++) {
+          this.checkpointsList.push(this.checkpointsKeys[i].split('/')[1] + ' | ' + this.checkpointsKeys[i].split('/')[0]);
+        }
+
+        this.weightTypeTooltip = 'transfer learning from a pretrained network using local weights';
       }
       this.checkpointsHidden = false;
       this.networksHidden = true;

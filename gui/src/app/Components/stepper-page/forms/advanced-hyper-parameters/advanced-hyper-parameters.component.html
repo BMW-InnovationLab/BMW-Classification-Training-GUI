@@ -149,7 +149,7 @@
     <nz-form-label nzFlex="1">Xavier :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="xErrorTpl">
       <nz-select nz-tooltip="true or false (used for weights initialization)"
-                 nzTooltipPlacement="topRight"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
                  formControlName="Xavier" nzPlaceHolder="Xavier"
                  [(ngModel)]="selectedXavier">
         <nz-option [nzValue]="true" nzLabel="True"></nz-option>
@@ -166,7 +166,7 @@
     <nz-form-label nzFlex="1">MSRAPrelu :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="msrapErrorTpl">
       <nz-select nz-tooltip="true or false (used for weights initialization)"
-                 nzTooltipPlacement="topRight"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
                  formControlName="MSRAPrelu" nzPlaceHolder="MSRAPrelu"
                  [(ngModel)]="selectedMSRAPrelu">
         <nz-option [nzValue]="true" nzLabel="True"></nz-option>
@@ -183,7 +183,7 @@
     <nz-form-label nzFlex="1">Data Augmenting :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="dataErrorTpl">
       <nz-select nz-tooltip="decides wether to augment the data using our custom data_augmentation funtion or not"
-                 nzTooltipPlacement="topRight"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
                  formControlName="data_augmenting" nzPlaceHolder="Data Augmenting"
                  [(ngModel)]="selectedDataAugmenting">
         <nz-option [nzValue]="true" nzLabel="True"></nz-option>

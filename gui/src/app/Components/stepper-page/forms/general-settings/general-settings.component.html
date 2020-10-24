@@ -53,7 +53,7 @@
     <nz-form-label nzFlex="1">Weight Type :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="weightErrorTpl">
       <nz-select [nz-tooltip]="weightTypeTooltip"
-                 nzTooltipPlacement="topRight"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
                  nzPlaceHolder="Weight Type" formControlName="weightType" [(ngModel)]="selectedWeightType"
       (ngModelChange)="onWeightSelection()">
         <nz-option *ngFor="let weight of weightTypes" [nzLabel]="weight.name" [nzValue]="weight.value"></nz-option>
@@ -70,7 +70,7 @@
     <nz-form-label nzFlex="1">Networks :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="networkErrorTpl">
       <nz-select nz-tooltip="name of the network (used for training)"
-                 nzTooltipPlacement="topRight"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
                  nzPlaceHolder="Networks" formControlName="networks">
         <nz-option *ngFor="let networks of networksList" [nzLabel]="networks" [nzValue]="networks"></nz-option>
       </nz-select>

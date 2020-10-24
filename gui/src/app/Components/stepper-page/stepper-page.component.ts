@@ -137,36 +137,34 @@ export class StepperPageComponent implements OnInit, OnDestroy{
           nzDuration: 3000
         });
       } else {
+        this.generalSettings.datasetIndex = null;
+        this.generalSettings.datasetValue = [];
+        this.generalSettings.datasetIndex = this.prepareDataset.availableFoldersKeys.indexOf(this.prepareDataset.validateForm.value.dataset_name);
+        this.generalSettings.datasetValue = this.prepareDataset.availableFoldersValue[this.generalSettings.datasetIndex];
 
-        this.generalSettings.checkpointsValidKeys = [];
-        this.generalSettings.checkpointsValidValue = [];
+        if (this.generalSettings.selectedWeightType === 'checkpoint') {
+          this.generalSettings.checkpointsList = [];
+          let index = 0;
 
-        let datasetIndex = this.prepareDataset.availableFoldersKeys.indexOf(this.prepareDataset.validateForm.value.dataset_name);
-
-        for (let i = 0; i < this.generalSettings.checkpointsValue.length; i++) {
-          let val = 0;
-          if (this.generalSettings.checkpointsValue[i].length === this.prepareDataset.availableFoldersValue[datasetIndex].length) {
-            for (let j = 0; j < this.generalSettings.checkpointsValue[i].length; j++) {
-              if (this.generalSettings.checkpointsValue[i].includes(this.prepareDataset.availableFoldersValue[datasetIndex][j])) {
-                val = 1;
-              } else {
-                val = 0;
+          for (let i = 0; i < this.generalSettings.datasetValue.length; i++) {
+            if (this.generalSettings.checkpointsValue[i].length === this.generalSettings.datasetValue.length) {
+              for (let j = 0; j < this.generalSettings.datasetValue.length; j++) {
+                if (this.generalSettings.checkpointsValue[i].includes(this.generalSettings.datasetValue[j])) {
+                  index = 1;
+                } else {
+                  index = 0;
+                }
               }
             }
 
-            // if (val === 1) {
-            //   this.generalSettings.checkpointsValidKeys.push(this.generalSettings.checkpointsKeys[i]);
-            //   this.generalSettings.checkpointsValidValue.push(this.generalSettings.checkpointsValue[i]);
-            // }
+            if (index === 1) {
+              this.generalSettings.checkpointsList.push(this.generalSettings.checkpointsKeys[i].split('/')[1] + ' | ' + this.generalSettings.checkpointsKeys[i].split('/')[0]);
+            }
           }
+        } else {
 
-          if (val === 1) {
-            let chk = this.generalSettings.checkpointsKeys[i].split('/')[0];
-            let chk2 = this.generalSettings.checkpointsKeys[i].split('/')[1];
-
-            this.generalSettings.checkpointsList.push(chk + ' | ' + chk2);
-          }
         }
+
         this.current += 1;
         this.changeContent();
       }
