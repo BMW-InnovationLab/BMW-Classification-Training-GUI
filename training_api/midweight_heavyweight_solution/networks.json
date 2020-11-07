@@ -1,5 +1,5 @@
 { 
-    "select_all":  ture,
+    "select_all":  true,
     "resnet18_v1": false,
     "resnet34_v1": false,
     "resnet50_v1": false,
