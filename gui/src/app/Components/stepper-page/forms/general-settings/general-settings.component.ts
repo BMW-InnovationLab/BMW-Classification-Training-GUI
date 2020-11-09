@@ -155,7 +155,6 @@ export class GeneralSettingsComponent implements OnInit {
 
         this.weightTypeTooltip = 'transfer learning from a pretrained network using local weights';
       }
-      console.log('left');
       this.checkpointsHidden = false;
       this.networksHidden = true;
       if (this.networksHidden === true && this.validateForm.value.networks === null){
