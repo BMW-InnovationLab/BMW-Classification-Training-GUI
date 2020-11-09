@@ -83,19 +83,14 @@ Make sure that the `base_dir` field in `docker_sdk_api/data/paths.json` is corre
 - Go to `docker_sdk_api/api/data/paths.json` and change the following:
 
   - if you wish to deploy the training solution on GPUs (default mode), please set the field `image_name` to:<br>
-  **classification_training_api_gpu** 
+    **classification_training_api_gpu** 
+  
+    ​      ![](./documentation_images/gpu_image_name.gif)
+    ​    
 
+   - if you wish to deploy the training solution on CPU, please set the field `image_name` to: **classification_training_api_cpu** 
 
-​      
-​      ![](./documentation_images/gpu_image_name.gif)
-​    
-      <br>
-
-   - if you wish to deploy the training solution on CPU, please set the field `image_name` to:
-
-    **classification_training_api_cpu** 
-    
-    ![](./documentation_images/cpu_image_name.gif)
+![](./documentation_images/cpu_image_name.gif)
 
 <br>
 <br>
@@ -245,7 +240,7 @@ docker-compose -f run_cpu.yml up
 ```
 
 
-![](./docs/after_deployment.png)
+![](./docs/after_deployment.PNG)
 
 ---
 
@@ -353,7 +348,7 @@ Delete the container's job to stop an ongoing job or to remove the container of 
 
 The training might fail when a network isn't available anymore on the Gluoncv model_zoo server (pretrained online weights). If you encounter this error (image below), kindly create an issue.
 
-![](./docs/possible_error.png)
+![](./docs/possible_error.PNG)
 
 ## Acknowledgments
 
