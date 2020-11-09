@@ -69,11 +69,14 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
 \- Install NVIDIA Drivers (410.x or higher) and NVIDIA Docker for GPU training by following the [official docs](https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0))
 
-
 <br>
 <br>
 
----
+### Validating prerequisites 
+
+Make sure that the `base_dir` field in `docker_sdk_api/data/paths.json` is correct (it must match the path of the root of the repo on your machine).
+
+![](./docs/validating_prerequesites.jpeg)
 
 ## Changes To Make
 
@@ -83,14 +86,15 @@ This repository allows you to get started with training a State-of-the-art Deep 
   **classification_training_api_gpu** 
 
 
-      
-      ![](./documentation_images/gpu_image_name.gif)
-
+​      
+​      ![](./documentation_images/gpu_image_name.gif)
+​    
       <br>
 
    - if you wish to deploy the training solution on CPU, please set the field `image_name` to:
-    **classification_training_api_cpu** 
 
+    **classification_training_api_cpu** 
+    
     ![](./documentation_images/cpu_image_name.gif)
 
 <br>
@@ -101,7 +105,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
   - field `url`:  
 must match the IP address of your machine
-      
+    
   - the IP field of the `inferenceAPIUrl `: must match the IP address of your machine (**Use the `ifconfig `command to check your IP address . Please use your private IP which starts by either 10. or 172.16.  or 192.168.**)
 
 
@@ -131,11 +135,11 @@ If you are behind a proxy:
 <br>
 
 Docker SDK api uses the port **2223** to run.<br>
-In case it is used by another application. The api can be configured to run on a different port by doing the following steps:
+In case this port is used by another application. The api can be configured to run on a different port by doing the following steps:
 
 * Go to _docker_sdk_api/dockerfile_ and change the value after the --port flag in the CMD command.
 
-![sdk_port](./documentation_images/sdk_port.gif)
+![sdk_port](./docs/dockerfile.jpeg)
 
 * Go to gui/src/environments/environment.ts and gui/src/environments/environment.prod.ts and change the `baseEndPoint` field value to match the newly selected port:
 
@@ -205,6 +209,14 @@ The following is an example of how a dataset should be structured. Please put al
 
 ## Build the Solution
 
+If you wish want to deploy the training workflow in GPU mode, please write the following command
+
+```sh
+docker-compose -f build_gpu.yml build
+```
+
+<br>
+
 If you wish want to deploy the training workflow in CPU mode, please write the following command
 
 ```sh
@@ -212,30 +224,12 @@ docker-compose -f build_cpu.yml build
 ```
 <br>
 
-If you wish want to deploy the training workflow in GPU mode, please write the following command
 
-```sh
-docker-compose -f build_gpu.yml build
-```
-
-
-
-
-
-
-<br>
 <br>
 
 
 ---
 ## Run the Solution
-If you wish to deploy the training workflow in CPU mode, please write the following command
-
-```sh
-docker-compose -f run_cpu.yml up
-```
-<br>
-
 If you wish want to deploy the training workflow in GPU mode, please write the following command
 
 ```sh
@@ -244,11 +238,14 @@ docker-compose -f run_gpu.yml up
 
 <br>
 
+If you wish to deploy the training workflow in CPU mode, please write the following command
+
+```sh
+docker-compose -f run_cpu.yml up
+```
 
 
-
-<br>
-<br>
+![](./docs/after_deployment.png)
 
 ---
 
@@ -301,7 +298,7 @@ Prepare your dataset for training
 
 ![](./documentation_images/1.gif)
 
- 
+
 <br>
 
 
@@ -351,7 +348,13 @@ Delete the container's job to stop an ongoing job or to remove the container of 
 <br>
 
 ---
- 
+
+## Possible Errors
+
+The training might fail when a network isn't available anymore on the Gluoncv model_zoo server (pretrained online weights). If you encounter this error (image below), kindly create an issue.
+
+![](./docs/possible_error.png)
+
 ## Acknowledgments
 
 - Roy Anwar, BMW Innovation Lab, Munich, Germany

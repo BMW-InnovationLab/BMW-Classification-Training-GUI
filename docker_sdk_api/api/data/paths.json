@@ -1,1 +1,10 @@
-{"base_dir": "/home/ismail/WebstormProjects/BMW-Classification-training-GUI", "api_folder": "training_api", "dataset_folder_on_host": "data", "checkpoints_folder_on_host": "checkpoints", "inference_api_models_folder": "inference/models", "servable_folder": "servable", "image_name": "classification_training_api_cpu", "models_folder": "models"}
+{
+    "base_dir": "/<root_on_your_pc>/BMW-Classification-training-GUI/BMW-Classification-training-GUI",
+    "api_folder": "training_api",
+    "dataset_folder_on_host": "data",
+    "checkpoints_folder_on_host": "checkpoints",
+    "inference_api_models_folder": "inference/models",
+    "servable_folder": "servable",
+    "image_name": "classification_training_api_gpu",
+    "models_folder": "models"
+}
