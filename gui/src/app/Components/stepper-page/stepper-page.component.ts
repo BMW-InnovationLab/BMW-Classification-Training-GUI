@@ -146,17 +146,17 @@ export class StepperPageComponent implements OnInit, OnDestroy{
           this.generalSettings.checkpointsList = [];
           let index = 0;
 
-          for (let i = 0; i < this.generalSettings.datasetValue.length; i++) {
+          for (let i = 0; i < this.generalSettings.checkpointsValue.length; i++) {
             if (this.generalSettings.checkpointsValue[i].length === this.generalSettings.datasetValue.length) {
               for (let j = 0; j < this.generalSettings.datasetValue.length; j++) {
                 if (this.generalSettings.checkpointsValue[i].includes(this.generalSettings.datasetValue[j])) {
                   index = 1;
                 } else {
                   index = 0;
+                  break;
                 }
               }
             }
-
             if (index === 1) {
               this.generalSettings.checkpointsList.push(this.generalSettings.checkpointsKeys[i].split('/')[1] + ' | ' + this.generalSettings.checkpointsKeys[i].split('/')[0]);
             }
@@ -250,8 +250,8 @@ export class StepperPageComponent implements OnInit, OnDestroy{
               this.advancedConfig.weights_name = this.generalSettings.validateForm.value.networks;
           } else {
               this.advancedConfig.weights_type = this.generalSettings.validateForm.value.weightType;
-              this.advancedConfig.model_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[2].toString();
-              this.advancedConfig.weights_name = this.generalSettings.selectedCheckpointValue;
+              this.advancedConfig.model_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[0].toString();
+              this.advancedConfig.weights_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[2].toString();
           }
 
           this.dataSenderSecondApi.datasetPost(this.dataset, this.generalSettings.validateForm.value.APIPort).subscribe(
@@ -292,8 +292,8 @@ export class StepperPageComponent implements OnInit, OnDestroy{
               this.basicConfig.weights_name = this.generalSettings.validateForm.value.networks;
           } else {
               this.basicConfig.weights_type = this.generalSettings.validateForm.value.weightType;
-              this.basicConfig.model_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[2].toString();
-              this.basicConfig.weights_name = this.generalSettings.selectedCheckpointValue;
+              this.basicConfig.model_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[0].toString();
+              this.basicConfig.weights_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[2].toString();
           }
 
           this.dataSenderSecondApi.datasetPost(this.dataset, this.generalSettings.validateForm.value.APIPort).subscribe(

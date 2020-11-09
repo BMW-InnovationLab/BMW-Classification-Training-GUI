@@ -148,7 +148,9 @@
 
 <!--                middle part of the card containing the jobs name-->
                 <div *ngIf="!mobile" class="parent-div" nz-col nzFlex="2">
-                  <span nz-tooltip [nzTooltipTitle]="jobs" class="container-name">{{ (jobs.length>12)? (jobs | slice:0:12)+'...':(jobs) }}</span>
+                  <span nz-tooltip [nzTooltipTitle]="jobs" class="container-name">
+                    {{ (jobs.length>32)? (jobs | slice:0:32)+'...':(jobs) }}
+                  </span>
                 </div>
 
 <!--                right side of the jobs card-->

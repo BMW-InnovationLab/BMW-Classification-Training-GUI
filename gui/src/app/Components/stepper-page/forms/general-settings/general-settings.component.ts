@@ -30,8 +30,8 @@ export class GeneralSettingsComponent implements OnInit {
 
   weightTypes: WeightType[] = [
     {name: 'from scratch' , value: 'from_scratch'},
-    {name: 'pre-trained' , value: 'pre_trained'},
-    {name: 'pretrained offline' , value: 'pretrained_offline'},
+    {name: 'transfer learning from online weights' , value: 'pre_trained'},
+    {name: 'transfer learning from local weights' , value: 'pretrained_offline'},
     {name: 'from checkpoint' , value: 'checkpoint'}
   ];
 
@@ -131,17 +131,17 @@ export class GeneralSettingsComponent implements OnInit {
         this.checkpointsList = [];
         let index = 0;
 
-        for (let i = 0; i < this.datasetValue.length; i++) {
+        for (let i = 0; i < this.checkpointsValue.length; i++) {
           if (this.checkpointsValue[i].length === this.datasetValue.length) {
             for (let j = 0; j < this.datasetValue.length; j++) {
               if (this.checkpointsValue[i].includes(this.datasetValue[j])) {
                 index = 1;
               } else {
                 index = 0;
+                break;
               }
             }
           }
-
           if (index === 1) {
             this.checkpointsList.push(this.checkpointsKeys[i].split('/')[1] + ' | ' + this.checkpointsKeys[i].split('/')[0]);
           }
@@ -155,6 +155,7 @@ export class GeneralSettingsComponent implements OnInit {
 
         this.weightTypeTooltip = 'transfer learning from a pretrained network using local weights';
       }
+      console.log('left');
       this.checkpointsHidden = false;
       this.networksHidden = true;
       if (this.networksHidden === true && this.validateForm.value.networks === null){
