@@ -74,7 +74,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
 ### Validating prerequisites 
 
-Make sure that the `base_dir` field in `docker_sdk_api/data/paths.json` is correct (it must match the path of the root of the repo on your machine).
+Make sure that the `base_dir` field in `docker_sdk_api/api/data/paths.json` is correct (it must match the path of the root of the repo on your machine).
 
 ![](./docs/validating_prerequesites.jpeg)
 
