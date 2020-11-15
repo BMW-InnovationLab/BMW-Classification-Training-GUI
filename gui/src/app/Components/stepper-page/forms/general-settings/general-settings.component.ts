@@ -30,8 +30,8 @@ export class GeneralSettingsComponent implements OnInit {
 
   weightTypes: WeightType[] = [
     {name: 'from scratch' , value: 'from_scratch'},
-    {name: 'transfer learning from online weights' , value: 'pre_trained'},
-    {name: 'transfer learning from local weights' , value: 'pretrained_offline'},
+    {name: 'transfer learning based on the ImageNet pretrained weights' , value: 'pre_trained'},
+    {name: 'transfer learning based on the custom weights' , value: 'pretrained_offline'},
     {name: 'from checkpoint' , value: 'checkpoint'}
   ];
 
