@@ -244,6 +244,15 @@ docker-compose -f run_cpu.yml up
 
 ---
 
+## Usage
+
+- If the app is deployed on your machine:  open your web browser and type the following: `localhost:4200` or `127.0.0.1:4200  `
+
+
+- If the app is deployed on a different machine: open your web browser and type the following: `<machine_ip>:4200`
+
+---
+
 ## Prepare Custom Dataset
 
 After running the docker container, run this command if you labeled your dataset with the [labelme](https://github.com/wkentaro/labelme/) labeling-tool:
@@ -271,14 +280,6 @@ This is how the **customdataset** folder should look like :
 <br>
 
 ---
-
-## Usage
-
-- If the app is deployed on your machine:  open your web browser and type the following: `localhost:4200` or `127.0.0.1:4200  `
-
-
-- If the app is deployed on a different machine: open your web browser and type the following: `<machine_ip>:4200`
-
 
 
 
