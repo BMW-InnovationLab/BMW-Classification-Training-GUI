@@ -305,10 +305,10 @@ Specify the general parameters for you docker container
 
 
 
-- From scratch : building the network and training immediately (no weights loaded)
-- Transfer learning based on the ImageNet pretrained weights: building the network, downloading online pretrained weights, loading them into the network,resetting the last layer (transfer learning) and then training.
-- Transfer learning based on the custom weights: building the network, loading local weights into the network, resetting the last layer (transfer learning) and then training.
-- From checkpoint: building the network, loading local weights into the network and training.
+- From scratch : (i) Building the network and (ii) training without loading any pre-trained weights
+- Transfer learning based on the ImageNet pretrained weights: (i) building the network, (ii) downloading online ImageNet pretrained weights from gluoncv's modelzoo, (iii) loading them onto the network, (iv) resetting the last layer (transfer learning) and (v) launching the training.
+- Transfer learning based on the custom weights: (i) building the network, (ii) loading local weights into the network, (iii) resetting the last layer (transfer learning) and (iv) launching the  training.
+- From checkpoint: (i) building the network, (ii) loading local weights and (iii) training without resetting the last layer.
 
 #### 3- Specifying Hyperparameters
 
