@@ -129,7 +129,7 @@ export class GeneralSettingsComponent implements OnInit {
         this.weightTypeTooltip = 'training the network using local weights';
 
         this.checkpointsList = [];
-        let index = 0;
+        let index;
 
         for (let i = 0; i < this.checkpointsValue.length; i++) {
           if (this.checkpointsValue[i].length === this.datasetValue.length) {
@@ -141,9 +141,9 @@ export class GeneralSettingsComponent implements OnInit {
                 break;
               }
             }
-          }
-          if (index === 1) {
-            this.checkpointsList.push(this.checkpointsKeys[i].split('/')[1] + ' | ' + this.checkpointsKeys[i].split('/')[0]);
+            if (index === 1) {
+              this.checkpointsList.push(this.checkpointsKeys[i].split('/')[1] + ' | ' + this.checkpointsKeys[i].split('/')[0]);
+            }
           }
         }
       } else {

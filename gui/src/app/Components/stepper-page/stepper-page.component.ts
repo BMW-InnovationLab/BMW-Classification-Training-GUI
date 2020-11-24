@@ -144,7 +144,7 @@ export class StepperPageComponent implements OnInit, OnDestroy{
 
         if (this.generalSettings.selectedWeightType === 'checkpoint') {
           this.generalSettings.checkpointsList = [];
-          let index = 0;
+          let index;
 
           for (let i = 0; i < this.generalSettings.checkpointsValue.length; i++) {
             if (this.generalSettings.checkpointsValue[i].length === this.generalSettings.datasetValue.length) {
@@ -156,9 +156,9 @@ export class StepperPageComponent implements OnInit, OnDestroy{
                   break;
                 }
               }
-            }
-            if (index === 1) {
-              this.generalSettings.checkpointsList.push(this.generalSettings.checkpointsKeys[i].split('/')[1] + ' | ' + this.generalSettings.checkpointsKeys[i].split('/')[0]);
+              if (index === 1) {
+                this.generalSettings.checkpointsList.push(this.generalSettings.checkpointsKeys[i].split('/')[1] + ' | ' + this.generalSettings.checkpointsKeys[i].split('/')[0]);
+              }
             }
           }
         } else {

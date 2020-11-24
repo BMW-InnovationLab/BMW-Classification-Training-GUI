@@ -1,10 +1,10 @@
 {
-    "base_dir": "/home/hadi/Desktop/BMW-Classification-training-GUI",
+    "base_dir": "/home/hadi/Documents/BMW-Classification-training-GUI",
     "api_folder": "training_api",
     "dataset_folder_on_host": "data",
     "checkpoints_folder_on_host": "checkpoints",
     "inference_api_models_folder": "inference/models",
     "servable_folder": "servable",
-    "image_name": "classification_training_api_gpu",
+    "image_name": "classification_training_api_cpu",
     "models_folder": "models"
 }
