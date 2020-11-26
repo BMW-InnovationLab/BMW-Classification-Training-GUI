@@ -254,6 +254,8 @@ export class StepperPageComponent implements OnInit, OnDestroy{
               this.advancedConfig.weights_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[2].toString();
           }
 
+          this.doneButtonLoading = true;
+
           this.dataSenderSecondApi.datasetPost(this.dataset, this.generalSettings.validateForm.value.APIPort).subscribe(
             (message: HttpResponse<Config>) => {
                 this.dataSenderSecondApi.advancedConfigPost(this.advancedConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
@@ -295,6 +297,8 @@ export class StepperPageComponent implements OnInit, OnDestroy{
               this.basicConfig.model_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[0].toString();
               this.basicConfig.weights_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[2].toString();
           }
+
+          this.doneButtonLoading = true;
 
           this.dataSenderSecondApi.datasetPost(this.dataset, this.generalSettings.validateForm.value.APIPort).subscribe(
             (message: HttpResponse<Config>) => {

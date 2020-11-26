@@ -125,6 +125,7 @@ export class GeneralSettingsComponent implements OnInit {
       }
       this.validateForm.get('networks').setValidators([Validators.required]);
     } else if (this.selectedWeightType === 'checkpoint' || this.selectedWeightType === 'pretrained_offline') {
+      this.selectedCheckpointValue = '';
       if (this.selectedWeightType === 'checkpoint') {
         this.weightTypeTooltip = 'training the network using local weights';
 
