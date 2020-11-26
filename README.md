@@ -335,7 +335,7 @@ Check your training logs to get better insights on the progress of the training
 
 #### 5- Downloading Models
 
-Download your model to use it in your applications. After downloading your model, if you would like to load it in a [GPU-based inference API](https://github.com/BMW-InnovationLab/BMW-Classification-Inference-GPU-CPU) , please make sure that you change the architecture (CPU or GPU) in the model's configuration json file. (please refer to the [inference API's documentation](https://github.com/BMW-InnovationLab/BMW-Classification-Inference-GPU-CPU) , section Model "Model Structure")
+Download your model to use it in your applications. After downloading your model, if you would like to load it in a [GPU-based inference API](https://github.com/BMW-InnovationLab/BMW-Classification-Inference-GPU-CPU) , please make sure to specify the GPU architecture in the model's configuration json file. (please refer to the [inference API's documentation](https://github.com/BMW-InnovationLab/BMW-Classification-Inference-GPU-CPU) , section Model "Model Structure")
 
 ![](./documentation_images/5.gif)
 
