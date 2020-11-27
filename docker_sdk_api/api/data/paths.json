@@ -5,6 +5,6 @@
     "checkpoints_folder_on_host": "checkpoints",
     "inference_api_models_folder": "inference/models",
     "servable_folder": "servable",
-    "image_name": "classification_training_api_gpu",
+    "image_name": "classification_training_api_cpu",
     "models_folder": "models"
 }
