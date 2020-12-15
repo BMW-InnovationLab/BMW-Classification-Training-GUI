@@ -6,7 +6,7 @@ import os
 import mxnet as mx
 import gluoncv as gcv
 from gluoncv.data.transforms import presets
-# from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 import datetime
 from pathlib import Path
 from mxnet import nd
@@ -39,13 +39,13 @@ def predict(images, model_name, model_config):
     # run forward pass to obtain the predicted score for each class
     pred = net(transformed_img)
     # map predicted values to probability by softmax
-    prob =  nd.softmax(pred)[0].asnumpy() * 100
+    prob = nd.softmax(pred)[0].asnumpy()
     #prob = pred[0].asnumpy()
 
     with open(os.path.join("/models",str(model_name),'config.json')) as config_file:
         data = json.load(config_file)
-        max_number_of_predictions = data['configuration']['max_number_of_predictions']
-        minimum_confidence = data['configuration']['minimum_confidence']
+        max_number_of_predictions = data['max_number_of_predictions']
+        minimum_confidence = data['minimum_confidence']
 
     if(max_number_of_predictions>len(net.classes)):
         max_number_of_predictions=len(net.classes)

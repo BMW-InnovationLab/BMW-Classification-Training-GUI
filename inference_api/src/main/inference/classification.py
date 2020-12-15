@@ -131,7 +131,7 @@ class InferenceEngine(AbstractInferenceEngine):
 	#load the model configuration
 	def set_model_configuration(self, data):
 		self.configuration['inference_engine'] = data['inference_engine_name']
-		self.configuration['configuration'] = data['configuration']
+		self.configuration['configuration'] = data
 	
 	#Validate the json configuration file
 	def validate_json_configuration(self, data):

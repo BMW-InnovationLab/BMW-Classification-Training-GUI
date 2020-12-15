@@ -46,10 +46,12 @@ class TrainingStart():
     """
     def get_ctx(self, processor, gpus_count):
         gpu_count=mx.util.get_gpu_count()
+        print(gpu_count)
         if gpu_count>0:
             ctx = [mx.gpu(i) for i in gpus_count] if gpus_count[0] != -1 else [mx.cpu()]
         else:
             ctx=[mx.cpu()]
+        print(ctx)
         return ctx
     """
     Method that creates a dictionary that will be used for the inference
@@ -65,23 +67,17 @@ class TrainingStart():
     def define_inference_configuration(self,processor):
         if processor=="CPU":
             configuration ={
-                "configuration" : {
-                    "gpu" : False,
                     "cpu" : True,
                     "max_number_of_predictions": 5,
-                    "minimum_confidence": 0
-                },
-                "inference_engine_name": "classification"
+                    "minimum_confidence": 0,
+                    "inference_engine_name": "classification"
             }
         else:
             configuration ={
-                "configuration" : {
-                    "gpu" : True,
                     "cpu" : False,
-                    "max_number_of_predictions": 3,
-                    "minimum_confidence": 80
-                },
-                "inference_engine_name": "classification"
+                    "max_number_of_predictions": 5,
+                    "minimum_confidence": 0,
+                    "inference_engine_name": "classification"
             }
 
         return configuration
@@ -151,6 +147,7 @@ class TrainingStart():
 
             network = str(net)
             network = str(net) 
+            print(net.name)
             output_exists=hasattr(net,'output') ##check if output exists
             network_name=net.name ##get the model's name
             
@@ -168,7 +165,9 @@ class TrainingStart():
                     If_HybridSequential_2 = len(net.output) ##check if HybridSequential contains more than 2 items
                     if(If_HybridSequential_2>2):
                         with net.name_scope():
+                            print('2------------------------')
                             
+                            print('------------------------')
                             x = nn.HybridSequential()
                             x.add(nn.Conv2D(classes, 1, strides=1))
                             x.add(net.output[1])
@@ -177,11 +176,15 @@ class TrainingStart():
                             net.output = x
                     else:
                         with net.name_scope():
+                            print('3------------------------')
+                            # print(net.output[1])
+                            print('------------------------')
                             x = nn.HybridSequential()
                             x.add(nn.Conv2D(classes, 1, strides=1))
                             x.add(net.output[1])
                             net.output = x
                 else:
+                    print("4")
                     with net.name_scope():
                         net.output = nn.Dense(classes)
                 if(config.Xavier == True):
@@ -189,6 +192,7 @@ class TrainingStart():
                 else:
                     net.output.initialize(mx.init.MSRAPrelu(), ctx = ctx)
             else:
+                print("5")
                 with net.name_scope():
                     net.fc = nn.Dense(classes)
                 if(config.Xavier == True):
