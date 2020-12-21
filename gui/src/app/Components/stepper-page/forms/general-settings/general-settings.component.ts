@@ -177,7 +177,7 @@ export class GeneralSettingsComponent implements OnInit {
       this.selectedCheckpointValue = '';
     } else {
       if (this.checkpointsList.length > 0) {
-        this.selectedCheckpointValue = this.validateForm.value.checkPoints.split(' ')[0].toString();
+        this.selectedCheckpointValue = this.validateForm.value.checkPoints;
       } else {
         this.selectedCheckpointValue = '';
       }
