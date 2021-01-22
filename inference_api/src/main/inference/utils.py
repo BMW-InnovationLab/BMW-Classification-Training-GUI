@@ -37,7 +37,7 @@ def get_models_info(model_config):
     
     return model_config.models_hash
 
-##block edited by roy
+
 def load_model(model_config, model_name):
     classes = get_classes(model_name)
     root=os.path.join('/root', '.mxnet', 'models')
@@ -45,7 +45,7 @@ def load_model(model_config, model_name):
     file_path = os.path.join(root, model_name)
     with open(file_path+'/config.json') as f:
         data= json.load(f)
-    config = data["configuration"] 
+    config = data
     if(config["cpu"] == True): 
         ctx = [mx.cpu()]
         model_config.models_config[model_name] = 'cpu'

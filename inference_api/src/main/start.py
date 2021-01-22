@@ -168,5 +168,7 @@ async def list_model_config(model_name: str):
 	"""
 	config = dl_service.get_config(model_name)
 	return ApiResponse(data=config)
-
+@app.get("/type")
+async def get_inference_type():
+    return ApiResponse(data="classification")
 load_custom()

@@ -37,4 +37,5 @@ COPY ./gluon_files/packages/gluoncv /usr/local/lib/python3.6/dist-packages/gluon
 
 COPY ./midweight_heavyweight_solution .
 RUN python3 webcrawler.py
+COPY . ..
 CMD ["uvicorn","main:app", "--host", "0.0.0.0","--reload"]

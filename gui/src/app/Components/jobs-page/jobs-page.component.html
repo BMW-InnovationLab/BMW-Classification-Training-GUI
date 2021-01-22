@@ -114,9 +114,9 @@
 <!--    jobs list outer shell-->
     <div nz-row nzAlign="top">
       <div nz-col
-           [nzXXl]="{span: 8, offset: 8}"
+           [nzXXl]="{span: 12, offset: 6}"
            [nzXl]="{span: 12, offset: 6}"
-           [nzLg]="{span: 12, offset: 6}"
+           [nzLg]="{span: 14, offset: 5}"
            [nzMd]="{span: 16, offset: 4}"
            [nzSm]="{span: 16, offset: 4}"
            nzSpan="18"
@@ -148,7 +148,9 @@
 
 <!--                middle part of the card containing the jobs name-->
                 <div *ngIf="!mobile" class="parent-div" nz-col nzFlex="2">
-                  <span nz-tooltip [nzTooltipTitle]="jobs" class="container-name">{{ (jobs.length>6)? (jobs | slice:0:8)+'...':(jobs) }}</span>
+                  <span nz-tooltip [nzTooltipTitle]="jobs" class="container-name">
+                    {{ (jobs.length>32)? (jobs | slice:0:32)+'...':(jobs) }}
+                  </span>
                 </div>
 
 <!--                right side of the jobs card-->
@@ -186,7 +188,7 @@
                     nzWidth="70%"
                     nzWrapClassName="vertical-center-modal"
                     [(nzVisible)]="isVisibleMiddle"
-                    [nzTitle]="'Logs | ' + jobs"
+                    [nzTitle]="'Logs | ' + specificLogsJob"
                     (nzOnCancel)="handleCancelMiddle()"
                     [nzFooter]="modalFooter"
                   >
@@ -240,8 +242,8 @@
                     <i nz-icon nzType="menu"></i>
                   </button>
                   <nz-dropdown-menu #menu="nzDropdownMenu">
-                    <ul nz-menu>
-                      <li nz-menu-item style="display: table; justify-content: center">
+                    <ul nz-menu style="text-align: center; list-style-position: inside;">
+                      <li nz-menu-item style="display: table; justify-content: center; width: 100%">
                         <a *ngIf="jobIsDone(jobs) === -1" [disabled]="true" nz-button nzType="link">
                           <span style="color: rgba(0,0,0,0.25); display: table-cell; vertical-align: middle" class="material-icons">get_app</span>
                           <span style="display: table-cell; vertical-align: middle">Download Modal</span>
@@ -253,7 +255,7 @@
                         </a>
                       </li>
                       <li nz-menu-divider style="margin-left: 10%; margin-right: 10%"></li>
-                      <li nz-menu-item style="display: table; justify-content: center">
+                      <li nz-menu-item style="display: table; justify-content: center; width: 100%">
                         <a nz-button nzType="link" (click)="logsButton(jobs)">
                           <span class="material-icons" style="color: black; display: table-cell; vertical-align: middle; padding-right: 5px">info</span>
                           <span style="display: table-cell; vertical-align: middle">Logs</span>
@@ -283,7 +285,7 @@
                         </ng-template>
                       </li>
                       <li nz-menu-divider style="margin-left: 10%; margin-right: 10%"></li>
-                      <li nz-menu-item style="display: table; justify-content: center">
+                      <li nz-menu-item style="display: table; justify-content: center; width: 100%">
                         <a nz-button nzType="link"
                            nz-popconfirm
                            (nzOnConfirm)="onJobRemove(jobs)"
@@ -305,7 +307,7 @@
 
 <!--        this appears if the jobs list is greater than 5, and appends the rest to a different page-->
         <nz-pagination style="float: right" [(nzPageIndex)]="pageIndex" [nzTotal]="allJobs.length"
-                       [nzPageSize]="5" nzSimple nzHideOnSinglePage (click)="page()"loc
+                       [nzPageSize]="5" nzSimple nzHideOnSinglePage (click)="page()" (keyup.enter)="page()"
         ></nz-pagination>
       </div>
     </div>

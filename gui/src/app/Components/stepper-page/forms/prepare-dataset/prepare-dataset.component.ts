@@ -19,7 +19,8 @@ export class PrepareDatasetComponent implements OnInit {
   }
 
   validateForm: FormGroup;
-  availableFiles: string[] = [];
+  availableFoldersKeys = [];
+  availableFoldersValue = [];
   sum = 0;
   parserPercent = (value: string) => value.replace(/[.]\d*/, '');
 
@@ -30,12 +31,14 @@ export class PrepareDatasetComponent implements OnInit {
       this.validateForm.controls[key].updateValueAndValidity();
     }
     this.sum = this.validateForm.value.training + this.validateForm.value.validation + this.validateForm.value.testing;
-    console.log(value);
   }
 
   ngOnInit(): void {
     this.dataGetterFirstApi.getDataSets().subscribe((availableFolders: string[]) => {
-      this.availableFiles = availableFolders;
+      for (const [key, value] of Object.entries(availableFolders)) {
+        this.availableFoldersKeys.push(key);
+        this.availableFoldersValue.push(value);
+      }
     });
   }
 

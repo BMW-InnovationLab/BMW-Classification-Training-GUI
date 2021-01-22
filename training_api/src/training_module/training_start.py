@@ -67,23 +67,17 @@ class TrainingStart():
     def define_inference_configuration(self,processor):
         if processor=="CPU":
             configuration ={
-                "configuration" : {
-                    "gpu" : False,
                     "cpu" : True,
                     "max_number_of_predictions": 5,
-                    "minimum_confidence": 0
-                },
-                "inference_engine_name": "classification"
+                    "minimum_confidence": 0,
+                    "inference_engine_name": "classification"
             }
         else:
             configuration ={
-                "configuration" : {
-                    "gpu" : True,
                     "cpu" : False,
-                    "max_number_of_predictions": 3,
-                    "minimum_confidence": 80
-                },
-                "inference_engine_name": "classification"
+                    "max_number_of_predictions": 5,
+                    "minimum_confidence": 0,
+                    "inference_engine_name": "classification"
             }
 
         return configuration

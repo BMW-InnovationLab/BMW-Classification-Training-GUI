@@ -52,7 +52,6 @@ async def dataset_func(dataset: Dataset):
 async def config_func(background_tasks: BackgroundTasks, config: Configuration):
     config= conf_facade.configure_job(config)
     net=conf_facade.get_network(config,tmp['classes_num'])
-    print(tmp['classes_num'])
     train_data, valid_data, test_data = dataset_facade.augment_dataset(config, "../dataset/")
     
     background_tasks.add_task(training_facade.training,config,train_data, valid_data, test_data, net, tmp['dataset_name'])

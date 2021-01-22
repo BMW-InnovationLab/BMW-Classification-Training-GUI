@@ -71,8 +71,6 @@ class NetworkSetter():
 
     def get_scratch_model(self, model_name,nmbrofclasses):
         all_models = model_zoo.get_model_list()
-        print("all models :")
-        print(str(all_models))
         if model_name in all_models:
             net = model_zoo.get_model(model_name, pretrained=False,classes=nmbrofclasses)
         else:
@@ -130,7 +128,6 @@ class NetworkSetter():
         num_gpu = config.gpus_count
         num_workers = config.num_workers
         checkpoint_model_name = config.model_name
-        print(weight_type)
         transfer_learning=False
         if weight_type == 'pretrained_offline':
             transfer_learning=True

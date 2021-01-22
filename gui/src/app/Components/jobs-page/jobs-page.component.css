@@ -153,6 +153,36 @@ body, html {
   }
 }
 
+@media only screen and (min-width: 1024px) and (max-width: 1600px) {
+  .container-name {
+    font-size: 1.3em;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .container-name {
+    font-size: 1.5em;
+    display:table-cell;
+    vertical-align:middle;
+  }
+
+  .status {
+    display:table-cell;
+    vertical-align:middle;
+    padding-right: 15px;
+  }
+
+  .parent-div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .parent-right-div {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
 @media only screen and (min-width: 510px) and (max-width: 767px) {
   .container-name {
     font-size: 2em;

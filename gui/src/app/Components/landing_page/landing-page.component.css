@@ -4,7 +4,7 @@ body, html {
 }
 
 .bg {
-  background-image: url("../../../assets/images/landingBackground.png");
+  background-image: url("../../../assets/images/waves-gradient-3.svg");
   height: 100%;
   width: 100%;
   z-index: 0;
@@ -14,8 +14,8 @@ body, html {
   right: 0;
   background-repeat: no-repeat;
   position: absolute;
-  background-position:center;
-  background-size:cover;
+  background-position: bottom;
+  background-size: 101%;
 }
 
 .site-page-header {

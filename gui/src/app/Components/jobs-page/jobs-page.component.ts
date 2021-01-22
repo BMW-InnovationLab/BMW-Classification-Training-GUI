@@ -35,6 +35,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
 
   exactValue;
   specificJob;
+  specificLogsJob;
 
   pageIndex = 1;
 
@@ -99,6 +100,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
 
   // returns the logs list of a certain job
   logsButton(jobs: string) {
+    this.specificLogsJob = jobs;
     this.specificJob = jobs;
     this.removeJob.name = jobs;
     this.dataSenderFirstApi.logs(this.removeJob).subscribe( (logs) => {
@@ -120,6 +122,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
       this.allJobs = allJobs;
       this.displayList = this.allJobs;
       this.numberOfJobsPerPage = this.displayList.length;
+      this.page();
     });
   }
 
@@ -132,7 +135,6 @@ export class JobsPageComponent implements OnInit, OnDestroy {
 
   // linked to the button inside the logs modal to update the logs list
   handleRefreshMiddle(): void {
-    console.log(this.specificJob);
     this.removeJob.name = this.specificJob;
     this.dataSenderFirstApi.logs(this.removeJob).subscribe( (logs) => {
       if (logs.length > this.logs.length) {
@@ -200,7 +202,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    if (window.screen.width < 768) { // 768px portrait
+    if (window.screen.width <= 1024) { // 768px portrait
       this.mobile = true;
     } else {
       this.mobile = false;
@@ -213,7 +215,7 @@ export class JobsPageComponent implements OnInit, OnDestroy {
     }
 
     window.onresize = () => {
-      if (window.screen.width < 768) { // 768px portrait
+      if (window.screen.width <= 1024) { // 768px portrait
         this.mobile = true;
       } else {
         this.mobile = false;

@@ -1,23 +1,6 @@
 <form nz-form [formGroup]="validateForm" nzLayout="vertical"
       (ngSubmit)="submitForm(validateForm.value)"
       style="justify-content: space-between; display: flex; flex-wrap: wrap;">
-  <nz-form-item style="width: 100%; display: block;">
-    <nz-form-label nzFlex="1">Processor :</nz-form-label>
-    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="processorErrorTpl">
-      <nz-select nz-tooltip="CPU or GPU (used for inference)"
-        nzTooltipPlacement="topRight"
-        formControlName="processor" nzPlaceHolder="Processor"
-                 [(ngModel)]="selectedProcessor">
-        <nz-option nzValue="CPU" nzLabel="CPU"></nz-option>
-        <nz-option nzValue="GPU" nzLabel="GPU"></nz-option>
-      </nz-select>
-      <ng-template #processorErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          Please select a processor!
-        </ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
   <nz-form-item class="form-item">
     <nz-form-label nzFlex="1">Learning Rate :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="lrErrorTpl">
@@ -35,7 +18,7 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item class="form-item">
-    <nz-form-label nzFlex="1">Batch Size :</nz-form-label>
+    <nz-form-label nzFlex="1">Batch Size Per Device:</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="bsErrorTpl">
       <input nz-tooltip="batch size (used for training)"
              nzTooltipPlacement="topRight"
@@ -166,7 +149,7 @@
     <nz-form-label nzFlex="1">Xavier :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="xErrorTpl">
       <nz-select nz-tooltip="true or false (used for weights initialization)"
-                 nzTooltipPlacement="topRight"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
                  formControlName="Xavier" nzPlaceHolder="Xavier"
                  [(ngModel)]="selectedXavier">
         <nz-option [nzValue]="true" nzLabel="True"></nz-option>
@@ -183,7 +166,7 @@
     <nz-form-label nzFlex="1">MSRAPrelu :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="msrapErrorTpl">
       <nz-select nz-tooltip="true or false (used for weights initialization)"
-                 nzTooltipPlacement="topRight"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
                  formControlName="MSRAPrelu" nzPlaceHolder="MSRAPrelu"
                  [(ngModel)]="selectedMSRAPrelu">
         <nz-option [nzValue]="true" nzLabel="True"></nz-option>
@@ -200,7 +183,7 @@
     <nz-form-label nzFlex="1">Data Augmenting :</nz-form-label>
     <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="dataErrorTpl">
       <nz-select nz-tooltip="decides wether to augment the data using our custom data_augmentation funtion or not"
-                 nzTooltipPlacement="topRight"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
                  formControlName="data_augmenting" nzPlaceHolder="Data Augmenting"
                  [(ngModel)]="selectedDataAugmenting">
         <nz-option [nzValue]="true" nzLabel="True"></nz-option>

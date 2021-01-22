@@ -69,29 +69,28 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
 \- Install NVIDIA Drivers (410.x or higher) and NVIDIA Docker for GPU training by following the [official docs](https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0))
 
-
 <br>
 <br>
 
----
+### Validating prerequisites 
+
+Make sure that the `base_dir` field in `docker_sdk_api/api/data/paths.json` is correct (it must match the path of the root of the repo on your machine).
+
+![](./docs/validating_prerequesites.jpeg)
 
 ## Changes To Make
 
 - Go to `docker_sdk_api/api/data/paths.json` and change the following:
 
   - if you wish to deploy the training solution on GPUs (default mode), please set the field `image_name` to:<br>
-  **classification_training_api_gpu** 
+    **classification_training_api_gpu** 
+  
+    ​      ![](./documentation_images/gpu_image_name.gif)
+    ​    
 
+   - if you wish to deploy the training solution on CPU, please set the field `image_name` to: **classification_training_api_cpu** 
 
-      
-      ![](./documentation_images/gpu_image_name.gif)
-
-      <br>
-
-   - if you wish to deploy the training solution on CPU, please set the field `image_name` to:
-    **classification_training_api_cpu** 
-
-    ![](./documentation_images/cpu_image_name.gif)
+![](./documentation_images/cpu_image_name.gif)
 
 <br>
 <br>
@@ -101,7 +100,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
   - field `url`:  
 must match the IP address of your machine
-      
+    
   - the IP field of the `inferenceAPIUrl `: must match the IP address of your machine (**Use the `ifconfig `command to check your IP address . Please use your private IP which starts by either 10. or 172.16.  or 192.168.**)
 
 
@@ -130,12 +129,14 @@ If you are behind a proxy:
 
 <br>
 
+### Remark - docker sdk port 
+
 Docker SDK api uses the port **2223** to run.<br>
 In case this port is used by another application. The api can be configured to run on a different port by doing the following steps:
 
 * Go to _docker_sdk_api/dockerfile_ and change the value after the --port flag in the CMD command.
 
-![sdk_port](./documentation_images/sdk_port.gif)
+![sdk_port](./docs/dockerfile.jpeg)
 
 * Go to gui/src/environments/environment.ts and gui/src/environments/environment.prod.ts and change the `baseEndPoint` field value to match the newly selected port:
 
@@ -205,6 +206,14 @@ The following is an example of how a dataset should be structured. Please put al
 
 ## Build the Solution
 
+If you wish want to deploy the training workflow in GPU mode, please write the following command
+
+```sh
+docker-compose -f build_gpu.yml build
+```
+
+<br>
+
 If you wish want to deploy the training workflow in CPU mode, please write the following command
 
 ```sh
@@ -212,30 +221,12 @@ docker-compose -f build_cpu.yml build
 ```
 <br>
 
-If you wish want to deploy the training workflow in GPU mode, please write the following command
 
-```sh
-docker-compose -f build_gpu.yml build
-```
-
-
-
-
-
-
-<br>
 <br>
 
 
 ---
 ## Run the Solution
-If you wish to deploy the training workflow in CPU mode, please write the following command
-
-```sh
-docker-compose -f run_cpu.yml up
-```
-<br>
-
 If you wish want to deploy the training workflow in GPU mode, please write the following command
 
 ```sh
@@ -244,11 +235,23 @@ docker-compose -f run_gpu.yml up
 
 <br>
 
+If you wish to deploy the training workflow in CPU mode, please write the following command
+
+```sh
+docker-compose -f run_cpu.yml up
+```
 
 
+![](./docs/after_deployment.PNG)
 
-<br>
-<br>
+---
+
+## Usage
+
+- If the app is deployed on your machine:  open your web browser and type the following: `localhost:4200` or `127.0.0.1:4200  `
+
+
+- If the app is deployed on a different machine: open your web browser and type the following: `<machine_ip>:4200`
 
 ---
 
@@ -280,14 +283,6 @@ This is how the **customdataset** folder should look like :
 
 ---
 
-## Usage
-
-- If the app is deployed on your machine:  open your web browser and type the following: `localhost:4200` or `127.0.0.1:4200  `
-
-
-- If the app is deployed on a different machine: open your web browser and type the following: `<machine_ip>:4200`
-
-
 
 
 
@@ -301,7 +296,7 @@ Prepare your dataset for training
 
 ![](./documentation_images/1.gif)
 
- 
+
 <br>
 
 
@@ -313,7 +308,10 @@ Specify the general parameters for you docker container
 
 
 
-<br>
+- From scratch : (i) Building the network and (ii) training without loading any pre-trained weights
+- Transfer learning based on the ImageNet pretrained weights: (i) building the network, (ii) downloading online ImageNet pretrained weights from gluoncv's modelzoo, (iii) loading them onto the network, (iv) resetting the last layer (transfer learning) and (v) launching the training.
+- Transfer learning based on the custom weights: (i) building the network, (ii) loading local weights into the network, (iii) resetting the last layer (transfer learning) and (iv) launching the  training.
+- From checkpoint: (i) building the network, (ii) loading local weights and (iii) training without resetting the last layer.
 
 #### 3- Specifying Hyperparameters
 
@@ -323,7 +321,9 @@ Specify the hyperparameters for the training job
 
 
 
-<br>
+For more information about our hyperparameters, feel free to read our hyperparameters [documentation](hyperparameters_documentation.md )
+
+
 
 #### 4- Checking training logs
 
@@ -353,7 +353,13 @@ Delete the container's job to stop an ongoing job or to remove the container of 
 <br>
 
 ---
- 
+
+## Possible Errors
+
+The training might fail when a network isn't available anymore on the Gluoncv model_zoo server (pretrained online weights). If you encounter this error (image below), kindly create an issue.
+
+![](./docs/possible_error.PNG)
+
 ## Acknowledgments
 
 - Roy Anwar, BMW Innovation Lab, Munich, Germany

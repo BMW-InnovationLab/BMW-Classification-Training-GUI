@@ -56,14 +56,7 @@
     "se_resnext101_32x4d",
     "se_resnext101_64x4d",
     "senet_154",
-    "darknet53",
-    "resnet18_v1b_2.6x",
-    "resnet50_v1d_1.8x",
-    "resnet50_v1d_3.6x",
-    "resnet50_v1d_5.9x",
-    "resnet50_v1d_8.8x",
-    "resnet101_v1d_1.9x",
-    "resnet101_v1d_2.2x"
+    "darknet53"
 ]
 
 

@@ -23,7 +23,7 @@ export class AdvancedHyperParametersComponent implements OnInit {
       momentum: [0.9, [Validators.required], [this.checkIfFloatValidator]],
       wd: [0.0001, [Validators.required], [this.checkIfFloatValidator]],
       lr_factor: [0.75, [Validators.required], [this.checkIfFloatValidator]],
-      num_workers: [8, [Validators.required], [this.checkIfIntValidator]],
+      num_workers: [1, [Validators.required], [this.checkIfIntValidator]],
       jitter_param: [0.4, [Validators.required], [this.checkIfFloatValidator]],
       lighting_param: [0.1, [Validators.required], [this.checkIfFloatValidator]],
       processor: [this.selectedProcessor, [Validators.required]],

@@ -137,6 +137,34 @@ export class StepperPageComponent implements OnInit, OnDestroy{
           nzDuration: 3000
         });
       } else {
+        this.generalSettings.datasetIndex = null;
+        this.generalSettings.datasetValue = [];
+        this.generalSettings.datasetIndex = this.prepareDataset.availableFoldersKeys.indexOf(this.prepareDataset.validateForm.value.dataset_name);
+        this.generalSettings.datasetValue = this.prepareDataset.availableFoldersValue[this.generalSettings.datasetIndex];
+
+        if (this.generalSettings.selectedWeightType === 'checkpoint') {
+          this.generalSettings.checkpointsList = [];
+          let index;
+
+          for (let i = 0; i < this.generalSettings.checkpointsValue.length; i++) {
+            if (this.generalSettings.checkpointsValue[i].length === this.generalSettings.datasetValue.length) {
+              for (let j = 0; j < this.generalSettings.datasetValue.length; j++) {
+                if (this.generalSettings.checkpointsValue[i].includes(this.generalSettings.datasetValue[j])) {
+                  index = 1;
+                } else {
+                  index = 0;
+                  break;
+                }
+              }
+              if (index === 1) {
+                this.generalSettings.checkpointsList.push(this.generalSettings.checkpointsKeys[i].split('/')[1] + ' | ' + this.generalSettings.checkpointsKeys[i].split('/')[0]);
+              }
+            }
+          }
+        } else {
+
+        }
+
         this.current += 1;
         this.changeContent();
       }
@@ -145,6 +173,7 @@ export class StepperPageComponent implements OnInit, OnDestroy{
       if (!this.generalSettings.validateForm.valid){
         // do nothing
       } else {
+
         this.addJob.name = this.generalSettings.validateForm.value.containerName;
         this.addJob.api_port = this.generalSettings.validateForm.value.APIPort;
         this.addJob.gpus_count = this.generalSettings.validateForm.value.gpus_count;
@@ -221,21 +250,26 @@ export class StepperPageComponent implements OnInit, OnDestroy{
               this.advancedConfig.weights_name = this.generalSettings.validateForm.value.networks;
           } else {
               this.advancedConfig.weights_type = this.generalSettings.validateForm.value.weightType;
-              this.advancedConfig.model_name = this.generalSettings.validateForm.value.checkPoints;
-              this.advancedConfig.weights_name = this.generalSettings.selectedCheckpointValue;
+              this.advancedConfig.model_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[0].toString();
+              this.advancedConfig.weights_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[2].toString();
           }
+
+          this.doneButtonLoading = true;
 
           this.dataSenderSecondApi.datasetPost(this.dataset, this.generalSettings.validateForm.value.APIPort).subscribe(
             (message: HttpResponse<Config>) => {
                 this.dataSenderSecondApi.advancedConfigPost(this.advancedConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
                   (message1: HttpResponse<Config>) => {
-                    console.log(this.advancedConfig);
+                    if (message1.toString() === 'Training Started') {
+                      this.doneButtonLoading = false;
+                      this.current += 1;
+                      this.changeContent();
+                      this.router.navigate(['/jobs']);
+                    } else {
+                      this.doneButtonLoading = true;
+                    }
                   });
             });
-
-          this.current += 1;
-          this.changeContent();
-          this.router.navigate(['/jobs']);
         }
       } else {
         this.hyperParameters.submitForm(this.hyperParameters.validateForm.value);
@@ -260,21 +294,26 @@ export class StepperPageComponent implements OnInit, OnDestroy{
               this.basicConfig.weights_name = this.generalSettings.validateForm.value.networks;
           } else {
               this.basicConfig.weights_type = this.generalSettings.validateForm.value.weightType;
-              this.basicConfig.model_name = this.generalSettings.validateForm.value.checkPoints;
-              this.basicConfig.weights_name = this.generalSettings.selectedCheckpointValue;
+              this.basicConfig.model_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[0].toString();
+              this.basicConfig.weights_name = this.generalSettings.validateForm.value.checkPoints.split(' ')[2].toString();
           }
+
+          this.doneButtonLoading = true;
 
           this.dataSenderSecondApi.datasetPost(this.dataset, this.generalSettings.validateForm.value.APIPort).subscribe(
             (message: HttpResponse<Config>) => {
                 this.dataSenderSecondApi.basicConfigPost(this.basicConfig, this.generalSettings.validateForm.value.APIPort).subscribe(
                   (message1: HttpResponse<Config>) => {
-                    console.log(this.basicConfig);
+                    if (message1.toString() === 'Training Started') {
+                      this.doneButtonLoading = false;
+                      this.current += 1;
+                      this.changeContent();
+                      this.router.navigate(['/jobs']);
+                    } else {
+                      this.doneButtonLoading = true;
+                    }
                   });
             });
-
-          this.current += 1;
-          this.changeContent();
-          this.router.navigate(['/jobs']);
         }
       }
   }

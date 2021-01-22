@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {DataGetterFirstApiService} from '../../../../Services/data-getter-first-api.service';
 import {Observable, Observer} from 'rxjs';
+import {PrepareDatasetComponent} from '../prepare-dataset/prepare-dataset.component';
 
 interface WeightType {
   name: string;
@@ -15,6 +16,8 @@ interface WeightType {
 })
 
 export class GeneralSettingsComponent implements OnInit {
+  @ViewChild(PrepareDatasetComponent) prepareDataset: PrepareDatasetComponent;
+
   validateForm: FormGroup;
 
   availableGPUs: Array<number> = [];
@@ -27,8 +30,8 @@ export class GeneralSettingsComponent implements OnInit {
 
   weightTypes: WeightType[] = [
     {name: 'from scratch' , value: 'from_scratch'},
-    {name: 'pre-trained' , value: 'pre_trained'},
-    {name: 'pretrained offline' , value: 'pretrained_offline'},
+    {name: 'transfer learning based on the ImageNet pretrained weights' , value: 'pre_trained'},
+    {name: 'transfer learning based on the custom weights' , value: 'pretrained_offline'},
     {name: 'from checkpoint' , value: 'checkpoint'}
   ];
 
@@ -36,9 +39,12 @@ export class GeneralSettingsComponent implements OnInit {
 
   networksList: Array<string> = [];
 
-  checkpointsList: any;
+  checkpointsList = [];
   checkpointsKeys = [];
   checkpointsValue = [];
+
+  checkpointsValidKeys = [];
+  checkpointsValidValue = [];
 
   networksHidden = true;
   checkpointsHidden = true;
@@ -57,6 +63,9 @@ export class GeneralSettingsComponent implements OnInit {
   weightTypeDisabled = false;
   networksDisabled = false;
   checkpointsDisabled = false;
+
+  datasetIndex: number;
+  datasetValue = [];
 
   constructor(private fb: FormBuilder, private dataGetterFirstApi: DataGetterFirstApiService) {
     this.validateForm = this.fb.group({
@@ -92,7 +101,6 @@ export class GeneralSettingsComponent implements OnInit {
             val = 1;
           }
         }
-        console.log(val);
         if (val === 1) {
           observer.next({error: true, duplicated: true});
         } else {
@@ -117,10 +125,36 @@ export class GeneralSettingsComponent implements OnInit {
       }
       this.validateForm.get('networks').setValidators([Validators.required]);
     } else if (this.selectedWeightType === 'checkpoint' || this.selectedWeightType === 'pretrained_offline') {
+      this.selectedCheckpointValue = '';
       if (this.selectedWeightType === 'checkpoint') {
         this.weightTypeTooltip = 'training the network using local weights';
+
+        this.checkpointsList = [];
+        let index;
+
+        for (let i = 0; i < this.checkpointsValue.length; i++) {
+          if (this.checkpointsValue[i].length === this.datasetValue.length) {
+            for (let j = 0; j < this.datasetValue.length; j++) {
+              if (this.checkpointsValue[i].includes(this.datasetValue[j])) {
+                index = 1;
+              } else {
+                index = 0;
+                break;
+              }
+            }
+            if (index === 1) {
+              this.checkpointsList.push(this.checkpointsKeys[i].split('/')[1] + ' | ' + this.checkpointsKeys[i].split('/')[0]);
+            }
+          }
+        }
       } else {
-         this.weightTypeTooltip = 'transfer learning from a pretrained network using local weights';
+        this.checkpointsList = [];
+
+        for (let i = 0; i < this.checkpointsKeys.length; i++) {
+          this.checkpointsList.push(this.checkpointsKeys[i].split('/')[1] + ' | ' + this.checkpointsKeys[i].split('/')[0]);
+        }
+
+        this.weightTypeTooltip = 'transfer learning from a pretrained network using local weights';
       }
       this.checkpointsHidden = false;
       this.networksHidden = true;
@@ -139,13 +173,15 @@ export class GeneralSettingsComponent implements OnInit {
       this.validateForm.controls[key].updateValueAndValidity();
     }
 
-    for (let i = 0; i < this.checkpointsKeys.length; i++) {
-      if (this.validateForm.value.checkPoints === this.checkpointsKeys[i]) {
-        this.selectedCheckpointValue = this.checkpointsValue[i];
+    if (this.checkpointsHidden === true && this.validateForm.value.checkPoints === null){
+      this.selectedCheckpointValue = '';
+    } else {
+      if (this.checkpointsList.length > 0) {
+        this.selectedCheckpointValue = this.validateForm.value.checkPoints;
+      } else {
+        this.selectedCheckpointValue = '';
       }
     }
-
-    console.log(value);
   }
 
   isNotSelected(value: number): boolean {
@@ -195,13 +231,10 @@ export class GeneralSettingsComponent implements OnInit {
     });
 
     this.dataGetterFirstApi.getAvailableCheckPoints().subscribe((availableCheckpoints) => {
-      this.checkpointsList = availableCheckpoints;
-
-      for (const [key, value] of Object.entries(this.checkpointsList)) {
+      for (const [key, value] of Object.entries(availableCheckpoints)) {
         this.checkpointsKeys.push(key);
         this.checkpointsValue.push(value);
       }
-
     });
 
     this.dataGetterFirstApi.getDownloadableModels().subscribe((models) => {

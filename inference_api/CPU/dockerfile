@@ -3,7 +3,7 @@ FROM python:3.6
 
 COPY src/main /main
 
-
+RUN pip install --upgrade pip
 RUN pip install  Pillow \
   		  pytest \
   		# fastapi dependencies

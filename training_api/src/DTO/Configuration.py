@@ -16,7 +16,7 @@ class Configuration (BaseModel):
     wd: float = pydantic.Field(default=0.0001,example=0.0001)
     lr_factor: float = pydantic.Field(default=0.75,example=0.75)
     gpus_count: List[int] = pydantic.Field(default=[0],example=[0])
-    num_workers: int  = pydantic.Field(default=8,example=8)
+    num_workers: int  = pydantic.Field(default=1,example=1)
     jitter_param: float = pydantic.Field(default=0.4,example=0.4)
     lighting_param: float  = pydantic.Field(default=0.1,example=0.1)
     Xavier: bool  = pydantic.Field(default=True,example=True)
