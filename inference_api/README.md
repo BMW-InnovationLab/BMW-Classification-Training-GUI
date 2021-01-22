@@ -168,24 +168,20 @@ Inside each subfolder there should be a:
 - Config.json (This is a json file containing information about the model)
 
   ```json
-  { 
-  "configuration": 
      {
-         "gpu": false,
          "cpu": true, 
          "max_number_of_predictions": 3, 
-         "minimum_confidence": 0.8
-     },
-   "inference_engine_name":"classification" 
-  }
+         "minimum_confidence": 0.6,
+         "inference_engine_name": "classification"
+     }
   
   ```
     P.S:
-  
+    
+    - **Make sure to change cpu to {true/false} based on the image used {CPU/GPU}**
     - You can change confidence and predictions values while running the API
     - The API will return a response with a confidence higher than the "minimum_confidence" value. A high "minimum_confidence" can show you only accurate predictions
     - The "max_number_of_predictions" value specifies the maximum number of classes returned and analyzed  in the API response
-    - Make sure to change cpu and gpu to perform prediction on the device you need 
   
 
 
