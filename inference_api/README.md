@@ -2,7 +2,7 @@
 
 This is a repository for an image classification inference API using the [Gluoncv](https://gluon-cv.mxnet.io/build/examples_classification/index.html) framework.
 
-The inference REST API works on CPU. It's supported on Windows and Linux Operating systems.
+The inference REST API works on CPU/GPU. It's supported on Windows and Linux Operating systems.
 
 Models trained using our Gluoncv Classification training  repository can be deployed in this API. Several models can be loaded and used at the same time.
 
@@ -75,16 +75,14 @@ sudo nvidia-docker run -itv $(pwd)/models:/models -p 4343:4343 gluoncv_classific
 
 #### -Using Windows based docker:
 
+For windows inference is only supported on CPU
+
 - CPU:
 
 ```sh
 docker run -itv ${PWD}/models:/models -p 4343:4343 gluoncv_classification
 ```
-- GPU:
 
-```sh
-docker nvidia-docker run -itv ${PWD}/models:/models -p 4343:4343 gluoncv_classification
-```
 The API file will be run automatically, and the service will listen to http requests on the chosen port.
 
 ## API Endpoints
