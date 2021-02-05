@@ -1,6 +1,6 @@
 
 { 
-    "select_all":  true,
+    "select_all":  false,
     "resnet18_v1": false,
     "resnet34_v1": false,
     "resnet50_v1": false,
