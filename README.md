@@ -23,7 +23,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
 ## Prerequisites
 
-- Linux or windows
+- Linux
 - NVIDIA Drivers (410.x or higher) (optional : for gpu training )
 - Docker CE latest stable release 
 - NVIDIA Docker 2 (optional: for gpu training)
