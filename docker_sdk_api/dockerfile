@@ -43,7 +43,7 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
 
 RUN apt-get install -y python3-dev
 
-RUN pip3 install docker GPUtil fastapi[all]
+RUN pip3 install docker GPUtil fastapi[all]==0.63.0
 
 
 

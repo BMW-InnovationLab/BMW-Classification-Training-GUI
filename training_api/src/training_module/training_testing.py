@@ -61,9 +61,9 @@ class TrainingTesting():
         batch_size = config.batch_size * max(len(config.gpus_count), 1)
         
         best_acc = 0
-        model_name_writer=open(new_model_path+'/networkname.txt','w')
-        model_name_writer.write(config.weights_name)
-        model_name_writer.close()
+        # model_name_writer=open(new_model_path+'/networkname.txt','w')
+        # model_name_writer.write(config.weights_name)
+        # model_name_writer.close()
         for epoch in range(config.epochs):
             if epoch == lr_steps[lr_counter]:
                 trainer.set_learning_rate(trainer.learning_rate * config.lr_factor)
@@ -108,14 +108,13 @@ class TrainingTesting():
 
         _, test_acc = self.test(net, test_data, ctx)
         print('[Finished] Test-acc: %.3f' % (test_acc),flush=True)
+
         for ctx1 in ctx:
             ctx1.empty_cache()
         # os.remove('../scripts/configuration.json')
-
         servable_folder_path = os.path.join('/servable',config.weights_name)
         if not os.path.exists(servable_folder_path):
             os.makedirs(servable_folder_path, exist_ok=True)
-
 
 
 
@@ -123,7 +122,7 @@ class TrainingTesting():
             for filename in os.listdir(new_model_path):
                filePath = os.path.join(os.path.join(new_model_path, filename))
                zipObj.write(filePath)
-        
+
         inference_model_path = os.path.join('/models', model_name)
         if os.path.exists(inference_model_path):
             shutil.rmtree(inference_model_path)

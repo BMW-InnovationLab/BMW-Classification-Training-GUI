@@ -1,0 +1,107 @@
+<nz-card class="card" nzHoverable="true">
+    <div nz-row nzJustify="space-between" nzAlign="middle">
+        <div class="jobTitleParentDiv" nz-col
+             [nzXXl]="{span: 11}"
+             [nzLg]="{span: 8}"
+             [nzMd]="{span: 8}"
+             [nzSm]="{span: 12}"
+             [nzXs]="{span: 10}">
+            <span class="jobTitle" nz-tooltip [nzTooltipTitle]="job">{{ job }}</span>
+        </div>
+
+        <div *ngIf="!mobile" nz-col [nzXXl]="{span: 6}" [nzLg]="{span: 6}" style="display: flex; align-items: center; justify-content: center;">
+            <nz-tag *ngIf='jobIsDone(job) === -1' nzColor="default"
+                    style="border-radius: 20px; width: 120px; height: 35px; display: flex;
+                       justify-content: space-evenly; align-items: center; border: 1px solid #ff005b">
+                <i nz-icon nzType="sync" nzSpin></i>
+                <span style="font-family: Roboto, sans-serif; font-size: 1.2em">Training</span>
+            </nz-tag>
+            <nz-tag *ngIf='jobIsDone(job) !== -1' nzColor="success"
+                    style="border-radius: 20px; width: 100px; height: 35px; display: flex; justify-content: space-evenly; align-items: center">
+                <i nz-icon nzType="check-circle"></i>
+                <span style="font-family: Roboto, sans-serif; font-size: 1.2em">Done</span>
+            </nz-tag>
+        </div>
+
+        <div *ngIf="mobile" nz-col [nzXXl]="{span: 6}" [nzLg]="{span: 6}" [nzMd]="{span: 8}" [nzSm]="{span: 4}"
+             style="display: flex; align-items: center; justify-content: center; ">
+            <nz-tag *ngIf='jobIsDone(job) === -1' nzColor="default"
+                    style="border-radius: 20px; width: 35px; height: 35px; display: flex;
+                      justify-content: space-evenly; align-items: center; border: 1px solid #ff005b">
+                <i nz-icon nzType="sync" nzSpin></i>
+            </nz-tag>
+            <nz-tag *ngIf='jobIsDone(job) !== -1' nzColor="success"
+                    style="border-radius: 20px; width: 35px; height: 35px; display: flex; justify-content: space-evenly; align-items: center">
+                <i nz-icon nzType="check-circle"></i>
+            </nz-tag>
+        </div>
+
+        <div *ngIf="!mobile" nz-col [nzXXl]="{span: 4}" [nzXl]="{span: 6}" [nzLg]="{span: 6}" [nzMd]="{span: 7}"
+             style="display: flex; justify-content: space-around; align-items: center; ">
+
+            <button *ngIf="jobIsDone(job) === -1" [disabled]="true" nz-button nzType="default" nzShape="circle" nzSize="large"
+                    class="list-item-button">
+                <i nz-icon nzType="download" style="color: #FFD2E2;"></i>
+            </button>
+            <a *ngIf="jobIsDone(job) !== -1" [disabled]="false" nz-button nzType="default" nzShape="circle" nzSize="large"
+               class="list-item-button" [href]="modelsUrl + getSpecificJobDownloadableModelValue(job) + '/' + job + '.zip'">
+                <i nz-icon nzType="download" style="color: #ff005b;"></i>
+            </a>
+
+            <button nz-button nzType="default" nzShape="circle" nzSize="large"
+                    class="list-item-button" (click)="logsButton(job)">
+                <i nz-icon nzType="info-circle"></i>
+            </button>
+
+            <button nz-button nzType="default" nzShape="circle" nzSize="large" class="list-item-button" nzDanger
+                    nz-popconfirm (nzOnConfirm)="onJobRemove(job)" [nzPopconfirmTitle]="removePopupText"
+                    (click)="jobRemovePopupText(job)" nzPopconfirmPlacement="right">
+                <i nz-icon [nzType]="jobIsDone(job) !== -1 ? 'close-circle' : 'stop'" ></i>
+            </button>
+        </div>
+
+        <div *ngIf="mobile" nz-col [nzXXl]="{span: 4}" [nzXl]="{span: 6}" [nzLg]="{span: 6}"
+             style="display: flex; justify-content: flex-end; align-items: center; ">
+            <button nz-button nz-dropdown nzType="default" nzShape="circle" nzSize="large"
+                    class="list-item-button"
+                    [nzDropdownMenu]="menu">
+                <i nz-icon nzType="menu"></i>
+            </button>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu>
+                    <li nz-menu-item>
+                        <button *ngIf="jobIsDone(job) === -1" [disabled]="true" nz-button nzType="default"
+                                nzSize="large" style="border: 0; width: 100%">
+                            <i nz-icon nzType="download" style="color: #FFD2E2;"></i>
+                            <span style="color: #FFD2E2;">Download Model</span>
+                        </button>
+                        <a *ngIf="jobIsDone(job) !== -1" [disabled]="false" nz-button nzType="default" nzSize="large"
+                           [href]="modelsUrl + getSpecificJobDownloadableModelValue(job) + '/' + job + '.zip'"
+                           style="border: 0; width: 100%">
+                            <i nz-icon nzType="download" style="color: #ff005b;"></i>
+                            <span style="color: #ff005b;">Download Model</span>
+                        </a>
+                    </li>
+                    <li nz-menu-divider></li>
+                    <li nz-menu-item>
+                        <button nz-button nzType="default" nzSize="large"
+                                style="border: 0; width: 100%" (click)="logsButton(job)">
+                            <i nz-icon nzType="info-circle"></i>
+                            <span>View Logs</span>
+                        </button>
+                    </li>
+                    <li nz-menu-divider></li>
+                    <li nz-menu-item>
+                        <button nz-button nzType="default" nzSize="large"
+                                style="border: 0; width: 100%" nzDanger
+                                nz-popconfirm (nzOnConfirm)="onJobRemove(job)" [nzPopconfirmTitle]="removePopupText"
+                                (click)="jobRemovePopupText(job)" nzPopconfirmPlacement="right">
+                            <i nz-icon [nzType]="jobIsDone(job) !== -1 ? 'close-circle' : 'stop'" ></i>
+                            <span>{{jobIsDone(job) !== -1 ? 'Close Job' : 'Stop Job'}}</span>
+                        </button>
+                    </li>
+                </ul>
+            </nz-dropdown-menu>
+        </div>
+    </div>
+</nz-card>

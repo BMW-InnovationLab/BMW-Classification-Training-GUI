@@ -1,0 +1,195 @@
+<form nz-form [formGroup]="advancedParametersForm" nzLayout="vertical" (ngSubmit)="formValid()"
+      style="justify-content: space-between; display: flex; flex-wrap: wrap;">
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Learning Rate :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="lrErrorTpl">
+      <input nz-tooltip="Learning Rate (used for training)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="lr" placeholder="Learning Rate" />
+      <ng-template #lrErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Batch Size Per Device:</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="bsErrorTpl">
+      <input nz-tooltip="Batch Size (used for training)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="batch_size" placeholder="Batch Size" />
+      <ng-template #bsErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notInt')">
+          Must be an int
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Epochs :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="eErrorTpl">
+      <input nz-tooltip="Epochs (used for training)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="epochs" placeholder="Epochs" />
+      <ng-template #eErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notInt')">
+          Must be an int
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Momentum :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="momentumErrorTpl">
+      <input nz-tooltip="Momentum (used for training)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="momentum" placeholder="Momentum" />
+      <ng-template #momentumErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Weight Decay :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="wdErrorTpl">
+      <input nz-tooltip="Weight Decay (used for training)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="wd" placeholder="Weight Decay" />
+      <ng-template #wdErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Learning Rate Factor :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="lrfErrorTpl">
+      <input nz-tooltip="Learning Rate Factor (used for training)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="lr_factor" placeholder="Learning Rate Factor" />
+      <ng-template #lrfErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Number of Workers :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="nbwErrorTpl">
+      <input nz-tooltip="Number of Workers (used for training)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="num_workers" placeholder="Number of Workers" />
+      <ng-template #nbwErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notInt')">
+          Must be an int
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Jitter :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="jErrorTpl">
+      <input nz-tooltip="Jitter (used for data augmentation)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="jitter_param" placeholder="Jitter" />
+      <ng-template #jErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Lighting :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="lightingErrorTpl">
+      <input nz-tooltip="Lighting (used for data augmentation)"
+             nzTooltipPlacement="topRight"
+             nz-input formControlName="lighting_param" placeholder="Lighting" />
+      <ng-template #lightingErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a number!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notFloat')">
+          Must be a float
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Xavier :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="xErrorTpl">
+      <nz-select nz-tooltip="True or False (used for weights initialization)"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
+                 formControlName="Xavier" nzPlaceHolder="Xavier">
+        <nz-option [nzValue]="true" nzLabel="True"></nz-option>
+        <nz-option [nzValue]="false" nzLabel="False"></nz-option>
+      </nz-select>
+      <ng-template #xErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please select a state!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">MSRAPrelu :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="msrapErrorTpl">
+      <nz-select nz-tooltip="True or False (used for weights initialization)"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
+                 formControlName="MSRAPrelu" nzPlaceHolder="MSRAPrelu">
+        <nz-option [nzValue]="true" nzLabel="True"></nz-option>
+        <nz-option [nzValue]="false" nzLabel="False"></nz-option>
+      </nz-select>
+      <ng-template #msrapErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please select a state!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="form-item">
+    <nz-form-label nzFlex="1">Data Augmenting :</nz-form-label>
+    <nz-form-control nzFlex="1" nzHasFeedback [nzErrorTip]="dataErrorTpl">
+      <nz-select nz-tooltip="This parameter decides whether to augment the data using our custom data_augmentation function or not"
+                 nzTooltipPlacement="topRight" nzShowSearch nzAllowClear
+                 formControlName="data_augmenting" nzPlaceHolder="Data Augmenting">
+        <nz-option [nzValue]="true" nzLabel="True"></nz-option>
+        <nz-option [nzValue]="false" nzLabel="False"></nz-option>
+      </nz-select>
+      <ng-template #dataErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please select a state!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>

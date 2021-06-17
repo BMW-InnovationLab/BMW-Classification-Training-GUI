@@ -1,0 +1,282 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bg, .bg-1 {
+  background-color: #F6F6F8;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-repeat: no-repeat;
+  position: absolute;
+  background-position:center;
+  background-size:cover;
+}
+
+.card-item{
+  width: 100%;
+  overflow: auto;
+}
+
+.header {
+  background-color: transparent;
+  height: fit-content;
+  z-index: 1;
+  position: relative;
+  margin: 0 0 1% 1%;
+  padding: 0;
+}
+
+.right-header-div {
+  text-align: right;
+}
+
+.title {
+  font-family: Roboto-Regular;
+  font-size: 2.5em;
+  margin-right: 0.5em;
+  vertical-align: middle;
+  font-weight: bold;
+  color: #4A4A4A;
+}
+
+.divider {
+  font-size: 2.5em;
+  background-color: black;
+}
+
+.button {
+  margin-left: 1em;
+  margin-right: 1em;
+  font-size: 1.15em;
+}
+
+.header-download-button {
+  vertical-align: middle;
+  font-size: 1.2em;
+  margin-bottom: 0.4em;
+}
+
+
+
+.home {
+  margin-left: 1em;
+  font-size: 1.15em;
+}
+
+.button-icon {
+  color: #4A4A4A;
+  font-size: 1.75em;
+}
+
+.list-item:hover {
+  background-color: rgba(0,0,0,0.10);
+}
+
+.no-running-jobs {
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+@media only screen and (min-width: 480px) and (max-width: 510px) {
+  .header-download-button {
+    font-size: 0.9em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0.4em;
+  }
+
+  .downloads-icon {
+    font-size: 2.2em;
+  }
+}
+
+@media only screen and (min-width: 434px) and (max-width: 480px) {
+  .header {
+    margin-left: 15px;
+  }
+
+  .title {
+    font-size: 2em;
+  }
+
+  .divider {
+    font-size: 2em;
+  }
+
+  .button {
+    font-size: 1em;
+  }
+
+  .home {
+    font-size: 1em;
+  }
+
+  .header-download-button {
+    font-size: 0.9em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: -0.2em;
+  }
+}
+
+@media only screen and (min-width: 415px) and (max-width: 433px) {
+  .header {
+    margin-left: 15px;
+  }
+
+  .title {
+    font-size: 2em;
+  }
+
+  .divider {
+    font-size: 2em;
+  }
+
+  .button {
+    font-size: 1em;
+  }
+
+  .home {
+    font-size: 1em;
+  }
+
+  .header-download-button {
+    font-size: 0.9em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: -0.4em;
+  }
+}
+
+@media only screen and (min-width: 410px) and (max-width: 414px) {
+  .left-header-div {
+    font-size: 1.4em;
+    padding-left: 15px;
+    margin: 0 auto;
+  }
+
+  .right-header-div {
+    text-align: center;
+    font-size: 1.3em;
+  }
+
+  .header-download-button {
+    margin-bottom: 0.8em;
+  }
+}
+
+@media only screen and (min-width: 390px) and (max-width: 410px) {
+  .left-header-div {
+    font-size: 1.4em;
+    padding-left: 15px;
+    margin: 0 auto;
+  }
+
+  .right-header-div {
+    text-align: center;
+    font-size: 1.3em;
+  }
+
+  .header-download-button {
+    margin-bottom: 0.7em;
+  }
+}
+
+@media only screen and (min-width: 374px) and (max-width: 390px) {
+  .left-header-div {
+    font-size: 1.3em;
+    padding-left: 15px;
+    margin: 0 auto;
+  }
+
+  .right-header-div {
+    text-align: center;
+    font-size: 1.2em;
+  }
+
+  .header-download-button {
+    margin-bottom: 0.6em;
+  }
+}
+
+@media only screen and (min-width: 360px) and (max-width: 374px) {
+  .left-header-div {
+    font-size: 1.25em;
+    padding-left: 15px;
+    margin: 0 auto;
+  }
+
+  .right-header-div {
+    text-align: center;
+    font-size: 1.15em;
+  }
+
+  .header-download-button {
+    margin-bottom: 0.5em;
+  }
+}
+
+@media only screen and (min-width: 325px) and (max-width: 360px) {
+  .left-header-div {
+    font-size: 1.1em;
+    padding-left: 15px;
+    margin: 0 auto;
+  }
+
+  .right-header-div {
+    text-align: center;
+    font-size: 1em;
+  }
+
+  .header-download-button {
+    font-size: 1.2em;
+    margin-bottom: 0.4em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+  }
+}
+
+@media only screen and (min-width: 250px) and (max-width: 325px) {
+
+  .left-header-div {
+    font-size: 1.07em;
+    padding-left: 15px;
+    margin: 0 auto;
+  }
+
+  .right-header-div {
+    text-align: center;
+    font-size: 1em;
+  }
+}
+
+@media only screen and (min-height: 610px) and (max-height: 710px) {
+  .bg-1 {
+    height: 30%;
+  }
+}
+
+@media only screen and (min-height: 590px) and (max-height: 610px) {
+  .bg-1 {
+    height: 40%;
+  }
+}
+
+@media only screen and (min-height: 568px) and (max-height: 590px) {
+  .bg-1 {
+    height: 30%;
+  }
+}

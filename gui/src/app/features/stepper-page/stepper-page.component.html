@@ -1,0 +1,53 @@
+<nz-layout>
+  <app-header [title]="title"
+              [downloadableModels]="downloadableModels"
+    [finishedJobs]="finishedJobs"
+    [allJobs]="allJobs"
+    ></app-header>
+
+    <nz-content>
+      <div class="bg"></div> -->
+      <div class="bg-1" *ngIf="mobile"></div>
+      <div class="bg-2" *ngIf="switchState === true"></div>
+    <div nz-row class="stepper">
+        <nz-card class="stepper-card" nz-col [ngStyle]="{'height': switchState ? '100%' : '75%'}">
+
+          <nz-steps class="stepper-header" [nzCurrent]="current">
+            <nz-step nzTitle="Prepare Dataset" nzIcon="book"></nz-step>
+            <nz-step nzTitle="General Settings" nzIcon="setting"></nz-step>
+            <nz-step nzTitle="Hyper Parameters" nzIcon="form"></nz-step>
+          </nz-steps>
+
+          <div class="steps-content">
+            <nz-card [hidden]="current !== 0" class="steps-content-card">
+              <app-prepare-dataset class="prepare-dataset"></app-prepare-dataset>
+            </nz-card>
+            <nz-card [hidden]="current !== 1" class="steps-content-card">
+              <app-general-settings class="prepare-dataset"></app-general-settings>
+            </nz-card>
+            <nz-card [hidden]="current !== 2" class="steps-content-card">
+              <app-hyper-parameters [hidden]="switchState" class="prepare-dataset"></app-hyper-parameters>
+              <app-advanced-hyper-parameters [hidden]="!switchState" class="prepare-dataset" ></app-advanced-hyper-parameters>
+              <nz-switch style="float: right" (click)="switch()" [ngModel]="switchState" nzCheckedChildren="Advanced" nzUnCheckedChildren="Basic"></nz-switch>
+            </nz-card>
+          </div>
+
+          <div class="steps-action">
+            <button class="footer-buttons" [nzLoading]="doneButtonLoading" nz-button nzType="primary" (click)="done()" *ngIf="current === 2">
+              <span>Done</span>
+            </button>
+            <button class="footer-buttons" style="border-color: #ff005b; color: #ff005b"
+                    [nzLoading]="step2NextButtonLoading" nz-button nzType="default" (click)="next()" *ngIf="current < 2">
+              <span>Next</span>
+            </button>
+            <button class="footer-buttons" [disabled]="step2PreviousButtonDisabled" nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+              <span>Previous</span>
+            </button>
+            <button class="footer-buttons" [disabled]="cancelButtonDisabled" nz-button nzType="default" (click)="cancel()" *ngIf="current > 1" routerLink="/jobs">
+              <span>Cancel</span>
+            </button>
+          </div>
+        </nz-card>
+      </div>
+  </nz-content>
+</nz-layout>

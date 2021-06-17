@@ -35,6 +35,6 @@ class CheckpointValidator():
             return False
         if not os.path.exists(os.path.join(checkpoint_path,"classes.txt")):
             return False
-        if not os.path.exists(os.path.join(checkpoint_path,"networkname.txt")):
+        if not os.path.exists(os.path.join(checkpoint_path,"config.json")):
             return False
         return True

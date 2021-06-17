@@ -13,7 +13,7 @@ RUN pip install  Pillow \
 		  gluoncv \
 		  opencv-python
 RUN pip install jsonschema
-RUN pip install mxnet-mkl
+RUN pip install mxnet-mkl==1.5.1
 COPY src/packages/gluoncv /usr/local/lib/python3.6/site-packages/gluoncv 
 
 WORKDIR /main

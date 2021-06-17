@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {JobsPageComponent} from './Components/jobs-page/jobs-page.component';
-import {LandingPageComponent} from './Components/landing_page/landing-page.component';
-import {StepperPageComponent} from './Components/stepper-page/stepper-page.component';
+import {JobsPageComponent} from './features/jobs-page/jobs-page.component';
+import {LandingPageComponent} from './core/components/landing-page/landing-page.component';
+import {StepperPageComponent} from './features/stepper-page/stepper-page.component';
 
 const routes: Routes = [
   {
@@ -17,6 +17,11 @@ const routes: Routes = [
   {
     path: 'stepper',
     component: StepperPageComponent
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
 
@@ -25,5 +30,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
-export const routingComponents = [LandingPageComponent, JobsPageComponent];
