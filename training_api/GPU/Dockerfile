@@ -9,6 +9,18 @@ ENV NVIDIA_REQUIRE_CUDA=cuda>=10.0 brand=tesla,driver>=384,driver<385 brand=tesl
 ENV NCCL_VERSION=2.4.8
 ENV CUDNN_VERSION=7.6.3.30
 ENV MXNET_CUDNN_AUTOTUNE_DEFAULT=0
+ARG DEBIAN_FRONTEND=noninteractive
+
+
+# Fix Nvidia/Cuda repository key rotation
+RUN sed -i '/developer\.download\.nvidia\.com\/compute\/cuda\/repos/d' /etc/apt/sources.list.d/*
+RUN sed -i '/developer\.download\.nvidia\.com\/compute\/machine-learning\/repos/d' /etc/apt/sources.list.d/*  
+RUN apt-key del 7fa2af80 &&\
+    apt-get update && \
+    apt-get  install -y wget && \
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb && \
+    dpkg -i cuda-keyring_1.0-1_all.deb
+    
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
   locales \
