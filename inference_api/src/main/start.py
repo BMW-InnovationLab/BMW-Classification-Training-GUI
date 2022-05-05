@@ -171,4 +171,3 @@ async def list_model_config(model_name: str):
 @app.get("/type")
 async def get_inference_type():
     return ApiResponse(data="classification")
-load_custom()

@@ -1,0 +1,58 @@
+<nz-layout>
+<!--  Header-->
+  <app-header [title]="title"
+              [downloadableModels]="downloadableModels"
+              [finishedJobs]="finishedJobs"
+  ></app-header>
+<!--  Body-->
+  <nz-content>
+<!--    page background-->
+    <div class="bg"></div>
+<!--    second background which applies if the conditions below apply, not a very efficient way but does the job-->
+    <div class="bg-1" *ngIf="windowHeightSmall && mobile && jobsToDisplay.length === 5"></div>
+<!--    jobs list outer shell-->
+    <div nz-row nzAlign="top">
+      <div nz-col
+           [nzXXl]="{span: 16, offset: 4}"
+           [nzXl]="{span: 12, offset: 6}"
+           [nzLg]="{span: 14, offset: 5}"
+           [nzMd]="{span: 16, offset: 4}"
+           [nzSm]="{span: 16, offset: 4}"
+           nzSpan="18"
+           nzOffset="3"
+      >
+<!--        jobs list inner shell-->
+        <nz-list nzItemLayout="vertical" nzGrid>
+            <nz-list-item *ngFor="let job of jobsToDisplay">
+                <app-job-item class="card-item"
+                              [job]="job"
+                              [finishedJobs]="finishedJobs"
+                              [downloadableModels]="downloadableModels"
+                              (jobRemoved)=onJobRemove($event)
+                              (logsRequested)="logsButton($event)"
+                ></app-job-item>
+            </nz-list-item>
+        </nz-list>
+
+        <app-logs-modal [data]="logs"
+                        [modalSettings]="logsModalSettings"
+                        (refresh)="handleRefreshMiddle()"
+        ></app-logs-modal>
+
+<!--        this appears if the jobs list is greater than 5, and appends the rest to a different page-->
+        <nz-pagination style="float: right"
+                       nzSimple
+                       nzHideOnSinglePage = 'true'
+                       [(nzPageIndex)]="pageIndex"
+                       [nzTotal]="allJobs.length"
+                       [nzPageSize]="PAGE_SIZE"
+                       (nzPageIndexChange)="moveToPage($event)"
+        ></nz-pagination>
+      </div>
+    </div>
+
+   <div class="no-running-jobs" *ngIf="allJobs.length === 0">
+       <app-not-found></app-not-found>
+  </div>
+  </nz-content>
+</nz-layout>

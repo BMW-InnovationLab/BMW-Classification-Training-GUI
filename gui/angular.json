@@ -31,15 +31,6 @@
             "styles": [
               {
                 "input": "src/theme.less"
-              },
-              {
-                "input": "src/styles.css"
-              },
-              {
-                "input": "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
-              },
-              {
-                "input": "./src/assets/fonts/Comfortaa-VariableFont_wght.ttf"
               }
             ],
             "scripts": []

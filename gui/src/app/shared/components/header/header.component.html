@@ -1,0 +1,152 @@
+<!--  page header-->
+<nz-header nz-row class="header">
+    <!--    left side of the header, containing page title 'All Jobs' along side a vertical divider and home button
+            which links back to the landing page-->
+    <div nz-col
+         [class]="inStepperPage() ? 'left-header-div-stepper' : 'left-header-div'"
+         [nzXXl]="{span: inStepperPage() ? 5 : 4}"
+         [nzXl]="{span: inStepperPage() ? 7 : 6}"
+         [nzLg]="{span: inStepperPage() ? 8 : 7}"
+         [nzMd]="{span: inStepperPage() ? 10 : 9}"
+         [nzSm]="{span: 12}">
+        <!--      header title-->
+        <span class="title" >{{title}}</span>
+        <!--      divider-->
+        <nz-divider class="divider" nzType="vertical"></nz-divider>
+        <!--      home button (landing page button)-->
+        <a [disabled]="inStepperPage()"
+           class="button home"
+           routerLink="/"
+           nz-button
+           nzType="link"
+           nz-tooltip="Home"
+           nzTooltipPlacement="bottom">
+           <i class="button-icon" nz-icon nzType="home" nzTheme="fill"
+              [ngStyle]="{'color': inStepperPage() ? 'rgba(0,0,0,0.2)':'#4A4A4A'}"></i>
+        </a>
+    </div>
+    <!--    empty space between the left and right sides of the header, its length decreases as the page gets smaller
+            try changing its background color to view how it changes by changing the width-->
+    <div nz-col
+         [nzXXl]="{span: inStepperPage() ? 14 : 16}"
+         [nzXl]="{span: inStepperPage() ? 9 : 12}"
+         [nzLg]="{span: inStepperPage() ? 8 : 10}"
+         [nzMd]="{span: inStepperPage() ? 3 : 6}"
+         [nzSm]="{span: 0}">
+    </div>
+    <!--    right side of the header, containing the buttons and vertical dividers-->
+    <div nz-col nzFlex="1"
+         [class]="inStepperPage() ? 'right-header-div-stepper' : 'right-header-div'"
+         [nzXXl]="{span: inStepperPage() ? 6 : 4}"
+         [nzXl]="{span: inStepperPage() ? 8 : 6}"
+         [nzLg]="{span: inStepperPage() ? 8 : 7}"
+         [nzMd]="{span: inStepperPage() ? 11 : 9}"
+         [nzSm]="{span: 12}">
+
+        <a class="button"
+           [routerLink]="headerSettings[title].link"
+           nz-button
+           nzType="link"
+           [nz-tooltip]="headerSettings[title].tooltip"
+           nzTooltipPlacement="bottom">
+           <i class="button-icon"
+              nz-icon
+              [nzType]="headerSettings[title].iconType"
+              [nzTheme]="headerSettings[title].theme"></i>
+        </a>
+
+        <!--      divider-->
+        <nz-divider class="divider" nzType="vertical"></nz-divider>
+        <!--      jobs list view, same code architecture as the downloadable models button-->
+        <a *ngIf="inStepperPage()"
+           nz-tooltip="Jobs List" nzTooltipPlacement="bottom"
+           class="button job-list-button"
+           nz-button nzType="link"
+           nz-popover
+           nzPopoverTitle="Direct Jobs List Preview"
+           nzPopoverTrigger="click"
+           [nzPopoverContent]="jobs"
+        >
+            <i class="button-icon" nz-icon nzType="clock-circle" nzTheme="outline"></i>
+        </a>
+
+        <!--      divider-->
+        <nz-divider *ngIf="inStepperPage()" class="divider" nzType="vertical"></nz-divider>
+
+        <!--      downloadable models button-->
+        <a
+                nz-tooltip="Downloadable Models" nzTooltipPlacement="bottom"
+                (click)="onDownloadableModelClick()"
+                [class]="inStepperPage() ? 'header-download-button-stepper' : 'header-download-button'"
+                nz-button nzType="link"
+                nz-popover
+                nzPopoverTitle="Downloadable Models"
+                nzPopoverTrigger="click"
+                [nzPopoverPlacement]="popoverPlacement"
+                [nzPopoverContent]="downloads"
+        >
+            <!--        a dot that appears to the top right corner of the downloadable models button when a job is finished-->
+            <nz-badge style="font-size: 1.15em;" [nzDot]="updateInJobs">
+                <i class="button-icon downloads-icon" nz-icon nzType="cloud-download" nzTheme="outline"></i>
+            </nz-badge>
+        </a>
+
+
+
+        <!--      divider-->
+        <nz-divider class="divider" nzType="vertical"></nz-divider>
+
+        <!--      test with swagger button-->
+        <a class="button" nz-button nzType="link" (click)="testWithSwagger()" nz-tooltip="Test With Swagger"
+           nzTooltipPlacement="bottomRight">
+            <i class="button-icon" nz-icon nzType="thunderbolt" nzTheme="fill"></i>
+        </a>
+    </div>
+</nz-header>
+
+
+<!--      this is the list that you see when you click on the downloadable models button containing all the finished
+          jobs-->
+<ng-template #downloads>
+    <!--        this list applies when width < 768px-->
+    <nz-list *ngIf="mobile" nzSize="default" style="max-height: 250px"
+             [ngStyle]="{'overflow-y': downloadableModelsKeys.length > 5 ? 'scroll' : 'none'}">
+        <nz-list-item class="list-item" *ngFor="let model of downloadableModelsKeys; let i = index">
+            <a style="color: black; margin: 0 auto" [href]="makeUrl(i)">
+              <span style="font-weight: bold ">
+                {{(downloadableModelsKeys[i].slice(0, -4).length > 6)? (downloadableModelsKeys[i].slice(0, -4) | slice:0:7)+'...':(downloadableModelsKeys[i].slice(0, -4))}}
+              </span>
+                <span> | </span>
+                <span>{{downloadableModelsValues[i]}}</span>
+            </a>
+        </nz-list-item>
+    </nz-list>
+    <!--        this list applies when width >= 768px-->
+    <nz-list *ngIf="!mobile" nzSize="default" style="max-height: 250px;"
+             [ngStyle]="{'overflow-y': downloadableModelsKeys.length > 5 ? 'scroll' : 'none'}">
+        <nz-list-item class="list-item" *ngFor="let model of downloadableModelsKeys; let i = index">
+            <a style="color: black; margin: 0 auto" [href]="modelsUrl + downloadableModelsValues[i] + '/' + downloadableModelsKeys[i]">
+              <span style="font-weight: bold ">
+                {{ downloadableModelsKeys[i].slice(0, -4) }}</span>
+                <span> | </span>
+                <span>{{downloadableModelsValues[i]}}</span>
+            </a>
+        </nz-list-item>
+    </nz-list>
+</ng-template>
+
+<!--      popover template for the jobs list view-->
+<ng-template #jobs>
+    <nz-list nzSize="default">
+        <nz-list-item class="list-item" *ngFor="let job of allJobs">
+            <div *ngIf="jobIsDone(job) === -1" style="color: black; width: 100%; display: flex; align-items: center; justify-content: space-evenly">
+                <i nz-icon nzType="sync" style="color: #ff005b" nzSpin></i>
+                <span>{{ job }}</span>
+            </div>
+            <div *ngIf="jobIsDone(job) !== -1" style="color: black; width: 100%; display: flex; align-items: center; justify-content: space-evenly">
+                <i nz-icon nzType="check-circle" style="color: #52c419"></i>
+                <span>{{ job }}</span>
+            </div>
+        </nz-list-item>
+    </nz-list>
+</ng-template>

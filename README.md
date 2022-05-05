@@ -13,7 +13,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 - The built-in inference API supports CPU architectures.
 - It is recommended to use google Chrome when using the training app.
 
-![](./documentation_images/ClassificationDemo.gif)
+![](./documentation_images/1.gif)
 
 
 <br>
@@ -23,7 +23,7 @@ This repository allows you to get started with training a State-of-the-art Deep 
 
 ## Prerequisites
 
-- Linux
+- Linux or windows
 - NVIDIA Drivers (410.x or higher) (optional : for gpu training )
 - Docker CE latest stable release 
 - NVIDIA Docker 2 (optional: for gpu training)
@@ -99,7 +99,7 @@ Make sure that the `base_dir` field in `docker_sdk_api/api/data/paths.json` is c
 - Go to  `gui/src/environments/environment.ts ` and `gui/src/environments/environment.prod.ts  ` and change the following:
 
   - field `url`:  
-must match the IP address of your machine
+    must match the IP address of your machine
     
   - the IP field of the `inferenceAPIUrl `: must match the IP address of your machine (**Use the `ifconfig `command to check your IP address . Please use your private IP which starts by either 10. or 172.16.  or 192.168.**)
 
@@ -294,7 +294,7 @@ This is how the **customdataset** folder should look like :
 
 Prepare your dataset for training
 
-![](./documentation_images/1.gif)
+![](./documentation_images/2.gif)
 
 
 <br>
@@ -304,7 +304,7 @@ Prepare your dataset for training
 
 Specify the general parameters for you docker container
 
-![](./documentation_images/2.gif)
+![](./documentation_images/3.gif)
 
 
 
@@ -317,7 +317,7 @@ Specify the general parameters for you docker container
 
 Specify the hyperparameters for the training job
 
-![](./documentation_images/3.gif)
+![](./documentation_images/4.gif)
 
 
 
@@ -329,7 +329,7 @@ For more information about our hyperparameters, feel free to read our hyperparam
 
 Check your training logs to get better insights on the progress of the training
 
-![](./documentation_images/6.gif)
+![](./documentation_images/5.gif)
 
 <br>
 
@@ -337,7 +337,7 @@ Check your training logs to get better insights on the progress of the training
 
 Download your model to use it in your applications. 
 
-![](./documentation_images/5.gif)
+![](./documentation_images/6.gif)
 
 <br>
 
@@ -349,7 +349,7 @@ Delete the container's job to stop an ongoing job or to remove the container of 
 
 ![](./documentation_images/7.gif)
 
-<br>
+ <br>
 <br>
 
 ---
