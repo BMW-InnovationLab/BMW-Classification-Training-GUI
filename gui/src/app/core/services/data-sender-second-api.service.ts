@@ -5,7 +5,8 @@ import {IConfig} from '../domain/models/config';
 import {Observable} from 'rxjs';
 import {Dataset} from '../domain/models/dataset';
 import {Config} from 'codelyzer';
-import {BasicConfig} from '../Interfaces/basicConfig';
+import {BasicConfig} from '../domain/models/basic-config';
+import {HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'

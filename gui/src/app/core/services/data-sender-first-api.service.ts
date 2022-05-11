@@ -3,8 +3,8 @@ import { environment } from '../../../environments/environment';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Config} from 'codelyzer';
 import {Observable} from 'rxjs';
-import {AddJob} from '../Interfaces/addJob';
-import {RemoveJob} from '../Interfaces/removeJob';
+import {AddJob} from '../domain/models/add-job';
+import {RemoveJob} from '../domain/models/remove-job';
 import {HttpHeaders} from '@angular/common/http';
 
 @Injectable({
